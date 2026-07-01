@@ -14,6 +14,7 @@ import DesignPage from './pages/DesignsPage';
 import BlogsPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import DesignDetailsPage from './pages/DesignDetails';
+import BlogDetailsPage from './pages/BlogDetails';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/designs" element={<DesignPage />} />
             <Route path="/designs/:slug" element={<DesignDetailsPage />} />
             <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blogs/:slug" element={<BlogDetailsPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </PageTransitionLayout>

@@ -24,10 +24,9 @@ export const servicesData = [
 
     phone: "+91 89782 22980",
 
-    workingDays: "Monday – Saturday",
+ 
 
-    workingHours: "9 AM to 9 PM",
-
+   
     images: [
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop",
