@@ -306,7 +306,7 @@ class Canvas {
   createMedias() {
     this.medias = this.items.map((image, index) => new Media({
       gl: this.gl, geometry: this.planeGeometry, scene: this.scene, screen: this.screen, viewport: this.viewport,
-      image, length: this.items.length, index, planeWidth: 400, planeHeight: 600, distortion: this.distortion
+      image, length: this.items.length, index, planeWidth: 900, planeHeight: 550, distortion: this.distortion
     }));
   }
 

@@ -34,7 +34,7 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
         stagger: 0.1,
         ease: "expo.inOut",
       })
-      // Fade in the spinner
+      // Fade in the Logo
       .to(iconRef.current, {
         opacity: 1,
         duration: 0.3,
@@ -45,7 +45,7 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
         setDisplayLocation(location);
         window.scrollTo(0, 0);
       })
-      // 4. Fade out the spinner
+      // 4. Fade out the Logo
       .to(iconRef.current, {
         opacity: 0,
         duration: 0.2,
@@ -73,6 +73,7 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
         ref={containerRef} 
         className="fixed inset-0 z-[9999] pointer-events-none flex flex-col"
       >
+        {/* The 5 Dark Brown Tiles */}
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
@@ -81,26 +82,25 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
           />
         ))}
 
+        {/* The Logo Container */}
         <div
           ref={iconRef}
           className="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
         >
-          <motion.svg
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            width="48"
-            height="48"
-            viewBox="0 0 40 40"
-            fill="none"
-            className="drop-shadow-lg"
-          >
-            <path opacity="0.2" fill="#f7f4ee" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
-            <path fill="#f7f4ee" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z" />
-          </motion.svg>
+          <motion.img
+            src="/bright-arena-logo.webp"
+            alt="Bright Arena Logo"
+            className="w-32 md:w-48 h-auto object-contain drop-shadow-2xl" 
+            /* Note: 'brightness-0 invert' forces the logo to be solid white so it contrasts beautifully against the dark brown tiles. Remove those two classes if your logo is already light/white. */
+            
+            // Subtle breathing animation
+            animate={{ scale: [0.95, 1.02, 0.95] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          />
         </div>
       </div>
 
-      
+      {/* Explicitly passing the location prop to the children (the Routes block) */}
       {React.cloneElement(children as React.ReactElement<{ location: typeof displayLocation }>, { location: displayLocation })}
     </>
   );

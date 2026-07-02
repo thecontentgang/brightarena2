@@ -2,14 +2,13 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { projectsData } from "./ProjectsData"; // Ensure path is correct
+import { projectsData,type Project } from "./ProjectsData"; // Ensure path is correct
 
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ─── PROJECT CARD ─── */
-function ProjectCard({ project, index }: { project: typeof projectsData[0]; index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   // Logic to determine grid span based on index for a masonry look
-  // You can customize this logic if you want specific projects to be "wide" or "tall"
   const spanClasses = index % 5 === 0 
     ? "md:row-span-2 md:col-span-1 aspect-[3/4]" 
     : index % 3 === 0 
@@ -60,8 +59,20 @@ export default function PortfolioPage() {
       
       {/* ── HERO ── */}
       <section className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16">
-        <motion.p className="text-[#ff7043] text-xs tracking-[0.3em] uppercase font-bold mb-6">Selected Works</motion.p>
-        <motion.h1 className="text-[clamp(40px,7vw,96px)] font-primary leading-[1] mb-8 tracking-tight">
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: smoothEase }}
+          className="text-[#ff7043] text-xs tracking-[0.3em] uppercase font-bold mb-6"
+        >
+          Selected Works
+        </motion.p>
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: smoothEase }}
+          className="text-[clamp(40px,7vw,96px)] font-primary leading-[1] mb-8 tracking-tight"
+        >
           Designing spaces with <br />
           <span className="italic font-serif text-[#ff7043]">purpose.</span>
         </motion.h1>

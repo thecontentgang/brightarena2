@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { projectsData } from "./ProjectsData"; // Ensure this path is correct
 
-// Explicitly typed tuple for Framer Motion
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function ProjectDetailsPage() {
@@ -15,20 +14,25 @@ export default function ProjectDetailsPage() {
   // Scroll to top on route change
   useEffect(() => { window.scrollTo(0, 0); }, [slug]);
 
-  const project = projectsData.find((item) => item.slug === slug);
   const currentIndex = projectsData.findIndex((item) => item.slug === slug);
-  const nextProject = projectsData[(currentIndex + 1) % projectsData.length];
+  const project = projectsData[currentIndex];
+  
+  // Safe to calculate even if project is undefined (though it might yield a fallback)
+  const nextProject = projectsData.length > 0 
+    ? projectsData[(currentIndex >= 0 ? currentIndex + 1 : 1) % projectsData.length]
+    : null;
 
+  // 1. ALL HOOKS MUST GO HERE (Before any early returns)
   const heroImgRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroImgRef,
     offset: ["start end", "end start"],
   });
   
-  // Adjusted parallax for the shorter image
   const heroImgY = useTransform(heroScroll, [0, 1], ["-10%", "10%"]);
   const heroImgScale = useTransform(heroScroll, [0, 1], [1.1, 1.0]);
 
+  // 2. NOW you can safely do your early return
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee] text-[#4a1c13]">
@@ -39,6 +43,7 @@ export default function ProjectDetailsPage() {
 
   return (
     <main className="bg-[#f7f4ee] text-[#4a1c13] w-full overflow-hidden antialiased font-sans selection:bg-[#ff7043] selection:text-white pb-24">
+  
 
       {/* ── HERO TEXT ── */}
       <section className="pt-32 md:pt-48 pb-10 md:pb-12 relative">
@@ -94,7 +99,6 @@ export default function ProjectDetailsPage() {
 
       {/* ── SHORT HERO IMAGE (Panoramic) ── */}
       <section className="px-4 md:px-6 lg:px-12 max-w-[1600px] mx-auto">
-        {/* Changed from aspect-video to a fixed, shorter height (h-[40vh] to 55vh max) */}
         <div ref={heroImgRef} className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-[#e8e5de] h-[40vh] md:h-[50vh] lg:h-[55vh]">
           
           {/* Parallax Image */}
@@ -157,10 +161,10 @@ export default function ProjectDetailsPage() {
               {/* Info Grid Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12">
                 {[
-                  { label: "Client",     value: project.client },
-                  { label: "Location",   value: project.location },
-                  { label: "Category",   value: project.houseType },
-                  { label: "Year",       value: project.year },
+                  { label: "Client",    value: project.client },
+                  { label: "Location",  value: project.location },
+                  { label: "Category",  value: project.houseType },
+                  { label: "Year",      value: project.year },
                 ].map((item, i) => (
                   <motion.div
                     key={item.label}
@@ -189,19 +193,15 @@ export default function ProjectDetailsPage() {
       {project.gallery && project.gallery.length > 0 && (
         <section className="pb-24 md:pb-32 px-4 md:px-6 lg:px-12 max-w-[1600px] mx-auto">
           
-          {/* CSS Columns create the masonry effect automatically based on natural image heights */}
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6">
             
             {project.gallery.map((image, i) => {
-              // Creating varied heights for the fallback placeholders so the masonry effect is visible
               const randomHeight = i % 3 === 0 ? 1200 : i % 2 === 0 ? 800 : 1000;
               const imgSrc = image || `https://picsum.photos/seed/${project.id}-${i}/800/${randomHeight}`;
 
               return (
                 <div 
                   key={i} 
-                  // break-inside-avoid ensures images don't split across columns
-                  // mb-6 provides the vertical spacing between stacked items
                   className="relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] bg-[#e8e5de] break-inside-avoid mb-4 md:mb-6 group"
                 >
                   <motion.img
@@ -256,7 +256,8 @@ export default function ProjectDetailsPage() {
               className="group flex items-center gap-4 bg-[#4a1c13] text-white px-8 py-5 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-[#ff7043] transition-colors duration-500 w-fit shrink-0"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => navigate(`/projects/${nextProject.slug}`)}
+              // FIXED ROUTE: Using /portfolio/ instead of /projects/
+              onClick={() => navigate(`/portfolio/${nextProject.slug}`)}
             >
               View Project
               <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white transition-colors duration-500">

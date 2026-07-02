@@ -2,6 +2,8 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
 
 // Premium Apple-like easing curve for fluid, expensive-feeling motion
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -33,6 +35,7 @@ const MinimalHero: React.FC = () => {
     // Fade out and move text up as video expands
     const textOpacity = useTransform(smoothProgress, [0, 0.25], [1, 0]);
     const textY = useTransform(smoothProgress, [0, 0.25], ["0%", "-50%"]);
+const navigate = useNavigate();
 
     return (
         // The h-[300vh] provides the extra scrolling space before releasing to the next section
@@ -116,12 +119,17 @@ const MinimalHero: React.FC = () => {
 
                         <div className="flex items-center gap-3 w-full md:w-auto">
                             <motion.button
-                                whileHover={{ scale: 1.05, backgroundColor: "#ffc107", color: "#4a1c13" }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-full md:w-auto bg-[#ff7043] text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
-                            >
-                                View Projects
-                            </motion.button>
+  onClick={() => navigate("/portfolio")}
+  whileHover={{
+    scale: 1.05,
+    backgroundColor: "#ffc107",
+    color: "#4a1c13",
+  }}
+  whileTap={{ scale: 0.95 }}
+  className="w-full md:w-auto bg-[#ff7043] text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
+>
+  View Projects
+</motion.button>
 
                             <motion.button
                                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,.2)" }}

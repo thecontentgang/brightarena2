@@ -8,7 +8,7 @@ const testimonials = [
     id: 1,
     name: "Priya Sharma",
     role: "Homeowner",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "aZq2QRwiYsE",
     quote: "The transformation of our home was beyond what we imagined.",
     description: "Priya and her family wanted to create a space that felt both luxurious and livable. Our team worked closely with her to bring her vision to life.",
     location: "Mumbai, India"
@@ -17,7 +17,7 @@ const testimonials = [
     id: 2,
     name: "Arjun Mehta",
     role: "Founder & CEO",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "ztyqShdYSEY",
     quote: "Working with this team was a game-changer for our office space.",
     description: "Arjun needed an office that would inspire creativity and productivity. We designed a modern workspace that reflects his company's innovative culture.",
     location: "Bangalore, India"
@@ -26,7 +26,7 @@ const testimonials = [
     id: 3,
     name: "Sarah & David",
     role: "Restaurant Owners",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "fc27D9buInM",
     quote: "Our restaurant has never looked better. The ambiance they created is exceptional.",
     description: "Sarah and David wanted to elevate their restaurant's dining experience. We transformed their space into a warm, inviting environment.",
     location: "Delhi, India"
@@ -35,7 +35,7 @@ const testimonials = [
     id: 4,
     name: "Rahul Kapoor",
     role: "Creative Director",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "nPOif88Do40",
     quote: "The attention to detail and creativity brought to our project was outstanding.",
     description: "Rahul required a space that would serve as both a studio and a gallery for his creative work. We created a versatile environment that inspires creativity.",
     location: "Hyderabad, India"
