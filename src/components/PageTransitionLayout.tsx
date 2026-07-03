@@ -73,32 +73,34 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
         ref={containerRef} 
         className="fixed inset-0 z-[9999] pointer-events-none flex flex-col"
       >
-        {/* The 5 Dark Brown Tiles */}
+        {/* The 5 Tiles (Middle one is off-white) */}
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
             ref={(el) => { tilesRef.current[i] = el; }}
-            className="w-full h-[20vh] bg-[#4a1c13] scale-x-0 origin-left"
+            className={`w-full h-[20vh] scale-x-0 origin-left ${
+              i === 2 ? "bg-[#f4f4f5]" : "bg-[#4a1c13]"
+            }`}
           />
         ))}
 
         {/* The Logo Container */}
-<div
-  ref={iconRef}
-  className="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
->
-  <motion.div 
-    className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl"
-    animate={{ scale: [0.95, 1.02, 0.95] }}
-    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-  >
-    <img
-      src="/bright-logo.jpg"
-      alt="Bright Arena Logo"
-      className="w-32 md:w-48 h-auto object-contain" 
-    />
-  </motion.div>
-</div>
+        <div
+          ref={iconRef}
+          className="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
+        >
+          <motion.div 
+           
+            animate={{ scale: [0.95, 1.02, 0.95] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          >
+            <img
+              src="/bright-logo.jpg"
+              alt="Bright Arena Logo"
+              className="w-32 md:w-48 h-auto object-contain" 
+            />
+          </motion.div>
+        </div>
       </div>
 
       {/* Explicitly passing the location prop to the children (the Routes block) */}

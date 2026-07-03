@@ -39,7 +39,7 @@ const MinimalHero: React.FC = () => {
 
     return (
         // Changed bg-[#f7f4ee] to bg-[#4a1c13]
-        <section ref={containerRef} className="relative w-full h-[300vh] bg-[#4a1c13] antialiased">
+        <section ref={containerRef} className="relative w-full h-[300vh] bg-[#f7f4ee] antialiased">
             
             {/* Pinned Viewport Container */}
             <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start overflow-hidden">
@@ -55,7 +55,7 @@ const MinimalHero: React.FC = () => {
                             initial={{ opacity: 0, y: "100%" }}
                             animate={{ opacity: 1, y: "0%" }}
                             transition={{ duration: 1.2, ease: smoothEase, delay: 0.2 }}
-                            className="text-white font-primary text-[clamp(48px,7vw,120px)] leading-[1.1] tracking-tight whitespace-normal md:whitespace-nowrap text-center md:text-left"
+                            className="text-[#4a1c13] font-primary text-[clamp(48px,7vw,120px)] leading-[1.1] tracking-tight whitespace-normal md:whitespace-nowrap text-center md:text-left"
                         >
                             Live <span className="text-[#ffc107]">Beautifully</span> Every Day
                         </motion.h1>

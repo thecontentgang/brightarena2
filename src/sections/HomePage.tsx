@@ -12,10 +12,10 @@ const HomePage = () => {
    <>
    <Hero />
    <About />
+   <TrustedBy />
    <Services />
    <Philosophy />
    <ProjectsSection />
-   <TrustedBy />
    <TestimonialsSection />
    </>
   )

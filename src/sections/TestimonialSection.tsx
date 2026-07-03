@@ -140,7 +140,7 @@ const ScatteredTestimonials: React.FC = () => {
 
   return (
     <section className="relative w-full min-h-[90vh] bg-[#f7f4ee] overflow-hidden py-16 md:py-24 px-4 flex flex-col items-center">
-      
+
       {/* Header & Interactive Filters */}
       <div className="relative z-10 text-center flex flex-col items-center pointer-events-auto w-full max-w-4xl mx-auto">
         <motion.h2
@@ -160,9 +160,8 @@ const ScatteredTestimonials: React.FC = () => {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 md:py-1.5 rounded-full text-xs md:text-sm font-medium capitalize transition-all duration-300 ${
-                filter === f ? "bg-[#4a1c13] text-white shadow-md" : "text-[#4a1c13]/70 hover:text-[#4a1c13] hover:bg-gray-50"
-              }`}
+              className={`px-4 py-2 md:py-1.5 rounded-full text-xs md:text-sm font-medium capitalize transition-all duration-300 ${filter === f ? "bg-[#4a1c13] text-white shadow-md" : "text-[#4a1c13]/70 hover:text-[#4a1c13] hover:bg-gray-50"
+                }`}
             >
               {f === "all" ? "All Stories" : f === "video" ? "Videos" : "Reviews"}
             </button>
@@ -174,8 +173,8 @@ const ScatteredTestimonials: React.FC = () => {
         Instead of absolute positioning, we use flex-wrap with a gap. 
         It naturally wraps on smaller screens and expands on large screens. 
       */}
-      <div 
-        ref={containerRef} 
+      <div
+        ref={containerRef}
         className="relative w-full max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-4 md:gap-8 lg:gap-12 pb-20"
       >
         <AnimatePresence mode="popLayout">
@@ -191,7 +190,7 @@ const ScatteredTestimonials: React.FC = () => {
                 rotate: testimonial.rotation,
                 opacity: 1,
                 scale: 1,
-                y: [0, -8, 0], 
+                y: [0, -8, 0],
               }}
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
               transition={{
@@ -202,7 +201,7 @@ const ScatteredTestimonials: React.FC = () => {
               }}
               whileHover={{
                 scale: 1.05,
-                rotate: 0, 
+                rotate: 0,
                 transition: { duration: 0.2 },
                 zIndex: 40,
               }}
@@ -213,11 +212,11 @@ const ScatteredTestimonials: React.FC = () => {
                 ${selectedId === testimonial.id ? "z-50 opacity-0 pointer-events-none" : "z-20"}
               `}
             >
-              
+
               {/* Thumbnail */}
               <motion.div
                 layoutId={`image-${testimonial.id}`}
-                className="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
+                className="w-14 h-14 md:w-16 md:h-16 rounded-3xl overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
               >
                 {testimonial.type === "video" ? (
                   <>
@@ -225,7 +224,7 @@ const ScatteredTestimonials: React.FC = () => {
                       src={`https://img.youtube.com/vi/${testimonial.videoId}/maxresdefault.jpg`}
                       alt={testimonial.name}
                       draggable={false}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="absolute inset-0 w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/10 transition-colors">
                       <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
@@ -274,7 +273,7 @@ const ScatteredTestimonials: React.FC = () => {
             <div className="fixed inset-0 flex items-center justify-center z-[100] pointer-events-none p-4 md:p-8 lg:p-12">
               <motion.div
                 layoutId={`card-container-${selectedTestimonial.id}`}
-                className="bg-white rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl pointer-events-auto flex flex-col md:flex-row relative max-h-[90vh] md:max-h-[70vh]"
+                className="bg-white rounded-[2rem] overflow-hidden w-full max-w-5xl shadow-2xl pointer-events-auto flex flex-col md:flex-row relative max-h-[90vh] md:max-h-[70vh]"
               >
                 <button
                   onClick={() => setSelectedId(null)}
@@ -283,9 +282,24 @@ const ScatteredTestimonials: React.FC = () => {
                   ✕
                 </button>
 
-                <motion.div 
+                <motion.div
                   layoutId={`image-${selectedTestimonial.id}`}
-                  className={`w-full md:w-1/2 relative flex items-center justify-center ${selectedTestimonial.type === "video" ? "aspect-video md:aspect-auto bg-black shrink-0" : "bg-[#f4f1eb] p-8 md:p-12 shrink-0"}`}
+                  className={`
+    w-full
+    md:w-1/2
+    relative
+    overflow-hidden
+    rounded-t-[2rem]
+    md:rounded-l-[2rem]
+    md:rounded-r-none
+    flex
+    items-center
+    justify-center
+    ${selectedTestimonial.type === "video"
+                      ? "aspect-video md:aspect-auto bg-black shrink-0"
+                      : "bg-[#f4f1eb] p-8 md:p-12 shrink-0"
+                    }
+  `}
                 >
                   {selectedTestimonial.type === "video" ? (
                     <iframe
@@ -308,7 +322,7 @@ const ScatteredTestimonials: React.FC = () => {
                   )}
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   layoutId={`text-content-${selectedTestimonial.id}`}
                   className="w-full md:w-1/2 p-6 md:p-10 lg:p-12 flex flex-col justify-center bg-white overflow-y-auto"
                 >
