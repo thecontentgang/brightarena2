@@ -77,12 +77,12 @@ const Header: React.FC = () => {
       >
         <Link
           to="/"
-          className="inline-flex items-center justify-center bg-white p-1 rounded-2xl shadow-sm border border-gray-100/50 overflow-hidden w-fit"
+          className="inline-flex items-center justify-center"
         >
           <img
-            src="/bright-logo.jpg"
+            src="/bright-logo1.png"
             alt="Bright Arena Logo"
-            className="h-14 md:h-16 w-auto object-cover"
+            className="h-14 md:h-14 w-auto object-cover"
           />
         </Link>
       </motion.div>
@@ -131,7 +131,7 @@ const Header: React.FC = () => {
                           transition={{ type: "spring", stiffness: 350, damping: 30 }}
                         />
                       )}
-                      
+
                       <Link
                         to={item.path}
                         // Added hover:text-white to change text color over the pill

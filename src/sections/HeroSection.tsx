@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
 
 // Premium Apple-like easing curve for fluid, expensive-feeling motion
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -11,6 +10,25 @@ const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const MinimalHero: React.FC = () => {
     // 1. Reference for the scroll track
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // --- Dynamic Gap Logic to match Navbar (px-5 / md:px-10) ---
+    // Desktop: px-10 is 40px per side = 80px total. 
+    // Mobile: px-5 is 20px per side = 40px total.
+    const [horizontalGap, setHorizontalGap] = useState("80px");
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setHorizontalGap("40px");
+            } else {
+                setHorizontalGap("80px");
+            }
+        };
+
+        handleResize(); // Set on initial load
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     // 2. Track the scroll progress within the container
     const { scrollYProgress } = useScroll({
@@ -26,8 +44,9 @@ const MinimalHero: React.FC = () => {
     });
 
     // 4. Map scroll progress (0 to 0.33) to various CSS properties
-    // At 33% scroll (roughly 1 scroll down), it hits full screen and stays there for the rest.
-    const videoWidth = useTransform(smoothProgress, [0, 0.33], ["92%", "100%"]);
+    // We start at the calculated exact gap to match the navbar, and expand to 100%
+    // Change "100%" to "calc(100% - 0px)"
+const videoWidth = useTransform(smoothProgress, [0, 0.33], [`calc(100% - ${horizontalGap})`, "calc(100% - 0px)"]);
     const videoHeight = useTransform(smoothProgress, [0, 0.33], ["58vh", "100vh"]);
     const videoBR = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
     const videoBottom = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
@@ -38,7 +57,6 @@ const MinimalHero: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        // Changed bg-[#f7f4ee] to bg-[#4a1c13]
         <section ref={containerRef} className="relative w-full h-[300vh] bg-[#f7f4ee] antialiased">
             
             {/* Pinned Viewport Container */}
@@ -50,7 +68,6 @@ const MinimalHero: React.FC = () => {
                     className="w-full h-[40vh] flex items-end justify-center px-4 md:px-12 pb-4 z-0"
                 >
                     <div className="overflow-hidden flex justify-center md:justify-start">
-                        {/* Changed text-[#4a1c13] to text-white */}
                         <motion.h1
                             initial={{ opacity: 0, y: "100%" }}
                             animate={{ opacity: 1, y: "0%" }}
@@ -63,6 +80,7 @@ const MinimalHero: React.FC = () => {
                 </motion.div>
 
                 {/* Video Area */}
+                {/* Video Area */}
                 <motion.div
                     style={{
                         width: videoWidth,
@@ -70,11 +88,12 @@ const MinimalHero: React.FC = () => {
                         borderRadius: videoBR,
                         bottom: videoBottom,
                     }}
-                    // Entry animation changed to an opacity fade/slide so it doesn't conflict with scroll widths
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    // ADDED: x: "-50%" to keep the container anchored exactly in the middle
+                    initial={{ opacity: 0, y: 50, x: "-50%" }}
+                    animate={{ opacity: 1, y: 0, x: "-50%" }}
                     transition={{ duration: 1.2, ease: smoothEase, delay: 0.4 }}
-                    className="absolute bg-[#4a1c13] overflow-hidden flex justify-center z-10"
+                    // ADDED: left-1/2 | REMOVED: px-10
+                    className="absolute left-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10"
                 >
                     <motion.video
                         initial={{ scale: 1.25 }}
@@ -94,11 +113,12 @@ const MinimalHero: React.FC = () => {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
-                    <motion.div
+                   <motion.div
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.2, ease: smoothEase, delay: 1.2 }}
-                        className="absolute bottom-6 md:bottom-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 p-5 md:pl-10 md:pr-5 rounded-2xl z-20 w-[92%] md:w-auto"
+                        // Changed `p-5 md:pl-10 md:pr-5` to `py-5 px-6 md:px-10`
+                        className="absolute bottom-6 md:bottom-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-6 md:px-10 rounded-2xl z-20 w-[calc(100%-40px)] md:w-auto"
                     >
                         <div className="flex items-center gap-8 md:gap-10">
                             <div className="flex flex-col items-center md:items-start">
