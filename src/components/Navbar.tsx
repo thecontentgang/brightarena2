@@ -65,14 +65,15 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-5 py-5 md:px-10 pointer-events-none antialiased">
+    // Changed md:px-10 to lg:px-10 to switch layout at laptop sizes instead of tablet
+    <header className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-5 py-5 lg:px-10 pointer-events-none antialiased">
 
       {/* ========================================= */}
       {/* LEFT SIDE: LOGO                           */}
       {/* ========================================= */}
       <motion.div
-        // Added explicit height matching your mobile/desktop navigation bars for perfect vertical centering
-        className="pointer-events-auto flex items-center justify-center h-[40px] md:h-[52px] cursor-pointer mt-2 md:mt-0"
+        // Changed md: breakpoints to lg:
+        className="pointer-events-auto flex items-center justify-center h-[40px] lg:h-[52px] cursor-pointer mt-2 lg:mt-0"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.4, ease: smoothEase }}
       >
@@ -83,21 +84,24 @@ const Header: React.FC = () => {
           <img
             src="/bright-logo1.png"
             alt="Clickora Logo"
-            // Removed invalid "pt:10". Used object-contain to prevent cropping.
-            className="h-8 md:h-12 w-auto object-contain"
+            // Changed md:h-12 to lg:h-12
+            className="h-8 lg:h-12 w-auto object-contain"
           />
         </Link>
       </motion.div>
 
+      {/* ========================================= */}
+      {/* DESKTOP NAVIGATION (Laptop & up: lg:flex) */}
+      {/* ========================================= */}
       <div
-        className="pointer-events-auto hidden md:flex justify-end font-secondary p-4 -mr-4"
+        // Changed hidden md:flex to hidden lg:flex
+        className="pointer-events-auto hidden lg:flex justify-end font-secondary p-4 -mr-4"
         onMouseEnter={() => setIsDesktopExpanded(true)}
         onMouseLeave={() => setHoveredIndex(null)}
       >
         <motion.nav
           layout
           transition={{ duration: 0.6, ease: smoothEase }}
-          // Updated background: White to Off-White gradient
           className="flex items-center h-[52px] bg-gradient-to-b from-white to-[#f4f4f5] p-[6px] rounded-[1rem] shadow-sm border border-gray-200 cursor-pointer overflow-hidden origin-right"
         >
           <AnimatePresence mode="wait">
@@ -136,7 +140,6 @@ const Header: React.FC = () => {
 
                       <Link
                         to={item.path}
-                        // Added hover:text-white to change text color over the pill
                         className="text-[#4a1c13] text-[15px] font-bold tracking-wide relative z-10 px-4 py-2 block transition-colors duration-300 hover:text-white"
                       >
                         {item.name}
@@ -178,17 +181,16 @@ const Header: React.FC = () => {
       </div>
 
       {/* ========================================= */}
-      {/* RIGHT SIDE: MOBILE NAVIGATION (Click)     */}
+      {/* MOBILE / TABLET NAVIGATION (Below lg)     */}
       {/* ========================================= */}
-      <div className="pointer-events-auto flex md:hidden justify-end mt-2">
+      {/* Changed flex md:hidden to flex lg:hidden */}
+      <div className="pointer-events-auto flex lg:hidden justify-end mt-2">
         <motion.nav
           layout
           animate={{ width: isMobileOpen ? 240 : "auto" }}
           transition={{ duration: 0.6, ease: smoothEase }}
-          // Updated background: White to Off-White gradient
           className="flex flex-col bg-gradient-to-b from-white to-[#f4f4f5] p-[6px] rounded-[1rem] shadow-sm border border-gray-200 overflow-hidden origin-top-right relative z-50"
         >
-          {/* Top Row: Always visible */}
           {/* Top Row: Always visible */}
           <motion.div layout className="flex items-center justify-between w-full h-[40px]">
             {/* Morphing Hamburger/Close Button */}
@@ -220,7 +222,6 @@ const Header: React.FC = () => {
               <motion.button
                 layout
                 whileTap={{ scale: 0.95 }}
-                // Changed: Removed h-full, added explicit padding (py-1.5 px-4), and whitespace-nowrap
                 className="bg-[#ff7043] text-white px-4 py-1.5 rounded-[0.6rem] text-[12px] font-bold tracking-wide flex items-center justify-center whitespace-nowrap shadow-sm"
               >
                 Talk Now
@@ -228,7 +229,7 @@ const Header: React.FC = () => {
             </Link>
           </motion.div>
 
-          {/* Expanded Content: Links & Socials */}
+          {/* Expanded Content: Links */}
           <AnimatePresence>
             {isMobileOpen && (
               <motion.div
@@ -237,9 +238,10 @@ const Header: React.FC = () => {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.5, ease: smoothEase }}
-                className="flex flex-col px-4 pt-6 pb-4 w-full"
+                // Reduced bottom padding slightly since socials are gone
+                className="flex flex-col px-4 pt-6 pb-2 w-full"
               >
-                <div className="flex flex-col space-y-1 mb-6">
+                <div className="flex flex-col space-y-1 mb-2">
                   {navItems.map((item, i) => (
                     <motion.div
                       key={item.name}
@@ -252,7 +254,6 @@ const Header: React.FC = () => {
                       <Link
                         to={item.path}
                         onClick={() => setIsMobileOpen(false)}
-                        // Added hover pill logic for mobile devices
                         className="text-[#4a1c13] text-[17px] font-bold tracking-wide block hover:text-white hover:bg-[#ff7043] px-4 py-3 rounded-[0.8rem] transition-all duration-300"
                       >
                         {item.name}
@@ -260,22 +261,6 @@ const Header: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-
-                <motion.div
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="w-full h-[1px] bg-[#4a1c13]/10 mb-4"
-                />
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5, ease: smoothEase }}
-                  className="flex items-center space-x-5 text-[#4a1c13] px-2"
-                >
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg></a>
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg></a>
-                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>

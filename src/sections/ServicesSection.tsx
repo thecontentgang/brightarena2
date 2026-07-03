@@ -58,47 +58,41 @@ const HorizontalServices: React.FC = () => {
   return (
     <section ref={targetRef} className="relative h-[400vh] bg-[#f7f4ee] antialiased">
 
-      {/* The Sticky Viewport — header sits in normal flow so it always reserves
-          its own space and can never overlap the cards, at any viewport height */}
-      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+      {/* The Sticky Viewport — Changed to strictly center the entire visual block inside the screen */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-6 md:py-12">
 
-        {/* Section Header */}
-        {/* Section Header */}
-<div className="shrink-0 w-full px-4 pt-8 pb-2 sm:pt-10 sm:pb-3 md:pt-16 md:pb-10 text-center z-20">
-  <h2 className="text-[#4a1c13] font-primary text-[clamp(32px,5vw,72px)] leading-[1.05] tracking-tight">
-    We Do What{" "}
-    <span className="text-[#ff7043] font-primary">
-      We Know
-    </span>
-  </h2>
-</div>
-        {/* The Moving Track — takes up the remaining space below the header
-            and centers each card vertically within it */}
-        <div className="relative flex-1 min-h-0 overflow-hidden">
-          <motion.div style={{ x }} className="flex w-[400vw] h-full items-center">
+        {/* Section Header — Replaced top padding with fixed bottom padding to lock the gap */}
+        <div className="shrink-0 w-full px-4 pb-4 md:pb-6 text-center z-20">
+          <h2 className="text-[#4a1c13] font-primary text-[clamp(32px,5vw,72px)] leading-[1.05] tracking-tight">
+            We Do What{" "}
+            <span className="text-[#ff7043] font-primary">
+              We Know
+            </span>
+          </h2>
+        </div>
+
+        {/* The Moving Track — Height is now constrained at the track level instead of the card level */}
+        <div className="relative w-full flex-1 min-h-0 max-h-[460px] md:max-h-[640px] overflow-hidden">
+          <motion.div style={{ x }} className="flex w-[400vw] h-full items-start">
             {services.map((service) => (
-             
-              <div key={service.id} className="w-[100vw] h-full flex items-center justify-center px-4 md:px-8 pb-6 md:pb-10">
 
-                {/* Massive Card Layout — sized relative to the track's own
-                    height, so it always fits cleanly beneath the header */}
+              <div key={service.id} className="w-[100vw] h-full flex justify-center px-4 md:px-8">
+
+                {/* Massive Card Layout — Inherits height entirely from the track wrapper so it stays glued to the header */}
                 <div
-  className="
-    relative
-    w-full
-    max-w-[1400px]
-    h-[420px]
-    sm:h-[460px]
-    md:h-full
-    md:max-h-[640px]
-    bg-[#2a110b]
-    rounded-[2rem]
-    md:rounded-[3rem]
-    overflow-hidden
-    group
-    shadow-2xl
-  "
->
+                  className="
+                    relative
+                    w-full
+                    max-w-[1400px]
+                    h-full
+                    bg-[#2a110b]
+                    rounded-[2rem]
+                    md:rounded-[3rem]
+                    overflow-hidden
+                    group
+                    shadow-2xl
+                  "
+                >
 
                   {/* Background Image */}
                   <img

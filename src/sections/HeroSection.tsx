@@ -12,8 +12,6 @@ const MinimalHero: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // --- Dynamic Gap Logic to match Navbar (px-5 / md:px-10) ---
-    // Desktop: px-10 is 40px per side = 80px total. 
-    // Mobile: px-5 is 20px per side = 40px total.
     const [horizontalGap, setHorizontalGap] = useState("80px");
 
     useEffect(() => {
@@ -44,7 +42,6 @@ const MinimalHero: React.FC = () => {
     });
 
     // 4. Map scroll progress (0 to 0.33) to various CSS properties
-    // We start at the calculated exact gap to match the navbar, and expand to 100%
     const videoWidth = useTransform(smoothProgress, [0, 0.33], [`calc(100% - ${horizontalGap})`, "calc(100% - 0px)"]);
     const videoHeight = useTransform(smoothProgress, [0, 0.33], ["58vh", "100vh"]);
     const videoBR = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
@@ -64,17 +61,26 @@ const MinimalHero: React.FC = () => {
                 {/* Heading Area */}
                 <motion.div
                     style={{ opacity: textOpacity, y: textY }}
-                    // CHANGED HERE: h-[32vh] on mobile, pt-28 to clear header, items-start on mobile vs md:items-end
-                    className="w-full h-[32vh] md:h-[40vh] flex items-start md:items-end justify-center md:justify-start pt-28 md:pt-0 px-4 md:px-12 pb-4 z-0"
+                    className="w-full h-[40vh] md:h-[45vh] flex flex-col items-center justify-center pt-16 md:pt-20 px-4 md:px-8 z-0"
                 >
-                    <div className="overflow-hidden flex justify-center md:justify-start">
+                    <div className="overflow-hidden flex justify-center w-full">
                         <motion.h1
                             initial={{ opacity: 0, y: "100%" }}
                             animate={{ opacity: 1, y: "0%" }}
                             transition={{ duration: 1.2, ease: smoothEase, delay: 0.2 }}
-                            className="text-[#4a1c13] font-primary text-[clamp(48px,7vw,120px)] leading-[1.1] tracking-tight whitespace-normal md:whitespace-nowrap text-center md:text-left"
+                            /* CHANGED HERE: 
+                              1. Mobile/Tab scale: text-[clamp(40px,8vw,80px)]
+                              2. Desktop scale: lg:text-[clamp(40px,5vw,110px)] (Ensures it fits on one line)
+                              3. Added lg:whitespace-nowrap to prevent ANY accidental breaking on desktop.
+                            */
+                            className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto"
                         >
-                            Live <span className="text-[#ffc107]">Beautifully</span> Every Day
+                            Live <span className="text-[#ffc107]">Beautifully</span>
+                            {/* Hidden on Laptops/Desktops (lg), visible on Mobile/Tablet */}
+                            <br className="block lg:hidden" />
+                            {/* A space is needed when the <br> is hidden so the words don't merge on desktop */}
+                            <span className="hidden lg:inline"> </span>
+                            Every Day
                         </motion.h1>
                     </div>
                 </motion.div>
@@ -87,11 +93,9 @@ const MinimalHero: React.FC = () => {
                         borderRadius: videoBR,
                         bottom: videoBottom,
                     }}
-                    // ADDED: x: "-50%" to keep the container anchored exactly in the middle
                     initial={{ opacity: 0, y: 50, x: "-50%" }}
                     animate={{ opacity: 1, y: 0, x: "-50%" }}
                     transition={{ duration: 1.2, ease: smoothEase, delay: 0.4 }}
-                    // ADDED: left-1/2 to anchor the absolute position to the center
                     className="absolute left-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10"
                 >
                     <motion.video
@@ -104,21 +108,16 @@ const MinimalHero: React.FC = () => {
                         playsInline
                         className="absolute inset-0 h-full w-full object-cover opacity-90"
                     >
-                        <source
-                            src="/bright-hero-video.mp4"
-                            type="video/mp4"
-                        />
+                        <source src="/bright-hero-video.mp4" type="video/mp4" />
                     </motion.video>
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
                    {/* Stats & Buttons Inner Container */}
                    <motion.div
-                        // ADDED x: "-50%" so the inner stats stay perfectly centered inside the video
                         initial={{ opacity: 0, y: 40, x: "-50%" }}
                         animate={{ opacity: 1, y: 0, x: "-50%" }}
                         transition={{ duration: 1.2, ease: smoothEase, delay: 1.2 }}
-                        // Added `left-1/2` to center this absolute element perfectly
                         className="absolute bottom-6 md:bottom-10 left-1/2 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-6 md:px-10 rounded-2xl z-20 w-[calc(100%-40px)] md:w-auto"
                     >
                         <div className="flex items-center gap-8 md:gap-10">
