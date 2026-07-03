@@ -71,18 +71,20 @@ const Header: React.FC = () => {
       {/* LEFT SIDE: LOGO                           */}
       {/* ========================================= */}
       <motion.div
-        className="pointer-events-auto flex items-center cursor-pointer"
+        // Added explicit height matching your mobile/desktop navigation bars for perfect vertical centering
+        className="pointer-events-auto flex items-center justify-center h-[40px] md:h-[52px] cursor-pointer mt-2 md:mt-0"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.4, ease: smoothEase }}
       >
         <Link
           to="/"
-          className="inline-flex items-center justify-center"
+          className="inline-flex items-center justify-center h-full"
         >
           <img
             src="/bright-logo1.png"
-            alt="Bright Arena Logo"
-            className="h-14 md:h-14 w-auto object-cover"
+            alt="Clickora Logo"
+            // Removed invalid "pt:10". Used object-contain to prevent cropping.
+            className="h-8 md:h-12 w-auto object-contain"
           />
         </Link>
       </motion.div>
@@ -187,6 +189,7 @@ const Header: React.FC = () => {
           className="flex flex-col bg-gradient-to-b from-white to-[#f4f4f5] p-[6px] rounded-[1rem] shadow-sm border border-gray-200 overflow-hidden origin-top-right relative z-50"
         >
           {/* Top Row: Always visible */}
+          {/* Top Row: Always visible */}
           <motion.div layout className="flex items-center justify-between w-full h-[40px]">
             {/* Morphing Hamburger/Close Button */}
             <button
@@ -213,11 +216,12 @@ const Header: React.FC = () => {
             </button>
 
             {/* Talk Now Button */}
-            <Link to="/contact">
+            <Link to="/contact" className="flex items-center justify-center shrink-0 pr-2">
               <motion.button
                 layout
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#ff7043] text-white px-6 h-full rounded-[0.8rem] text-[13px] font-semibold tracking-wide flex items-center justify-center flex-shrink-0"
+                // Changed: Removed h-full, added explicit padding (py-1.5 px-4), and whitespace-nowrap
+                className="bg-[#ff7043] text-white px-4 py-1.5 rounded-[0.6rem] text-[12px] font-bold tracking-wide flex items-center justify-center whitespace-nowrap shadow-sm"
               >
                 Talk Now
               </motion.button>
