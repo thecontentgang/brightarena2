@@ -15,11 +15,13 @@ import BlogsPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import DesignDetailsPage from './pages/DesignDetails';
 import BlogDetailsPage from './pages/BlogDetails';
+import FloatingSocialBar from './components/SocialMediaBar';
 
 const App = () => {
   return (
     <>
       <Navbar />
+      <FloatingSocialBar />
       
       <main>
         {/* Wrap your Routes in the new Layout */}

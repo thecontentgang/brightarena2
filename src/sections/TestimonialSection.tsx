@@ -1,303 +1,357 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const testimonials = [
+type ReviewType = "video" | "google";
+
+// 1. Updated Data Structure: Removed hardcoded absolute positions.
+// Added `floatDuration` to fix the Math.random() ESLint purity error.
+interface Testimonial {
+  id: number;
+  type: ReviewType;
+  name: string;
+  role: string;
+  location: string;
+  rotation: number;
+  delay: number;
+  floatDuration: number;
+  videoId?: string;
+  description?: string;
+  rating?: number;
+  reviewText?: string;
+  date?: string;
+}
+
+const testimonials: Testimonial[] = [
   {
     id: 1,
+    type: "video",
     name: "Priya Sharma",
     role: "Homeowner",
     videoId: "aZq2QRwiYsE",
-    quote: "The transformation of our home was beyond what we imagined.",
-    description: "Priya and her family wanted to create a space that felt both luxurious and livable. Our team worked closely with her to bring her vision to life.",
-    location: "Mumbai, India"
+    description: "The transformation of our home was beyond what we imagined. Priya and her family wanted to create a space that felt both luxurious and livable.",
+    location: "Mumbai",
+    rotation: -3,
+    delay: 0,
+    floatDuration: 3.2,
   },
   {
     id: 2,
-    name: "Arjun Mehta",
-    role: "Founder & CEO",
-    videoId: "ztyqShdYSEY",
-    quote: "Working with this team was a game-changer for our office space.",
-    description: "Arjun needed an office that would inspire creativity and productivity. We designed a modern workspace that reflects his company's innovative culture.",
-    location: "Bangalore, India"
+    type: "google",
+    name: "Vikram Desai",
+    role: "Local Guide",
+    rating: 5,
+    reviewText: "Absolutely phenomenal service! The team was highly professional and delivered the project 2 weeks ahead of schedule.",
+    date: "2 weeks ago",
+    location: "Pune",
+    rotation: 4,
+    delay: 0.5,
+    floatDuration: 4.1,
   },
   {
     id: 3,
-    name: "Sarah & David",
-    role: "Restaurant Owners",
-    videoId: "fc27D9buInM",
-    quote: "Our restaurant has never looked better. The ambiance they created is exceptional.",
-    description: "Sarah and David wanted to elevate their restaurant's dining experience. We transformed their space into a warm, inviting environment.",
-    location: "Delhi, India"
+    type: "video",
+    name: "Arjun Mehta",
+    role: "Founder & CEO",
+    videoId: "ztyqShdYSEY",
+    description: "Working with this team was a game-changer for our office space. Arjun needed an office that would inspire creativity.",
+    location: "Bangalore",
+    rotation: -2,
+    delay: 1.2,
+    floatDuration: 3.8,
   },
   {
     id: 4,
-    name: "Rahul Kapoor",
-    role: "Creative Director",
-    videoId: "nPOif88Do40",
-    quote: "The attention to detail and creativity brought to our project was outstanding.",
-    description: "Rahul required a space that would serve as both a studio and a gallery for his creative work. We created a versatile environment that inspires creativity.",
-    location: "Hyderabad, India"
-  }
+    type: "google",
+    name: "Anita Rao",
+    role: "Customer",
+    rating: 5,
+    reviewText: "I was skeptical at first, but the 3D renders matched the final outcome perfectly. The quality of materials used is top-notch.",
+    date: "1 month ago",
+    location: "Hyderabad",
+    rotation: 5,
+    delay: 0.8,
+    floatDuration: 4.5,
+  },
+  {
+    id: 5,
+    type: "video",
+    name: "Sarah & David",
+    role: "Restaurant Owners",
+    videoId: "fc27D9buInM",
+    description: "Our restaurant has never looked better. The ambiance they created is exceptional.",
+    location: "Delhi",
+    rotation: -4,
+    delay: 2.1,
+    floatDuration: 3.5,
+  },
+  {
+    id: 6,
+    type: "google",
+    name: "Karan Singh",
+    role: "Customer",
+    rating: 4,
+    reviewText: "Great experience overall. The design team is very receptive to feedback.",
+    date: "3 months ago",
+    location: "Gurgaon",
+    rotation: 2,
+    delay: 1.5,
+    floatDuration: 4.0,
+  },
 ];
 
-interface TestimonialVideoProps {
-  videoId: string;
-  name: string;
-  resetTrigger: number;
-  onPlayChange: (isPlaying: boolean) => void;
-}
+// Reusable SVG Icons
+const StarIcon = () => (
+  <svg className="w-3 h-3 md:w-4 md:h-4 text-[#FBBC04] fill-current" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
 
-const TestimonialVideo: React.FC<TestimonialVideoProps> = ({ 
-  videoId, 
-  name, 
-  resetTrigger,
-  onPlayChange
-}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const prevResetTrigger = useRef(resetTrigger);
+const GoogleIcon = () => (
+  <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+  </svg>
+);
+
+const ScatteredTestimonials: React.FC = () => {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const [filter, setFilter] = useState<"all" | "video" | "google">("all");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (prevResetTrigger.current !== resetTrigger) {
-      setIsPlaying(false);
-      prevResetTrigger.current = resetTrigger;
-    }
-  }, [resetTrigger]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
-  const handlePlay = () => {
-    setIsPlaying(true);
-    onPlayChange(true);
-  };
+  const selectedTestimonial = testimonials.find((t) => t.id === selectedId);
+  const filteredTestimonials = testimonials.filter(t => filter === "all" || t.type === filter);
 
-  // Notify parent when video is closed manually (by user clicking outside or refreshing)
-  const handleStop = () => {
-    setIsPlaying(false);
-    onPlayChange(false);
-  };
-
-  return (
-    <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#e8e5de] shadow-lg">
-      {!isPlaying ? (
-        <div className="relative w-full h-full group">
-          <img 
-            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
-            alt={name}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <button 
-            onClick={handlePlay}
-            className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-all duration-300"
-            aria-label="Play video"
-          >
-            <motion.div 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/95 flex items-center justify-center shadow-2xl"
-            >
-              <div className="w-0 h-0 border-t-[11px] border-t-transparent border-l-[18px] border-l-[#4a1c13] border-b-[11px] border-b-transparent ml-1" />
-            </motion.div>
-          </button>
-        </div>
-      ) : (
-        <div className="relative w-full h-full">
-          <iframe
-            className="w-full h-full"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-            title={`Testimonial video - ${name}`}
-          />
-          {/* Optional: Button to close video and go back to thumbnail */}
-          <button
-            onClick={handleStop}
-            className="absolute top-3 right-3 bg-black/70 hover:bg-black/90 text-white text-xs px-3 py-1 rounded-full transition-colors z-10"
-          >
-            ✕ Close Video
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const TestimonialsSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [resetCounter, setResetCounter] = useState(0);
-
-  // Auto-advance only when NO video is playing
   useEffect(() => {
-    if (isVideoPlaying) return;
+    if (selectedId) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+  }, [selectedId]);
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      setResetCounter((prev) => prev + 1);
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [isVideoPlaying]);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    setResetCounter((prev) => prev + 1);
-    setIsVideoPlaying(false); // Reset video state when manually changing
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-    setResetCounter((prev) => prev + 1);
-    setIsVideoPlaying(false);
-  }, []);
-
-  const handleDotClick = (index: number) => {
-    if (index === currentIndex) return;
-    
-    setCurrentIndex(index);
-    setResetCounter((prev) => prev + 1);
-    setIsVideoPlaying(false);
-  };
-
-  const handlePlayChange = (playing: boolean) => {
-    setIsVideoPlaying(playing);
-  };
+  if (!isMounted) return null;
 
   return (
-    <section ref={sectionRef} className="py-8 md:py-12 lg:py-16 bg-[#f7f4ee] min-h-screen flex items-center">
-      <div className="max-w-[1100px] mx-auto px-4 md:px-6 w-full">
-        
-        <div className="text-center mb-6 md:mb-8">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#4a1c13] font-primary text-[clamp(28px,4vw,48px)] leading-[1.1]"
-          >
-            Client <span className="italic font-serif text-[#ff7043]">Stories</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-            className="text-[#4a1c13]/60 text-sm md:text-base mt-2"
-          >
-            Hear directly from the people we've worked with
-          </motion.p>
-        </div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#e8e5de]"
+    <section className="relative w-full min-h-[90vh] bg-[#f7f4ee] overflow-hidden py-16 md:py-24 px-4 flex flex-col items-center">
+      
+      {/* Header & Interactive Filters */}
+      <div className="relative z-10 text-center flex flex-col items-center pointer-events-auto w-full max-w-4xl mx-auto">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-[#4a1c13] font-primary text-[clamp(32px,5vw,56px)] leading-[1.1]"
         >
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/2 p-3 md:p-4 lg:p-5 bg-[#faf8f5]">
-              <div className="w-full aspect-video md:aspect-square lg:aspect-[4/3] relative">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0"
-                  >
-                    <TestimonialVideo 
-                      videoId={testimonials[currentIndex].videoId}
-                      name={testimonials[currentIndex].name}
-                      resetTrigger={resetCounter}
-                      onPlayChange={handlePlayChange}
+          Client <span className="italic font-serif text-[#ff7043]">Stories</span>
+        </motion.h2>
+        <p className="text-[#4a1c13]/60 text-sm md:text-base mt-2 mb-8">
+          Explore our latest experiences and reviews
+        </p>
+
+        {/* Filters - Fixed the TypeScript 'any' error here */}
+        <div className="flex bg-white shadow-sm rounded-full p-1 border border-[#e8e5de] mb-12">
+          {(["all", "video", "google"] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-4 py-2 md:py-1.5 rounded-full text-xs md:text-sm font-medium capitalize transition-all duration-300 ${
+                filter === f ? "bg-[#4a1c13] text-white shadow-md" : "text-[#4a1c13]/70 hover:text-[#4a1c13] hover:bg-gray-50"
+              }`}
+            >
+              {f === "all" ? "All Stories" : f === "video" ? "Videos" : "Reviews"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Responsive Organic Grid 
+        Instead of absolute positioning, we use flex-wrap with a gap. 
+        It naturally wraps on smaller screens and expands on large screens. 
+      */}
+      <div 
+        ref={containerRef} 
+        className="relative w-full max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-4 md:gap-8 lg:gap-12 pb-20"
+      >
+        <AnimatePresence mode="popLayout">
+          {filteredTestimonials.map((testimonial) => (
+            <motion.div
+              key={testimonial.id}
+              layoutId={`card-container-${testimonial.id}`}
+              drag
+              dragConstraints={containerRef}
+              whileDrag={{ scale: 1.05, cursor: "grabbing", zIndex: 60 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                rotate: testimonial.rotation,
+                opacity: 1,
+                scale: 1,
+                y: [0, -8, 0], 
+              }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+              transition={{
+                // Fixed ESLint Purity error by using pre-calculated floatDuration
+                y: { duration: testimonial.floatDuration, repeat: Infinity, ease: "easeInOut", delay: testimonial.delay },
+                opacity: { duration: 0.4 },
+                layout: { duration: 0.4, type: "spring", bounce: 0.2 },
+              }}
+              whileHover={{
+                scale: 1.05,
+                rotate: 0, 
+                transition: { duration: 0.2 },
+                zIndex: 40,
+              }}
+              onClick={() => setSelectedId(testimonial.id)}
+              className={`
+                cursor-grab group shadow-lg bg-white rounded-[2rem] p-3 pr-6 md:pr-8 flex items-center gap-4
+                hover:shadow-xl border border-[#e8e5de] select-none shrink-0
+                ${selectedId === testimonial.id ? "z-50 opacity-0 pointer-events-none" : "z-20"}
+              `}
+            >
+              
+              {/* Thumbnail */}
+              <motion.div
+                layoutId={`image-${testimonial.id}`}
+                className="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
+              >
+                {testimonial.type === "video" ? (
+                  <>
+                    <img
+                      src={`https://img.youtube.com/vi/${testimonial.videoId}/maxresdefault.jpg`}
+                      alt={testimonial.name}
+                      draggable={false}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-
-            <div className="w-full md:w-1/2 p-4 md:p-5 lg:p-6 flex flex-col justify-between bg-white">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4 }}
-                  className="flex-1"
-                >
-                  {/* Content remains same */}
-                  <div className="flex items-start gap-3 mb-4">
-                    <svg className="w-6 h-6 text-[#ff7043] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <div>
-                      <h3 className="text-xl font-bold text-[#4a1c13]">
-                        {testimonials[currentIndex].name}
-                      </h3>
-                      <p className="text-[#ff7043] font-medium">
-                        {testimonials[currentIndex].role}
-                      </p>
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/10 transition-colors">
+                      <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
                     </div>
+                  </>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-[#4285F4]/10 text-[#4285F4] text-xl font-bold font-serif">
+                    {testimonial.name.charAt(0)}
                   </div>
+                )}
+              </motion.div>
 
-                  <p className="text-[#4a1c13] text-lg font-serif italic leading-relaxed mb-4">
-                    "{testimonials[currentIndex].quote}"
-                  </p>
-
-                  <p className="text-[#4a1c13]/70 leading-relaxed">
-                    {testimonials[currentIndex].description}
-                  </p>
-
-                  <div className="mt-6 flex items-center gap-2 text-sm text-[#4a1c13]/60">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                    <span>{testimonials[currentIndex].location}</span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="mt-8 pt-6 border-t border-[#e8e5de]">
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-2">
-                    {testimonials.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleDotClick(index)}
-                        className={`h-2 rounded-full transition-all duration-300 ${
-                          index === currentIndex 
-                            ? 'w-8 bg-[#ff7043]' 
-                            : 'w-2 bg-[#4a1c13]/20 hover:bg-[#4a1c13]/40'
-                        }`}
-                      />
+              {/* Text Label */}
+              <motion.div layoutId={`text-content-${testimonial.id}`} className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-[#4a1c13] text-sm md:text-base whitespace-nowrap">{testimonial.name}</h3>
+                  {testimonial.type === "google" && <GoogleIcon />}
+                </div>
+                {testimonial.type === "video" ? (
+                  <p className="text-[11px] md:text-xs text-[#ff7043] whitespace-nowrap font-medium mt-0.5">Watch Video</p>
+                ) : (
+                  <div className="flex items-center gap-0.5 mt-1">
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} />
                     ))}
                   </div>
-
-                  <div className="flex gap-2">
-                    <button onClick={prevSlide} className="p-3 rounded-full hover:bg-[#f7f4ee] transition-colors">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
-                      </svg>
-                    </button>
-                    <button onClick={nextSlide} className="p-3 rounded-full hover:bg-[#f7f4ee] transition-colors">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        
+                )}
+              </motion.div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
+
+      {/* Expanded Modal State (Kept identical for the nice expanded UI) */}
+      <AnimatePresence>
+        {selectedId && selectedTestimonial && (
+          <React.Fragment>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedId(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-[90]"
+            />
+
+            <div className="fixed inset-0 flex items-center justify-center z-[100] pointer-events-none p-4 md:p-8 lg:p-12">
+              <motion.div
+                layoutId={`card-container-${selectedTestimonial.id}`}
+                className="bg-white rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl pointer-events-auto flex flex-col md:flex-row relative max-h-[90vh] md:max-h-[70vh]"
+              >
+                <button
+                  onClick={() => setSelectedId(null)}
+                  className="absolute top-3 right-3 md:top-4 md:right-4 z-[110] w-8 h-8 md:w-10 md:h-10 bg-black/10 hover:bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-[#4a1c13] transition-colors"
+                >
+                  ✕
+                </button>
+
+                <motion.div 
+                  layoutId={`image-${selectedTestimonial.id}`}
+                  className={`w-full md:w-1/2 relative flex items-center justify-center ${selectedTestimonial.type === "video" ? "aspect-video md:aspect-auto bg-black shrink-0" : "bg-[#f4f1eb] p-8 md:p-12 shrink-0"}`}
+                >
+                  {selectedTestimonial.type === "video" ? (
+                    <iframe
+                      className="w-full h-full absolute inset-0"
+                      src={`https://www.youtube.com/embed/${selectedTestimonial.videoId}?autoplay=1`}
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="text-center flex flex-col items-center justify-center">
+                      <div className="scale-150 mb-4"><GoogleIcon /></div>
+                      <h2 className="text-[#4a1c13] text-5xl font-serif font-bold mt-2 mb-3">{selectedTestimonial.rating}.0</h2>
+                      <div className="flex items-center gap-1.5 mb-4 scale-125">
+                        {[...Array(selectedTestimonial.rating || 5)].map((_, i) => (
+                          <StarIcon key={i} />
+                        ))}
+                      </div>
+                      <p className="text-sm text-[#4a1c13]/60 font-medium">Verified Customer Review</p>
+                    </div>
+                  )}
+                </motion.div>
+
+                <motion.div 
+                  layoutId={`text-content-${selectedTestimonial.id}`}
+                  className="w-full md:w-1/2 p-6 md:p-10 lg:p-12 flex flex-col justify-center bg-white overflow-y-auto"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <div className="flex items-start justify-between mb-4 md:mb-6">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-[#4a1c13]">
+                          {selectedTestimonial.name}
+                        </h3>
+                        <p className="text-[#ff7043] font-medium text-sm md:text-lg">
+                          {selectedTestimonial.role}
+                        </p>
+                      </div>
+                      {selectedTestimonial.type === "google" && (
+                        <span className="text-xs md:text-sm text-[#4a1c13]/50">{selectedTestimonial.date}</span>
+                      )}
+                    </div>
+
+                    <p className={`text-[#4a1c13] font-serif leading-relaxed mb-6 ${selectedTestimonial.type === "google" ? "text-lg md:text-xl italic" : "text-base md:text-lg"}`}>
+                      "{selectedTestimonial.type === "google" ? selectedTestimonial.reviewText : selectedTestimonial.description}"
+                    </p>
+
+                    <div className="mt-4 md:mt-8 flex items-center gap-2 text-sm text-[#4a1c13]/60 font-medium pt-4 md:pt-6 border-t border-[#f4f1eb]">
+                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>{selectedTestimonial.location}</span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+              </motion.div>
+            </div>
+          </React.Fragment>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
-export default TestimonialsSection;
+export default ScatteredTestimonials;

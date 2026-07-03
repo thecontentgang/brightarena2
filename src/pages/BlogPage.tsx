@@ -50,19 +50,19 @@ export default function BlogPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: smoothEase }}
-            className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-[2rem] md:rounded-[3rem] p-4 md:p-8 shadow-sm border border-[#4a1c13]/5"
+            className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-white rounded-[3rem] p-6 shadow-sm border border-[#4a1c13]/5"
           >
             {/* Featured Image */}
-            <div className="lg:col-span-8 overflow-hidden rounded-2xl md:rounded-[2rem] aspect-[4/3] lg:aspect-[16/9]">
-              <img 
-                src={featuredPost.coverImage} 
-                alt={featuredPost.title}
-                className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-              />
-            </div>
+             <div className="lg:col-span-8 overflow-hidden rounded-[2rem] h-full min-h-[500px]">
+    <img
+      src={featuredPost.coverImage}
+      alt={featuredPost.title}
+      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+    />
+  </div>
             
             {/* Featured Content */}
-            <div className="lg:col-span-4 px-4 py-6 md:p-8 flex flex-col justify-center">
+             <div className="lg:col-span-4 flex flex-col justify-center py-4">
               <div className="flex items-center gap-3 mb-6">
                 <span className="bg-[#ff7043]/10 text-[#ff7043] px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
                   {featuredPost.category}

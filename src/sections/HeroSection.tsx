@@ -28,18 +28,18 @@ const MinimalHero: React.FC = () => {
     // 4. Map scroll progress (0 to 0.33) to various CSS properties
     // At 33% scroll (roughly 1 scroll down), it hits full screen and stays there for the rest.
     const videoWidth = useTransform(smoothProgress, [0, 0.33], ["92%", "100%"]);
-    const videoHeight = useTransform(smoothProgress, [0, 0.33], ["70vh", "100vh"]);
+    const videoHeight = useTransform(smoothProgress, [0, 0.33], ["58vh", "100vh"]);
     const videoBR = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
-    const videoBottom = useTransform(smoothProgress, [0, 0.33], ["16px", "0px"]);
+    const videoBottom = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
 
     // Fade out and move text up as video expands
     const textOpacity = useTransform(smoothProgress, [0, 0.25], [1, 0]);
     const textY = useTransform(smoothProgress, [0, 0.25], ["0%", "-50%"]);
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
-        // The h-[300vh] provides the extra scrolling space before releasing to the next section
-        <section ref={containerRef} className="relative w-full h-[300vh] bg-[#f7f4ee] antialiased">
+        // Changed bg-[#f7f4ee] to bg-[#4a1c13]
+        <section ref={containerRef} className="relative w-full h-[300vh] bg-[#4a1c13] antialiased">
             
             {/* Pinned Viewport Container */}
             <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start overflow-hidden">
@@ -47,18 +47,19 @@ const navigate = useNavigate();
                 {/* Heading Area */}
                 <motion.div
                     style={{ opacity: textOpacity, y: textY }}
-                    className="w-full h-[30vh] flex items-end justify-center px-4 md:px-12 pb-4 z-0"
+                    className="w-full h-[40vh] flex items-end justify-center px-4 md:px-12 pb-4 z-0"
                 >
                     <div className="overflow-hidden flex justify-center md:justify-start">
-    <motion.h1
-        initial={{ opacity: 0, y: "100%" }}
-        animate={{ opacity: 1, y: "0%" }}
-        transition={{ duration: 1.2, ease: smoothEase, delay: 0.2 }}
-        className="text-[#4a1c13] font-primary text-[clamp(48px,7vw,120px)] leading-[1.1] tracking-tight whitespace-normal md:whitespace-nowrap text-center md:text-left"
-    >
-        Live <span className="text-[#ffc107]">Beautifully</span> Every Day
-    </motion.h1>
-</div>
+                        {/* Changed text-[#4a1c13] to text-white */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: "100%" }}
+                            animate={{ opacity: 1, y: "0%" }}
+                            transition={{ duration: 1.2, ease: smoothEase, delay: 0.2 }}
+                            className="text-white font-primary text-[clamp(48px,7vw,120px)] leading-[1.1] tracking-tight whitespace-normal md:whitespace-nowrap text-center md:text-left"
+                        >
+                            Live <span className="text-[#ffc107]">Beautifully</span> Every Day
+                        </motion.h1>
+                    </div>
                 </motion.div>
 
                 {/* Video Area */}
@@ -119,17 +120,17 @@ const navigate = useNavigate();
 
                         <div className="flex items-center gap-3 w-full md:w-auto">
                             <motion.button
-  onClick={() => navigate("/portfolio")}
-  whileHover={{
-    scale: 1.05,
-    backgroundColor: "#ffc107",
-    color: "#4a1c13",
-  }}
-  whileTap={{ scale: 0.95 }}
-  className="w-full md:w-auto bg-[#ff7043] text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
->
-  View Projects
-</motion.button>
+                                onClick={() => navigate("/portfolio")}
+                                whileHover={{
+                                    scale: 1.05,
+                                    backgroundColor: "#ffc107",
+                                    color: "#4a1c13",
+                                }}
+                                whileTap={{ scale: 0.95 }}
+                                className="w-full md:w-auto bg-[#ff7043] text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
+                            >
+                                View Projects
+                            </motion.button>
 
                             <motion.button
                                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,.2)" }}

@@ -23,8 +23,8 @@ export interface ProjectItem {
 const projectsData: ProjectItem[] = [
   {
     id: 1,
-    shortDescription: "The Glass Pavilion",
-    heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+    shortDescription: "Rajapushpa Provincia",
+    heroImage: "/projectsImg/rajapushpa/rp-img7.JPG",
     year: "2026",
     houseType: "Residential",
     location: "Bangalore",
@@ -32,8 +32,8 @@ const projectsData: ProjectItem[] = [
   },
   {
     id: 2,
-    shortDescription: "Aura Workspace",
-    heroImage: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2000&auto=format&fit=crop",
+    shortDescription: "Luxury Villa",
+    heroImage: "/projectsImg/villa/villa-img8.JPG",
     year: "2025",
     houseType: "Commercial",
     location: "Mumbai",
@@ -41,22 +41,14 @@ const projectsData: ProjectItem[] = [
   },
   {
     id: 3,
-    shortDescription: "Lumina Penthouse",
-    heroImage: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop",
+    shortDescription: "Forest Edge",
+    heroImage: "/projectsImg/forest-edge/fe-img7.JPG",
     year: "2025",
     houseType: "Luxury",
     location: "Dubai",
     slug: "lumina-penthouse",
   },
-  {
-    id: 4,
-    shortDescription: "The Botanika",
-    heroImage: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop",
-    year: "2024",
-    houseType: "Residential",
-    location: "Hyderabad",
-    slug: "botanika",
-  },
+ 
 ];
 
 const PROJECTS = projectsData.map((p) => ({

@@ -17,7 +17,7 @@ const quickLinks = [
 export default function CardFooter() {
     const containerRef = useRef<HTMLElement>(null);
     const isInView = useInView(containerRef, { once: true, margin: "-50px" });
-    const currentYear = new Date().getFullYear();
+    // const currentYear = new Date().getFullYear();
 
     return (
         <footer
@@ -151,48 +151,31 @@ export default function CardFooter() {
                     </div>
 
                 </div>
-
-                {/* Bottom Section: Copyright & Socials */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-[#4a1c13]/10">
-                    <p className="text-[#4a1c13]/50 text-xs tracking-wider font-medium text-center md:text-left">
-                        &copy; {currentYear} Bright Arena. All rights reserved.
+{/* Bottom Section: Copyright, Policy & Credits */}
+                <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-4 pt-8 border-t border-[#4a1c13]/10 text-[#4a1c13]/50 text-[11px] md:text-xs tracking-wider font-medium text-center">
+                    <p>
+                        &copy; {new Date().getFullYear()} Bright Arena. All rights reserved.
                     </p>
-
-                    {/* Social Media Icons */}
-                    <div className="flex items-center gap-5">
-                        {/* Instagram */}
-                        <a href="#" className="text-[#4a1c13]/40 hover:text-[#ff7043] hover:scale-110 transition-all duration-300">
-                            <span className="sr-only">Instagram</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
+                    
+                    <span className="hidden md:block w-px h-3 bg-[#4a1c13]/20"></span>
+                    
+                    <a href="/privacy-policy" className="hover:text-[#ff7043] transition-colors duration-300">
+                        Privacy Policy
+                    </a>
+                    
+                    <span className="hidden md:block w-px h-3 bg-[#4a1c13]/20"></span>
+                    
+                    <p>
+                        Designed and built by{" "}
+                        <a 
+                            href="https://thecontentgang.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-[#4a1c13]/80 hover:text-[#ff7043] hover:underline underline-offset-4 transition-colors duration-300"
+                        >
+                            thecontentgang.com
                         </a>
-                        {/* Facebook */}
-                        <a href="#" className="text-[#4a1c13]/40 hover:text-[#ff7043] hover:scale-110 transition-all duration-300">
-                            <span className="sr-only">Facebook</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        {/* LinkedIn */}
-                        <a href="#" className="text-[#4a1c13]/40 hover:text-[#ff7043] hover:scale-110 transition-all duration-300">
-                            <span className="sr-only">LinkedIn</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                        {/* Twitter / X */}
-                        <a href="#" className="text-[#4a1c13]/40 hover:text-[#ff7043] hover:scale-110 transition-all duration-300">
-                            <span className="sr-only">Twitter</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    </p>
                 </div>
 
             </motion.div>

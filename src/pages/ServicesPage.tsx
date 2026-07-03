@@ -76,16 +76,41 @@ function ServiceRow({
             </ul>
           </div>
 
-          <div className="flex items-center gap-6 flex-wrap">
-            <span className="text-[12px] tracking-wide" style={{ color: "#8A7570" }}>
-              {service.phone}
-            </span>
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Phone */}
+            <a
+              href={`tel:${service.phone}`}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#E8D9D3] bg-[#F9F6F3] text-[#6B5752] hover:border-[#C4623A] hover:text-[#C4623A] transition-all duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.8}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a1.5 1.5 0 001.5-1.5v-1.372a1.5 1.5 0 00-1.09-1.443l-4.423-1.106a1.5 1.5 0 00-1.465.417l-.97.97a12.042 12.042 0 01-5.431-5.431l.97-.97a1.5 1.5 0 00.417-1.465L7.937 4.34A1.5 1.5 0 006.494 3.25H5.122a1.5 1.5 0 00-1.5 1.5V6.75z"
+                />
+              </svg>
+
+              <span className="text-[13px] font-medium tracking-wide">
+                {service.phone}
+              </span>
+            </a>
+
+            {/* Learn More */}
             <a
               href={`/services/${service.slug}`}
-              className="text-[11px] font-semibold tracking-[0.18em] uppercase border-b pb-px transition-all duration-300 hover:tracking-[0.25em]"
-              style={{ color: "#C4623A", borderColor: "#C4623A" }}
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C4623A] text-white text-[11px] font-semibold tracking-[0.18em] uppercase transition-all duration-300 hover:bg-[#A84E2C] hover:scale-105 hover:shadow-xl"
             >
-              Learn More →
+              Learn More
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </a>
           </div>
         </motion.div>

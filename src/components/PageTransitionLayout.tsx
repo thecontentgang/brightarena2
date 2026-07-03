@@ -83,21 +83,22 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
         ))}
 
         {/* The Logo Container */}
-        <div
-          ref={iconRef}
-          className="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
-        >
-          <motion.img
-            src="/bright-arena-logo.webp"
-            alt="Bright Arena Logo"
-            className="w-32 md:w-48 h-auto object-contain drop-shadow-2xl" 
-            /* Note: 'brightness-0 invert' forces the logo to be solid white so it contrasts beautifully against the dark brown tiles. Remove those two classes if your logo is already light/white. */
-            
-            // Subtle breathing animation
-            animate={{ scale: [0.95, 1.02, 0.95] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          />
-        </div>
+<div
+  ref={iconRef}
+  className="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none"
+>
+  <motion.div 
+    className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl"
+    animate={{ scale: [0.95, 1.02, 0.95] }}
+    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+  >
+    <img
+      src="/bright-logo.jpg"
+      alt="Bright Arena Logo"
+      className="w-32 md:w-48 h-auto object-contain" 
+    />
+  </motion.div>
+</div>
       </div>
 
       {/* Explicitly passing the location prop to the children (the Routes block) */}

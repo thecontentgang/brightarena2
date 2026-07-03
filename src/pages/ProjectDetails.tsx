@@ -2,14 +2,14 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { projectsData } from "./ProjectsData"; // Ensure this path is correct
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Scroll to top on route change
   useEffect(() => { window.scrollTo(0, 0); }, [slug]);
@@ -18,9 +18,9 @@ export default function ProjectDetailsPage() {
   const project = projectsData[currentIndex];
   
   // Safe to calculate even if project is undefined (though it might yield a fallback)
-  const nextProject = projectsData.length > 0 
-    ? projectsData[(currentIndex >= 0 ? currentIndex + 1 : 1) % projectsData.length]
-    : null;
+  // const nextProject = projectsData.length > 0 
+  //   ? projectsData[(currentIndex >= 0 ? currentIndex + 1 : 1) % projectsData.length]
+  //   : null;
 
   // 1. ALL HOOKS MUST GO HERE (Before any early returns)
   const heroImgRef = useRef<HTMLDivElement>(null);
@@ -69,7 +69,7 @@ export default function ProjectDetailsPage() {
           </motion.p>
 
           {/* Animated Title */}
-          <h1 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary flex flex-wrap gap-x-[0.22em] max-w-5xl">
+          <h1 className="text-[clamp(40px,6vw,80px)] leading-[1.05] tracking-tight font-primary flex flex-wrap gap-x-[0.22em] max-w-5xl">
             {project.title.split(" ").map((word, i) => (
               <span key={i} className="overflow-hidden block pb-2">
                 <motion.span
@@ -224,52 +224,6 @@ export default function ProjectDetailsPage() {
         </section>
       )}
 
-      {/* ── NEXT PROJECT CTA ── */}
-      {nextProject && (
-        <section className="py-12 md:py-20 px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto">
-          
-          <motion.div
-            className="h-px w-full bg-[#4a1c13]/10 mb-12"
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 1.1, ease: EASE }}
-            viewport={{ once: true }}
-          />
-
-          <motion.div
-            className="flex flex-col md:flex-row md:items-end justify-between gap-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE }}
-            viewport={{ once: true }}
-          >
-            <div>
-              <p className="text-[#ff7043] text-[10px] md:text-xs uppercase tracking-[0.3em] font-bold mb-4">
-                Next Project
-              </p>
-              <h3 className="text-[#4a1c13] text-3xl md:text-5xl lg:text-6xl font-primary leading-tight tracking-tight max-w-2xl">
-                {nextProject.title}
-              </h3>
-            </div>
-
-            <motion.button
-              className="group flex items-center gap-4 bg-[#4a1c13] text-white px-8 py-5 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-[#ff7043] transition-colors duration-500 w-fit shrink-0"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              // FIXED ROUTE: Using /portfolio/ instead of /projects/
-              onClick={() => navigate(`/portfolio/${nextProject.slug}`)}
-            >
-              View Project
-              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white transition-colors duration-500">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-white group-hover:text-[#ff7043]">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </motion.button>
-          </motion.div>
-
-        </section>
-      )}
 
     </main>
   );

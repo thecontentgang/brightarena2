@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, AnimatePresence, type Variants, useScroll, useMotionValueEvent } from "framer-motion";
 import { Link } from "react-router-dom";
 
 // Array of objects for exact routing paths
@@ -18,11 +18,32 @@ const navItems = [
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const Header: React.FC = () => {
-  const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
+  // Default to true so it's open when they first land on the page
+  const [isDesktopExpanded, setIsDesktopExpanded] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  
+
   // State to track which link is currently being hovered for the sliding underline
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // --- Scroll Tracking Logic ---
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+
+    // 1. If at the very top of the page, always keep it open
+    if (latest <= 50) {
+      setIsDesktopExpanded(true);
+    }
+    // 2. If scrolling DOWN (and past the top 50px), collapse it
+    else if (latest > previous && latest > 50) {
+      setIsDesktopExpanded(false);
+    }
+    // 3. If scrolling UP, expand it
+    else if (latest < previous) {
+      setIsDesktopExpanded(true);
+    }
+  });
 
   // --- Link Animation Variants ---
   const desktopLinkVariants: Variants = {
@@ -45,7 +66,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-5 py-5 md:px-10 pointer-events-none antialiased">
-      
+
       {/* ========================================= */}
       {/* LEFT SIDE: LOGO                           */}
       {/* ========================================= */}
@@ -54,30 +75,28 @@ const Header: React.FC = () => {
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.4, ease: smoothEase }}
       >
-        <Link to="/" className="h-24 md:h-24 w-auto overflow-hidden -mt-3.5 block">
+        <Link
+          to="/"
+          className="inline-flex items-center justify-center bg-white p-1 rounded-2xl shadow-sm border border-gray-100/50 overflow-hidden w-fit"
+        >
           <img
-            src="/bright-arena-logo.webp"
+            src="/bright-logo.jpg"
             alt="Bright Arena Logo"
-            className="h-full w-auto object-cover"
+            className="h-14 md:h-20 w-auto object-cover"
           />
         </Link>
       </motion.div>
 
-      {/* ========================================= */}
-      {/* RIGHT SIDE: DESKTOP NAVIGATION (Hover)    */}
-      {/* ========================================= */}
-      <div 
+      <div
         className="pointer-events-auto hidden md:flex justify-end font-secondary p-4 -mr-4"
+        // Kept hover as a fallback in case they want to open it manually without scrolling up
         onMouseEnter={() => setIsDesktopExpanded(true)}
-        onMouseLeave={() => {
-          setIsDesktopExpanded(false);
-          setHoveredIndex(null);
-        }}
+        onMouseLeave={() => setHoveredIndex(null)}
       >
         <motion.nav
           layout
           transition={{ duration: 0.6, ease: smoothEase }}
-          className="flex items-center h-[52px] bg-[#f7f4ee] p-[6px] rounded-[1rem] shadow-sm border border-gray-200/60 cursor-pointer overflow-hidden origin-right"
+          className="flex items-center h-[52px] bg-white/40 backdrop-blur-md p-[6px] rounded-[1rem] shadow-sm border border-white/50 cursor-pointer overflow-hidden origin-right"
         >
           <AnimatePresence mode="wait">
             {isDesktopExpanded ? (
@@ -103,11 +122,11 @@ const Header: React.FC = () => {
                     >
                       <Link
                         to={item.path}
-                        className="text-[#4a1c13] text-[15px] font-medium tracking-wide relative z-10 px-4 py-2 block transition-colors duration-300 hover:text-[#ff7043]"
+                        className="text-[#4a1c13] text-[15px] font-bold tracking-wide relative z-10 px-4 py-2 block transition-colors duration-300 hover:text-[#ff7043]"
                       >
                         {item.name}
                       </Link>
-                      
+
                       {/* Sliding Underline Animation */}
                       {hoveredIndex === i && (
                         <motion.div
@@ -158,32 +177,32 @@ const Header: React.FC = () => {
       {/* ========================================= */}
       {/* RIGHT SIDE: MOBILE NAVIGATION (Click)     */}
       {/* ========================================= */}
-      <div className="pointer-events-auto flex md:hidden justify-end">
+      <div className="pointer-events-auto flex md:hidden justify-end mt-2">
         <motion.nav
           layout
           animate={{ width: isMobileOpen ? 240 : "auto" }}
           transition={{ duration: 0.6, ease: smoothEase }}
-          className="flex flex-col bg-[#f7f4ee] p-[6px] rounded-[1rem] shadow-sm border border-gray-200/60 overflow-hidden origin-top-right relative z-50"
+          className="flex flex-col bg-white/40 backdrop-blur-md p-[6px] rounded-[1rem] shadow-sm border border-white/50 overflow-hidden origin-top-right relative z-50"
         >
-          {/* Top Row: Always visible (Matches Desktop Collapsed State) */}
+          {/* Top Row: Always visible */}
           <motion.div layout className="flex items-center justify-between w-full h-[40px]">
             {/* Morphing Hamburger/Close Button */}
-            <button 
+            <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               className="px-5 h-full flex items-center justify-center text-[#4a1c13]"
             >
               <div className="w-5 h-[14px] flex flex-col justify-between relative">
-                <motion.span 
+                <motion.span
                   animate={isMobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.4, ease: smoothEase }}
                   className="w-full h-[1.75px] bg-current rounded-full origin-center"
                 />
-                <motion.span 
+                <motion.span
                   animate={isMobileOpen ? { opacity: 0, x: -5 } : { opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, ease: smoothEase }}
                   className="w-[70%] h-[1.75px] bg-current rounded-full ml-auto"
                 />
-                <motion.span 
+                <motion.span
                   animate={isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.4, ease: smoothEase }}
                   className="w-full h-[1.75px] bg-current rounded-full origin-center"
@@ -235,22 +254,20 @@ const Header: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Divider */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="w-full h-[1px] bg-[#4a1c13]/10 mb-4" 
+                  className="w-full h-[1px] bg-[#4a1c13]/10 mb-4"
                 />
 
-                {/* Social Icons */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.5, ease: smoothEase }}
                   className="flex items-center space-x-5 text-[#4a1c13]"
                 >
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg></a>
+                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
+                  <a href="#" className="hover:text-[#ff7043] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg></a>
                 </motion.div>
               </motion.div>
             )}
