@@ -104,20 +104,34 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, onClose }) => {
                     <label className="text-[11px] sm:text-[12px] font-bold text-[#4a1c13] uppercase tracking-wide">Name</label>
                     <input
                       type="text"
-                      placeholder="John Doe"
+                      placeholder="Your Name"
                       className="w-full bg-gray-50 border border-gray-200 text-[#4a1c13] text-[13px] sm:text-[14px] rounded-lg sm:rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ff7043]/30 focus:border-[#ff7043] transition-all"
                       required
                     />
                   </div>
-                  <div className="space-y-1 sm:space-y-1.5">
-                    <label className="text-[11px] sm:text-[12px] font-bold text-[#4a1c13] uppercase tracking-wide">Phone</label>
-                    <input
-                      type="tel"
-                      placeholder="(555) 000-0000"
-                      className="w-full bg-gray-50 border border-gray-200 text-[#4a1c13] text-[13px] sm:text-[14px] rounded-lg sm:rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ff7043]/30 focus:border-[#ff7043] transition-all"
-                      required
-                    />
-                  </div>
+                 <div className="space-y-1 sm:space-y-1.5">
+  <label className="text-[11px] sm:text-[12px] font-bold text-[#4a1c13] uppercase tracking-wide">
+    Phone
+  </label>
+  
+  {/* Outer container acts as the "input box" visually */}
+  <div className="flex items-center w-full bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl focus-within:ring-2 focus-within:ring-[#ff7043]/30 focus-within:border-[#ff7043] transition-all overflow-hidden">
+    
+    {/* Permanent +91 Prefix */}
+    <span className="pl-3 sm:pl-4 pr-2 text-[#4a1c13]/60 text-[13px] sm:text-[14px] font-medium select-none border-r border-gray-200">
+      +91
+    </span>
+    
+    {/* Actual Input Field */}
+    <input
+      type="tel"
+      placeholder="Mobile number"
+      // Removed the borders/background from the input itself so it blends in
+      className="w-full bg-transparent text-[#4a1c13] text-[13px] sm:text-[14px] px-3 py-2 sm:px-3 sm:py-2.5 focus:outline-none"
+      required
+    />
+  </div>
+</div>
                 </div>
 
                 {/* Project Type (Segmented Control) */}

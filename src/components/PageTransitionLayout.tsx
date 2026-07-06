@@ -95,7 +95,7 @@ const PageTransitionLayout: React.FC<PageTransitionLayoutProps> = ({ children })
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
             <img
-              src="/bright-logo.jpg"
+              src="/bright-logo1.png"
               alt="Bright Arena Logo"
               className="w-32 md:w-48 h-auto object-contain" 
             />

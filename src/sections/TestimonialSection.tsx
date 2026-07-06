@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type ReviewType = "video" | "google";
 
-// 1. Updated Data Structure: Removed hardcoded absolute positions.
-// Added `floatDuration` to fix the Math.random() ESLint purity error.
 interface Testimonial {
   id: number;
   type: ReviewType;
@@ -119,14 +117,11 @@ const GoogleIcon = () => (
 
 const ScatteredTestimonials: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  
   const [filter, setFilter] = useState<"all" | "video" | "google">("all");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMounted(true);
-  }, []);
+ 
 
   const selectedTestimonial = testimonials.find((t) => t.id === selectedId);
   const filteredTestimonials = testimonials.filter(t => filter === "all" || t.type === filter);
@@ -136,7 +131,7 @@ const ScatteredTestimonials: React.FC = () => {
     else document.body.style.overflow = "unset";
   }, [selectedId]);
 
-  if (!isMounted) return null;
+  
 
   return (
     <section className="relative w-full min-h-[90vh] bg-[#f7f4ee] overflow-hidden py-16 md:py-24 px-4 flex flex-col items-center">
@@ -154,7 +149,7 @@ const ScatteredTestimonials: React.FC = () => {
           Explore our latest experiences and reviews
         </p>
 
-        {/* Filters - Fixed the TypeScript 'any' error here */}
+        {/* Filters */}
         <div className="flex bg-white shadow-sm rounded-full p-1 border border-[#e8e5de] mb-12">
           {(["all", "video", "google"] as const).map((f) => (
             <button
@@ -169,13 +164,13 @@ const ScatteredTestimonials: React.FC = () => {
         </div>
       </div>
 
-      {/* Responsive Organic Grid 
-        Instead of absolute positioning, we use flex-wrap with a gap. 
-        It naturally wraps on smaller screens and expands on large screens. 
+      {/* Responsive Grid/Scatter Layout 
+          - Mobile: 3-column Grid
+          - Desktop: Flex Wrap (Scatter)
       */}
       <div
         ref={containerRef}
-        className="relative w-full max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-4 md:gap-8 lg:gap-12 pb-20"
+        className="relative w-full max-w-[1200px] mx-auto grid grid-cols-3 gap-3 sm:gap-4 md:flex md:flex-wrap md:items-center md:justify-center md:gap-8 lg:gap-12 pb-20"
       >
         <AnimatePresence mode="popLayout">
           {filteredTestimonials.map((testimonial) => (
@@ -194,7 +189,6 @@ const ScatteredTestimonials: React.FC = () => {
               }}
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
               transition={{
-                // Fixed ESLint Purity error by using pre-calculated floatDuration
                 y: { duration: testimonial.floatDuration, repeat: Infinity, ease: "easeInOut", delay: testimonial.delay },
                 opacity: { duration: 0.4 },
                 layout: { duration: 0.4, type: "spring", bounce: 0.2 },
@@ -207,16 +201,19 @@ const ScatteredTestimonials: React.FC = () => {
               }}
               onClick={() => setSelectedId(testimonial.id)}
               className={`
-                cursor-grab group shadow-lg bg-white rounded-[2rem] p-3 pr-6 md:pr-8 flex items-center gap-4
+                cursor-grab group shadow-md md:shadow-lg bg-white 
+                rounded-2xl md:rounded-[2rem] 
+                p-1.5 md:p-3 md:pr-6 lg:pr-8 
+                flex items-center justify-center md:justify-start gap-0 md:gap-4
                 hover:shadow-xl border border-[#e8e5de] select-none shrink-0
                 ${selectedId === testimonial.id ? "z-50 opacity-0 pointer-events-none" : "z-20"}
               `}
             >
 
-              {/* Thumbnail */}
+              {/* Thumbnail (Full width on mobile, fixed w/h on desktop) */}
               <motion.div
                 layoutId={`image-${testimonial.id}`}
-                className="w-14 h-14 md:w-16 md:h-16 rounded-3xl overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
+                className="w-full aspect-square md:w-16 md:h-16 rounded-xl md:rounded-3xl overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
               >
                 {testimonial.type === "video" ? (
                   <>
@@ -224,27 +221,34 @@ const ScatteredTestimonials: React.FC = () => {
                       src={`https://img.youtube.com/vi/${testimonial.videoId}/maxresdefault.jpg`}
                       alt={testimonial.name}
                       draggable={false}
-                      className="absolute inset-0 w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
+                      className="absolute inset-0 w-full h-full object-cover rounded-xl md:rounded-full group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/10 transition-colors">
-                      <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
+                      {/* SVG Play Icon: Large on mobile, smaller on desktop */}
+                      <svg 
+                        className="w-8 h-8 md:w-5 md:h-5 text-white/95 ml-1 drop-shadow-md" 
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
                     </div>
                   </>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-[#4285F4]/10 text-[#4285F4] text-xl font-bold font-serif">
+                  <div className="w-full h-full flex items-center justify-center bg-[#4285F4]/10 text-[#4285F4] text-3xl md:text-xl font-bold font-serif">
                     {testimonial.name.charAt(0)}
                   </div>
                 )}
               </motion.div>
 
-              {/* Text Label */}
-              <motion.div layoutId={`text-content-${testimonial.id}`} className="flex flex-col">
+              {/* Text Label - HIDDEN on mobile, flex on md+ */}
+              <motion.div layoutId={`text-content-${testimonial.id}`} className="hidden md:flex flex-col">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-[#4a1c13] text-sm md:text-base whitespace-nowrap">{testimonial.name}</h3>
                   {testimonial.type === "google" && <GoogleIcon />}
                 </div>
                 {testimonial.type === "video" ? (
-                  <p className="text-[11px] md:text-xs text-[#ff7043] whitespace-nowrap font-medium mt-0.5">Watch Video</p>
+                  <p className="text-xs text-[#ff7043] whitespace-nowrap font-medium mt-0.5">Watch Video</p>
                 ) : (
                   <div className="flex items-center gap-0.5 mt-1">
                     {[...Array(5)].map((_, i) => (
@@ -258,7 +262,7 @@ const ScatteredTestimonials: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Expanded Modal State (Kept identical for the nice expanded UI) */}
+      {/* Expanded Modal State */}
       <AnimatePresence>
         {selectedId && selectedTestimonial && (
           <React.Fragment>
@@ -277,7 +281,7 @@ const ScatteredTestimonials: React.FC = () => {
               >
                 <button
                   onClick={() => setSelectedId(null)}
-                  className="absolute top-3 right-3 md:top-4 md:right-4 z-[110] w-8 h-8 md:w-10 md:h-10 bg-black/10 hover:bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-[#4a1c13] transition-colors"
+                  className="absolute top-3 right-3 md:top-4 md:right-4 z-[110] w-8 h-8 md:w-10 md:h-10 bg-black/10 hover:bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-[#4a1c13] md:text-white transition-colors"
                 >
                   ✕
                 </button>
@@ -285,21 +289,9 @@ const ScatteredTestimonials: React.FC = () => {
                 <motion.div
                   layoutId={`image-${selectedTestimonial.id}`}
                   className={`
-    w-full
-    md:w-1/2
-    relative
-    overflow-hidden
-    rounded-t-[2rem]
-    md:rounded-l-[2rem]
-    md:rounded-r-none
-    flex
-    items-center
-    justify-center
-    ${selectedTestimonial.type === "video"
-                      ? "aspect-video md:aspect-auto bg-black shrink-0"
-                      : "bg-[#f4f1eb] p-8 md:p-12 shrink-0"
-                    }
-  `}
+                    w-full md:w-1/2 relative overflow-hidden rounded-t-[2rem] md:rounded-l-[2rem] md:rounded-r-none flex items-center justify-center
+                    ${selectedTestimonial.type === "video" ? "aspect-video md:aspect-auto bg-black shrink-0" : "bg-[#f4f1eb] p-8 md:p-12 shrink-0"}
+                  `}
                 >
                   {selectedTestimonial.type === "video" ? (
                     <iframe
@@ -326,11 +318,7 @@ const ScatteredTestimonials: React.FC = () => {
                   layoutId={`text-content-${selectedTestimonial.id}`}
                   className="w-full md:w-1/2 p-6 md:p-10 lg:p-12 flex flex-col justify-center bg-white overflow-y-auto"
                 >
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                  >
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                     <div className="flex items-start justify-between mb-4 md:mb-6">
                       <div>
                         <h3 className="text-xl md:text-2xl font-bold text-[#4a1c13]">
