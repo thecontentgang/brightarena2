@@ -75,6 +75,7 @@ interface ScrollState { ease: number; current: number; target: number; }
 
 const vertexShader = `
 precision highp float;
+uniform float uIsMobile;
 attribute vec3 position;
 attribute vec2 uv;
 attribute vec3 normal;
@@ -111,12 +112,17 @@ float qinticInOut(float t) {
 }
 void main() {
   vUv = uv;
-  float norm = 0.5;
   vec3 newpos = position;
-  float offset = (dot(distortionAxis, position) + norm / 2.) / norm;
-  float localprogress = clamp((fract(uPosition * 5.0 * 0.01) - 0.01 * uDistortion * offset) / (1. - 0.01 * uDistortion), 0., 2.);
-  localprogress = qinticInOut(localprogress) * PI;
-  newpos = rotate(newpos, rotationAxis, localprogress);
+  
+  // Only apply distortion on desktop (uIsMobile < 0.5)
+  if (uIsMobile < 0.5) {
+    float norm = 0.5;
+    float offset = (dot(distortionAxis, position) + norm / 2.) / norm;
+    float localprogress = clamp((fract(uPosition * 5.0 * 0.01) - 0.01 * uDistortion * offset) / (1. - 0.01 * uDistortion), 0., 2.);
+    localprogress = qinticInOut(localprogress) * PI;
+    newpos = rotate(newpos, rotationAxis, localprogress);
+  }
+  
   gl_Position = projectionMatrix * modelViewMatrix * vec4(newpos, 1.0);
 }
 `;
@@ -201,7 +207,8 @@ class Media {
         tMap: { value: texture }, uPosition: { value: 0 }, uPlaneSize: { value: [0, 0] },
         uImageSize: { value: [0, 0] }, rotationAxis: { value: [0, 1, 0] },
         distortionAxis: { value: [1, 1, 0] }, uDistortion: { value: this.distortion },
-        uViewportSize: { value: [this.viewport.width, this.viewport.height] }, uTime: { value: 0 }
+        uViewportSize: { value: [this.viewport.width, this.viewport.height] }, uTime: { value: 0 },uIsMobile: { value: 0 }
+
       }, cullFace: false
     });
     const img = new Image();
@@ -225,14 +232,19 @@ class Media {
     this.program.uniforms.uPlaneSize.value = [this.plane.scale.x, this.plane.scale.y];
   }
 
-  onResize({ screen, viewport, planeWidth, planeHeight }: { screen?: ScreenSize; viewport?: ViewportSize; planeWidth?: number; planeHeight?: number } = {}) {
-    if (screen) this.screen = screen;
-    if (viewport) { this.viewport = viewport; this.program.uniforms.uViewportSize.value = [viewport.width, viewport.height]; }
-    if (planeWidth) this.planeWidth = planeWidth;
-    if (planeHeight) this.planeHeight = planeHeight;
-    
-    this.setScale();
-    // Padding controls the space between posters. Y calculates the starting position (stacked downwards)
+ onResize({ screen, viewport, planeWidth, planeHeight }: { screen?: ScreenSize; viewport?: ViewportSize; planeWidth?: number; planeHeight?: number } = {}) {
+  if (screen) this.screen = screen;
+  if (viewport) {
+    this.viewport = viewport;
+    this.program.uniforms.uViewportSize.value = [viewport.width, viewport.height];
+  }
+  if (planeWidth) this.planeWidth = planeWidth;
+  if (planeHeight) this.planeHeight = planeHeight;
+
+  // Set mobile flag based on screen width
+  this.program.uniforms.uIsMobile.value = this.screen.width < 768 ? 1 : 0;
+
+  this.setScale();
     this.padding = 1.5; 
     this.height = this.plane.scale.y + this.padding;
     this.y = -this.index * this.height;
