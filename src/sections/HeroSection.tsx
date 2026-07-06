@@ -3,12 +3,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import ProjectModal from "../components/ProjectModal";
 
 // Premium Apple-like easing curve for fluid, expensive-feeling motion
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const MinimalHero: React.FC = () => {
-    // 1. Reference for the scroll track
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
     // --- Dynamic Gap Logic to match Navbar (px-5 / md:px-10) ---
@@ -41,51 +43,43 @@ const MinimalHero: React.FC = () => {
         mass: 0.5,
     });
 
-    // 4. Map scroll progress (0 to 0.33) to various CSS properties
-    const videoWidth = useTransform(smoothProgress, [0, 0.33], [`calc(100% - ${horizontalGap})`, "calc(100% - 0px)"]);
-    const videoHeight = useTransform(smoothProgress, [0, 0.33], ["58vh", "100vh"]);
-    const videoBR = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
-    const videoBottom = useTransform(smoothProgress, [0, 0.33], ["24px", "0px"]);
+    // 4. REVERSED: Map scroll progress (0 to 0.33) to shrink the video
+    const videoWidth = useTransform(smoothProgress, [0, 0.33], ["100%", `calc(100% - ${horizontalGap})`]);
+    const videoHeight = useTransform(smoothProgress, [0, 0.33], ["100vh", "60vh"]);
+    const videoBR = useTransform(smoothProgress, [0, 0.33], ["0px", "32px"]);
+    const videoBottom = useTransform(smoothProgress, [0, 0.33], ["0px", "32px"]);
 
-    // Fade out and move text up as video expands
-    const textOpacity = useTransform(smoothProgress, [0, 0.25], [1, 0]);
-    const textY = useTransform(smoothProgress, [0, 0.25], ["0%", "-50%"]);
+    // 5. TEXT REVEAL: Text fades IN and slides UP as the video moves out of the way
+    const textOpacity = useTransform(smoothProgress, [0.1, 0.33], [0, 1]);
+    const textY = useTransform(smoothProgress, [0.1, 0.33], ["40px", "0px"]);
+    
     const navigate = useNavigate();
 
     return (
+        <>
         <section ref={containerRef} className="relative w-full h-[300vh] bg-[#f7f4ee] antialiased">
             
             {/* Pinned Viewport Container */}
             <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start overflow-hidden">
                  
-                {/* Heading Area */}
+                {/* Heading Area (Behind the video initially) */}
                 <motion.div
                     style={{ opacity: textOpacity, y: textY }}
-                    className="w-full h-[40vh] md:h-[45vh] flex flex-col items-center justify-center pt-16 md:pt-20 px-4 md:px-8 z-0"
+                    className="w-full h-[40vh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0"
                 >
                     <div className="overflow-hidden flex justify-center w-full">
                         <motion.h1
-                            initial={{ opacity: 0, y: "100%" }}
-                            animate={{ opacity: 1, y: "0%" }}
-                            transition={{ duration: 1.2, ease: smoothEase, delay: 0.2 }}
-                            /* CHANGED HERE: 
-                              1. Mobile/Tab scale: text-[clamp(40px,8vw,80px)]
-                              2. Desktop scale: lg:text-[clamp(40px,5vw,110px)] (Ensures it fits on one line)
-                              3. Added lg:whitespace-nowrap to prevent ANY accidental breaking on desktop.
-                            */
                             className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto"
                         >
                             Live <span className="text-[#ffc107]">Beautifully</span>
-                            {/* Hidden on Laptops/Desktops (lg), visible on Mobile/Tablet */}
                             <br className="block lg:hidden" />
-                            {/* A space is needed when the <br> is hidden so the words don't merge on desktop */}
                             <span className="hidden lg:inline"> </span>
                             Every Day
                         </motion.h1>
                     </div>
                 </motion.div>
 
-                {/* Video Area */}
+                {/* Video Area (Starts Full Screen, z-10 puts it above the text) */}
                 <motion.div
                     style={{
                         width: videoWidth,
@@ -93,15 +87,17 @@ const MinimalHero: React.FC = () => {
                         borderRadius: videoBR,
                         bottom: videoBottom,
                     }}
-                    initial={{ opacity: 0, y: 50, x: "-50%" }}
-                    animate={{ opacity: 1, y: 0, x: "-50%" }}
-                    transition={{ duration: 1.2, ease: smoothEase, delay: 0.4 }}
-                    className="absolute left-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10"
+                    // Note: Removed 'y' from initial/animate so it doesn't conflict with the scroll bottom calculation
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.2, ease: smoothEase }}
+                    className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl"
                 >
+                    {/* The Video Element */}
                     <motion.video
-                        initial={{ scale: 1.25 }}
+                        initial={{ scale: 1.1 }}
                         animate={{ scale: 1 }}
-                        transition={{ duration: 2.5, ease: smoothEase, delay: 0.5 }}
+                        transition={{ duration: 2.5, ease: smoothEase }}
                         autoPlay
                         muted
                         loop
@@ -114,56 +110,69 @@ const MinimalHero: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
                    {/* Stats & Buttons Inner Container */}
-                   <motion.div
-                        initial={{ opacity: 0, y: 40, x: "-50%" }}
-                        animate={{ opacity: 1, y: 0, x: "-50%" }}
-                        transition={{ duration: 1.2, ease: smoothEase, delay: 1.2 }}
-                        className="absolute bottom-6 md:bottom-10 left-1/2 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-6 md:px-10 rounded-2xl z-20 w-[calc(100%-40px)] md:w-auto"
-                    >
-                        <div className="flex items-center gap-8 md:gap-10">
-                            <div className="flex flex-col items-center md:items-start">
-                                <span className="text-white text-2xl md:text-3xl font-bold">13+</span>
-                                <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-1">
-                                    Projects
-                                </span>
-                            </div>
+                  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 1.2, ease: smoothEase, delay: 0.8 }}
+    // 1. Reduced mobile padding (py-4 px-4) and gap (gap-4) to make it tighter
+    className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-4 px-4 md:py-5 md:px-10 rounded-[1.25rem] md:rounded-2xl z-20 w-[calc(100%-32px)] sm:w-[calc(100%-40px)] md:w-auto shadow-2xl"
+>
+    {/* Stats Row */}
+    <div className="flex items-center justify-center gap-6 md:gap-10 w-full md:w-auto">
+        <div className="flex flex-col items-center md:items-start">
+            {/* 2. Scaled down numbers slightly on mobile (text-xl to text-3xl) */}
+            <span className="text-white text-xl md:text-3xl font-bold">13+</span>
+            <span className="text-white/70 text-[9px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">
+                Projects
+            </span>
+        </div>
 
-                            <div className="w-px h-10 bg-white/20" />
+        {/* 3. Slightly shorter divider on mobile */}
+        <div className="w-px h-8 md:h-10 bg-white/20" />
 
-                            <div className="flex flex-col items-center md:items-start">
-                                <span className="text-white text-2xl md:text-3xl font-bold">05+</span>
-                                <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-1">
-                                    Years Exp.
-                                </span>
-                            </div>
-                        </div>
+        <div className="flex flex-col items-center md:items-start">
+            <span className="text-white text-xl md:text-3xl font-bold">05+</span>
+            <span className="text-white/70 text-[9px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">
+                Years Exp.
+            </span>
+        </div>
+    </div>
 
-                        <div className="flex items-center gap-3 w-full md:w-auto">
-                            <motion.button
-                                onClick={() => navigate("/portfolio")}
-                                whileHover={{
-                                    scale: 1.05,
-                                    backgroundColor: "#ffc107",
-                                    color: "#4a1c13",
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-full md:w-auto bg-[#ff7043] text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
-                            >
-                                View Projects
-                            </motion.button>
+    {/* Buttons Row */}
+    {/* 4. Tighter gap between buttons on mobile */}
+    <div className="flex items-center justify-center gap-2 md:gap-3 w-full md:w-auto">
+        <motion.button
+            onClick={() => navigate("/portfolio")}
+            whileHover={{
+                scale: 1.05,
+                backgroundColor: "#ffc107",
+                color: "#4a1c13",
+            }}
+            whileTap={{ scale: 0.95 }}
+            // 5. Added `flex-1` so buttons split width 50/50 on mobile, reduced px/py and text size
+            className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-2 py-3 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap"
+        >
+            View Projects
+        </motion.button>
 
-                            <motion.button
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,.2)" }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-full md:w-auto bg-white/5 border border-white/30 text-white px-7 py-3.5 md:py-4 rounded-2xl text-xs font-bold tracking-widest uppercase"
-                            >
-                                Talk Now
-                            </motion.button>
-                        </div>
-                    </motion.div>
+        <motion.button
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,.2)" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsModalOpen(true)}
+            className="flex-1 md:flex-none w-full md:w-auto bg-white/5 border border-white/30 text-white px-2 py-3 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold tracking-widest uppercase text-center whitespace-nowrap"
+        >
+            Talk Now
+        </motion.button>
+    </div>
+</motion.div>
                 </motion.div>
             </div>
         </section>
+        <ProjectModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+        </>
     );
 };
 

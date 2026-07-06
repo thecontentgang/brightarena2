@@ -1,8 +1,14 @@
 "use client";
-
 import React, { useState } from "react";
-import { motion, AnimatePresence, type Variants, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  type Variants,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
 import { Link } from "react-router-dom";
+import ProjectModal from "./ProjectModal";
 
 // Array of objects for exact routing paths
 const navItems = [
@@ -10,14 +16,17 @@ const navItems = [
   { name: "Portfolio", path: "/portfolio" },
   { name: "Designs", path: "/designs" },
   { name: "About", path: "/about" },
+  {name: "Testimonials", path: "/testimonials"},
   { name: "Blogs", path: "/blogs" },
-  { name: "Contact", path: "/contact" }
+  { name: "Contact", path: "/contact" },
 ];
 
 // Premium Apple-like easing curve
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const Header: React.FC = () => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Default to true so it's open when they first land on the page
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -49,7 +58,9 @@ const Header: React.FC = () => {
   const desktopLinkVariants: Variants = {
     hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
     visible: (i: number) => ({
-      opacity: 1, y: 0, filter: "blur(0px)",
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
       transition: { duration: 0.6, ease: smoothEase, delay: 0.15 + i * 0.05 },
     }),
     exit: { opacity: 0, y: -5, filter: "blur(2px)", transition: { duration: 0.2 } },
@@ -58,34 +69,31 @@ const Header: React.FC = () => {
   const mobileLinkVariants: Variants = {
     hidden: { opacity: 0, x: -10, filter: "blur(4px)" },
     visible: (i: number) => ({
-      opacity: 1, x: 0, filter: "blur(0px)",
+      opacity: 1,
+      x: 0,
+      filter: "blur(0px)",
       transition: { duration: 0.5, ease: smoothEase, delay: 0.1 + i * 0.05 },
     }),
     exit: { opacity: 0, x: -5, filter: "blur(2px)", transition: { duration: 0.2 } },
   };
 
   return (
-    // Changed md:px-10 to lg:px-10 to switch layout at laptop sizes instead of tablet
+    <>
     <header className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-5 py-5 lg:px-10 pointer-events-none antialiased">
-
       {/* ========================================= */}
       {/* LEFT SIDE: LOGO                           */}
       {/* ========================================= */}
       <motion.div
-        // Changed md: breakpoints to lg:
-        className="pointer-events-auto flex items-center justify-center h-[40px] lg:h-[52px] cursor-pointer mt-2 lg:mt-0"
+        // Added: bg-white/60, backdrop-blur-md, and padding/border to match the nav styling
+        className="pointer-events-auto flex items-center justify-center h-[48px] lg:h-[52px] cursor-pointer mt-2 lg:mt-0 bg-white/60 backdrop-blur-md border border-white/50 shadow-sm rounded-[1rem] px-4"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.4, ease: smoothEase }}
       >
-        <Link
-          to="/"
-          className="inline-flex items-center justify-center h-full"
-        >
+        <Link to="/" className="inline-flex items-center justify-center h-full">
           <img
             src="/bright-logo1.png"
             alt="Clickora Logo"
-            // Changed md:h-12 to lg:h-12
-            className="h-8 lg:h-12 w-auto object-contain"
+            className="h-7 lg:h-9 w-auto object-contain"
           />
         </Link>
       </motion.div>
@@ -94,15 +102,15 @@ const Header: React.FC = () => {
       {/* DESKTOP NAVIGATION (Laptop & up: lg:flex) */}
       {/* ========================================= */}
       <div
-        // Changed hidden md:flex to hidden lg:flex
-        className="pointer-events-auto hidden lg:flex justify-end font-secondary p-4 -mr-4"
+        className="pointer-events-auto hidden lg:flex justify-end font-secondary pt-1 p-4 -mr-4"
         onMouseEnter={() => setIsDesktopExpanded(true)}
         onMouseLeave={() => setHoveredIndex(null)}
       >
         <motion.nav
           layout
           transition={{ duration: 0.6, ease: smoothEase }}
-          className="flex items-center h-[52px] bg-gradient-to-b from-white to-[#f4f4f5] p-[6px] rounded-[1rem] shadow-sm border border-gray-200 cursor-pointer overflow-hidden origin-right"
+          
+          className="flex items-center h-[52px] bg-white/60 backdrop-blur-md border border-white/50 p-[6px] rounded-[1rem] shadow-sm cursor-pointer overflow-hidden origin-right"
         >
           <AnimatePresence mode="wait">
             {isDesktopExpanded ? (
@@ -137,7 +145,6 @@ const Header: React.FC = () => {
                           transition={{ type: "spring", stiffness: 350, damping: 30 }}
                         />
                       )}
-
                       <Link
                         to={item.path}
                         className="text-[#4a1c13] text-[15px] font-bold tracking-wide relative z-10 px-4 py-2 block transition-colors duration-300 hover:text-white"
@@ -157,39 +164,73 @@ const Header: React.FC = () => {
                 transition={{ duration: 0.3, ease: smoothEase }}
                 className="px-5 flex items-center justify-center text-[#4a1c13] hover:text-[#ff7043] transition-colors duration-300 group"
               >
-                <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
-                  <motion.line x1="0" y1="1" x2="20" y2="1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" className="transition-all duration-300 group-hover:translate-x-[2px]" />
-                  <motion.line x1="0" y1="7" x2="14" y2="7" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" className="transition-all duration-300 group-hover:w-full group-hover:translate-x-[-2px]" />
-                  <motion.line x1="0" y1="13" x2="18" y2="13" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" className="transition-all duration-300 group-hover:translate-x-[1px]" />
+                <svg
+                  width="20"
+                  height="14"
+                  viewBox="0 0 20 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="overflow-visible"
+                >
+                  <motion.line
+                    x1="0"
+                    y1="1"
+                    x2="20"
+                    y2="1"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    className="transition-all duration-300 group-hover:translate-x-[2px]"
+                  />
+                  <motion.line
+                    x1="0"
+                    y1="7"
+                    x2="14"
+                    y2="7"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    className="transition-all duration-300 group-hover:w-full group-hover:translate-x-[-2px]"
+                  />
+                  <motion.line
+                    x1="0"
+                    y1="13"
+                    x2="18"
+                    y2="13"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    className="transition-all duration-300 group-hover:translate-x-[1px]"
+                  />
                 </svg>
               </motion.div>
             )}
           </AnimatePresence>
-
-          <Link to="/contact" className="h-full ml-2">
+          <div  className="h-full ml-2">
             <motion.button
               layout
               whileHover={{ backgroundColor: "#e65a2d" }}
+              onClick={() => setIsModalOpen(true)}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: smoothEase }}
               className="bg-[#ff7043] text-white px-7 h-full rounded-[0.8rem] text-[14px] font-semibold tracking-wide relative z-10 flex items-center justify-center"
             >
               Talk Now
             </motion.button>
-          </Link>
+          </div>
         </motion.nav>
       </div>
 
       {/* ========================================= */}
       {/* MOBILE / TABLET NAVIGATION (Below lg)     */}
       {/* ========================================= */}
-      {/* Changed flex md:hidden to flex lg:hidden */}
       <div className="pointer-events-auto flex lg:hidden justify-end mt-2">
         <motion.nav
           layout
           animate={{ width: isMobileOpen ? 240 : "auto" }}
           transition={{ duration: 0.6, ease: smoothEase }}
-          className="flex flex-col bg-gradient-to-b from-white to-[#f4f4f5] p-[6px] rounded-[1rem] shadow-sm border border-gray-200 overflow-hidden origin-top-right relative z-50"
+          // Added: bg-white/60, backdrop-blur-md, border-white/50 (Replaced solid gradient)
+          className="flex flex-col bg-white/60 backdrop-blur-md border border-white/50 p-[6px] rounded-[1rem] shadow-sm overflow-hidden origin-top-right relative z-50"
         >
           {/* Top Row: Always visible */}
           <motion.div layout className="flex items-center justify-between w-full h-[40px]">
@@ -216,17 +257,17 @@ const Header: React.FC = () => {
                 />
               </div>
             </button>
-
             {/* Talk Now Button */}
-            <Link to="/contact" className="flex items-center justify-center shrink-0 pr-2">
+            <div className="flex items-center justify-center shrink-0 pr-2">
               <motion.button
                 layout
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setIsModalOpen(true)}
                 className="bg-[#ff7043] text-white px-4 py-1.5 rounded-[0.6rem] text-[12px] font-bold tracking-wide flex items-center justify-center whitespace-nowrap shadow-sm"
               >
                 Talk Now
               </motion.button>
-            </Link>
+            </div>
           </motion.div>
 
           {/* Expanded Content: Links */}
@@ -238,7 +279,6 @@ const Header: React.FC = () => {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.5, ease: smoothEase }}
-                // Reduced bottom padding slightly since socials are gone
                 className="flex flex-col px-4 pt-6 pb-2 w-full"
               >
                 <div className="flex flex-col space-y-1 mb-2">
@@ -266,8 +306,12 @@ const Header: React.FC = () => {
           </AnimatePresence>
         </motion.nav>
       </div>
-
     </header>
+    <ProjectModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </>
   );
 };
 

@@ -16,6 +16,8 @@ import ContactPage from './pages/ContactPage';
 import DesignDetailsPage from './pages/DesignDetails';
 import BlogDetailsPage from './pages/BlogDetails';
 import FloatingSocialBar from './components/SocialMediaBar';
+import TestimonialPage from './pages/TestimonialPage';
+
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
             <Route path="/portfolio/:slug" element={<ProjectDetailsPage />} />
             <Route path="/designs" element={<DesignPage />} />
             <Route path="/designs/:slug" element={<DesignDetailsPage />} />
+            <Route path="/testimonials" element={<TestimonialPage />} />
             <Route path="/blogs" element={<BlogsPage />} />
             <Route path="/blogs/:slug" element={<BlogDetailsPage />} />
             <Route path="/contact" element={<ContactPage />} />

@@ -124,29 +124,68 @@ export default function ServicesPage() {
   return (
     <div style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
 
-      {/* HERO */}
-      <section className="min-h-screen flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
-        <motion.div
-          className="w-full max-w-5xl text-center"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="text-[11px] tracking-[0.3em] uppercase font-medium mb-7" style={{ color: "#8A7570" }}>
-            Bright Arena Interiors · Services
-          </p>
-          <h1 className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
-            Professional design <br />
-            <span style={{ color: "#C4623A", fontStyle: "italic" }}>
-              for your vision.
-            </span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-[16px] leading-[1.8]" style={{ color: "#6B5C57" }}>
-            We bring professional precision to every space, ensuring your project is handled with expertise, creativity, and absolute attention to detail.
-          </p>
-        </motion.div>
-      </section>
+     {/* HERO */}
+{/* Added 'relative' to the section to position the scroll indicator at the bottom */}
+<section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
+  <motion.div
+    className="w-full max-w-5xl text-center"
+    initial={{ opacity: 0, y: 24 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+  >
+    <p className="text-[11px] tracking-[0.3em] uppercase font-medium mb-7" style={{ color: "#8A7570" }}>
+      Bright Arena Interiors · Services
+    </p>
+    <h1 className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
+      Professional design <br />
+      <span style={{ color: "#C4623A", fontStyle: "italic" }}>
+        for your vision.
+      </span>
+    </h1>
+    <p className="max-w-2xl mx-auto text-[16px] leading-[1.8]" style={{ color: "#6B5C57" }}>
+      We bring professional precision to every space, ensuring your project is handled with expertise, creativity, and absolute attention to detail.
+    </p>
+  </motion.div>
 
+  {/* ========================================= */}
+  {/* SCROLL DOWN INDICATOR                     */}
+  {/* ========================================= */}
+  <motion.div
+    className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 1, duration: 0.8 }}
+    // Optional: Add an onClick to scroll the window down smoothly when clicked
+    onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+  >
+    <span className="text-[10px] tracking-[0.2em] uppercase font-medium" style={{ color: "#8A7570" }}>
+      Scroll
+    </span>
+    
+    {/* Bouncing Arrow/Line */}
+    <motion.div
+      animate={{ y: [0, 8, 0] }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#C4623A"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M12 5v14M19 12l-7 7-7-7" />
+      </svg>
+    </motion.div>
+  </motion.div>
+</section>
       {/* SERVICE ROWS */}
       <section>
         {servicesData.map((s, i) => (
