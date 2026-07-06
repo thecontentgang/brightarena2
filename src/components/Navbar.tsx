@@ -115,7 +115,9 @@ const Header: React.FC = () => {
           <motion.nav
             layout
             transition={{ duration: 0.6, ease: smoothEase }}
-            className={`flex items-center h-[52px] p-[6px] rounded-[1rem] cursor-pointer overflow-hidden origin-right transition-all duration-500 ${glassClasses}`}
+           className={`flex items-center h-[52px] p-[6px] rounded-[1rem] ... ${
+  isDesktopExpanded ? "bg-white shadow-md border border-white" : glassClasses
+}`}
           >
             <AnimatePresence mode="wait">
               {isDesktopExpanded ? (
@@ -234,7 +236,9 @@ const Header: React.FC = () => {
             layout
             animate={{ width: isMobileOpen ? 240 : "auto" }}
             transition={{ duration: 0.6, ease: smoothEase }}
-            className={`flex flex-col p-[6px] rounded-[1rem] overflow-hidden origin-top-right relative z-50 transition-all duration-500 ${glassClasses}`}
+            className={`flex flex-col p-[6px] rounded-[1rem] ... ${
+  isMobileOpen ? "bg-white shadow-md border border-white" : glassClasses
+}`}
           >
             {/* Top Row: Always visible */}
             <motion.div layout className="flex items-center justify-between w-full h-[40px]">
