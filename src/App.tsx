@@ -17,6 +17,7 @@ import DesignDetailsPage from './pages/DesignDetails';
 import BlogDetailsPage from './pages/BlogDetails';
 import FloatingSocialBar from './components/SocialMediaBar';
 import TestimonialPage from './pages/TestimonialPage';
+import Breadcrumb from './components/BreadCrumb';
 
 
 const App = () => {
@@ -24,6 +25,8 @@ const App = () => {
     <>
       <Navbar />
       <FloatingSocialBar />
+     
+        <Breadcrumb />
       
       <main>
         {/* Wrap your Routes in the new Layout */}

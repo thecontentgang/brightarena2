@@ -1,14 +1,42 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const FloatingSocialBar: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showSocialBar, setShowSocialBar] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setShowScrollTop(window.scrollY > 300);
-    window.addEventListener("scroll", handleScroll);
+    // Threshold to hide the social bar in the hero section
+    const heroHeight = typeof window !== "undefined" ? window.innerHeight * 0.9 : 0;
+
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+
+      // 1. Scroll-to-top button logic
+      setShowScrollTop(currentScroll > 300);
+
+      // 2. Hide/Show logic for Social Bar
+      if (currentScroll < heroHeight) {
+        // We are in the hero section
+        setShowSocialBar(false);
+      } else {
+        // We are past the hero section
+        if (currentScroll < lastScrollY.current) {
+          // Scrolling UP
+          setShowSocialBar(true);
+        } else if (currentScroll > lastScrollY.current) {
+          // Scrolling DOWN
+          setShowSocialBar(false);
+        }
+      }
+
+      lastScrollY.current = currentScroll;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -19,7 +47,7 @@ const FloatingSocialBar: React.FC = () => {
   const socials = [
     {
       name: "WhatsApp",
-      href: "https://wa.me/8978222980", // Replace with your number
+      href: "https://wa.me/8978222980",
       color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]">
@@ -29,7 +57,7 @@ const FloatingSocialBar: React.FC = () => {
     },
     {
       name: "Call Us",
-      href: "tel:+918978222980", // Replace with your number
+      href: "tel:+918978222980",
       color: "hover:bg-[#4a1c13] hover:text-white hover:border-[#4a1c13]",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
@@ -39,7 +67,7 @@ const FloatingSocialBar: React.FC = () => {
     },
     {
       name: "Instagram",
-      href: "https://www.instagram.com/brightarenainteriors", // Replace with your link
+      href: "https://www.instagram.com/brightarenainteriors",
       color: "hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C]",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
@@ -51,7 +79,7 @@ const FloatingSocialBar: React.FC = () => {
     },
     {
       name: "YouTube",
-      href: "https://www.youtube.com/@brightarenainteriors", // Replace with your link
+      href: "https://www.youtube.com/@brightarenainteriors",
       color: "hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]">
@@ -64,31 +92,36 @@ const FloatingSocialBar: React.FC = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
       {/* Social Media Pill Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        className="flex flex-col items-center gap-2 bg-white/70 backdrop-blur-md p-2 rounded-full shadow-lg border border-white/50"
-      >
-        {socials.map((social) => (
-          <a
-            key={social.name}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={social.name}
-            className={`relative group flex items-center justify-center w-11 h-11 shrink-0 rounded-full text-[#4a1c13] bg-white border border-[#4a1c13]/10 shadow-sm transition-colors duration-300 ${social.color}`}
+      <AnimatePresence>
+        {showSocialBar && (
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 60 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2 bg-white/70 backdrop-blur-md p-2 rounded-full shadow-lg border border-white/50"
           >
-            {social.icon}
+            {socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className={`relative group flex items-center justify-center w-11 h-11 shrink-0 rounded-full text-[#4a1c13] bg-white border border-[#4a1c13]/10 shadow-sm transition-colors duration-300 ${social.color}`}
+              >
+                {social.icon}
 
-            {/* Hover Tooltip */}
-            <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 translate-x-2 whitespace-nowrap rounded-md bg-[#4a1c13] px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-              {social.name}
-              <span className="absolute right-[-4px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[4px] border-l-[4px] border-y-transparent border-l-[#4a1c13]" />
-            </span>
-          </a>
-        ))}
-      </motion.div>
+                {/* Hover Tooltip */}
+                <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 translate-x-2 whitespace-nowrap rounded-md bg-[#4a1c13] px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                  {social.name}
+                  <span className="absolute right-[-4px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[4px] border-l-[4px] border-y-transparent border-l-[#4a1c13]" />
+                </span>
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Scroll To Top Button */}
       <AnimatePresence>
