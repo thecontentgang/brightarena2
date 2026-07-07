@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { designsData } from "./designsData"; // Adjust path as needed
 
 // Dynamically extract categories, count them, and grab a cover image for each
@@ -19,7 +20,15 @@ const categoriesData = Array.from(new Set(designsData.map(d => d.category))).map
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ─── CATEGORY CARD ─── */
-function CategoryCard({ category, index }: { category: typeof categoriesData[0]; index: number }) {
+function CategoryCard({ 
+  category, 
+  index,
+  isPriority 
+}: { 
+  category: typeof categoriesData[0]; 
+  index: number;
+  isPriority: boolean;
+}) {
   // The grid's 'auto-rows' safely controls the height without conflicts.
   const spanClasses = index % 4 === 0 || index % 4 === 3
     ? "md:col-span-2" 
@@ -34,16 +43,22 @@ function CategoryCard({ category, index }: { category: typeof categoriesData[0];
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
       className={`group relative w-full h-full overflow-hidden rounded-[2rem] cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-shadow duration-500 ${spanClasses}`}
     >
-      <Link to={`/designs/${category.slug}`} className="block w-full h-full">
+      <Link 
+        to={`/designs/${category.slug}`} 
+        className="block w-full h-full"
+        aria-label={`View all ${category.count} concepts in the ${category.name} interior design category`}
+      >
         <img
           src={category.coverImage}
-          alt={category.name}
+          alt={`Bright Arena interior design concepts for ${category.name}`}
+          decoding="async"
+          loading={isPriority ? "eager" : "lazy"}
+          fetchPriority={isPriority ? "high" : "auto"}
           className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
-          loading="lazy"
         />
 
         {/* Elegant Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-10">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-10" aria-hidden="true">
           <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out">
             <div className="flex items-center gap-3 mb-2">
               <span className="w-8 h-[1px] bg-[#ff7043]" />
@@ -70,19 +85,21 @@ function CategoryCard({ category, index }: { category: typeof categoriesData[0];
 
 /* ─── PAGE COMPONENT ─── */
 export default function DesignPage() {
+  // Enhanced SEO Page Title
+  useEffect(() => {
+    document.title = "Curated Design Concepts | Bright Arena Interiors";
+  }, []);
+
   return (
-    <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── BREADCRUMB CLEARANCE AREA ── */}
-      {/* This creates the exact top padding needed for the navbar clearance. 
-          If your Breadcrumb component is scoped to the page, drop it right inside this div. */}
-      <div className="pt-24 md:pt-32 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
+      <div className="pt-24 md:pt-32 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto" aria-hidden="true">
          {/* <Breadcrumb /> */}
       </div>
 
       {/* ── HERO ── */}
-      {/* Reduced the pt-32 to pt-8 since the clearance is now handled by the breadcrumb wrapper above */}
-      <section className="pt-8 md:pt-12 pb-16 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+      <header aria-labelledby="design-hero-heading" className="pt-8 md:pt-12 pb-16 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,6 +109,7 @@ export default function DesignPage() {
           Curated Collections
         </motion.p>
         <motion.h1
+          id="design-hero-heading"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: smoothEase, delay: 0.1 }}
@@ -108,23 +126,28 @@ export default function DesignPage() {
         >
           Explore our curated library of interior styles. Choose a category below to discover tailored concepts designed to inspire your next space.
         </motion.p>
-      </section>
+      </header>
 
       {/* ── CATEGORIES BENTO GRID ── */}
-      <section className="px-4 md:px-12 lg:px-24 max-w-[1400px] mx-auto">
+      <section aria-label="Interior Design Categories" className="px-4 md:px-12 lg:px-24 max-w-[1400px] mx-auto">
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-3 auto-rows-[350px] md:auto-rows-[450px] gap-4 md:gap-6 grid-flow-dense"
         >
           {categoriesData.map((category, i) => (
-            <CategoryCard key={category.name} category={category} index={i} />
+            <CategoryCard 
+              key={category.name} 
+              category={category} 
+              index={i} 
+              isPriority={i < 2} // Eagerly load the first row of images for LCP optimization
+            />
           ))}
         </motion.div>
 
         {/* Fallback if no data is found */}
         {categoriesData.length === 0 && (
           <div className="py-32 flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 mb-4 rounded-full bg-[#4a1c13]/5 flex items-center justify-center text-[#4a1c13]/20">
+            <div className="w-16 h-16 mb-4 rounded-full bg-[#4a1c13]/5 flex items-center justify-center text-[#4a1c13]/20" aria-hidden="true">
               <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
@@ -133,6 +156,6 @@ export default function DesignPage() {
           </div>
         )}
       </section>
-    </div>
+    </main>
   );
 }

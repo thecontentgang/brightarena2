@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 // Explicitly typed easing tuple to satisfy TypeScript
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -22,14 +23,17 @@ const staggerContainer = {
   }
 };
 
-
-
 export default function ContactPage() {
+  // Enhanced SEO Page Title
+  useEffect(() => {
+    document.title = "Contact Us | Bright Arena Luxury Interiors Hyderabad";
+  }, []);
+
   return (
-    <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── HERO SECTION ── */}
-      <section className="pt-32 pb-12 md:pt-48 md:pb-16 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+      <header aria-labelledby="contact-heading" className="pt-32 pb-12 md:pt-48 md:pb-16 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
         <motion.span 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,6 +44,7 @@ export default function ContactPage() {
         </motion.span>
         
         <motion.h1 
+          id="contact-heading"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: smoothEase, delay: 0.1 }}
@@ -48,10 +53,10 @@ export default function ContactPage() {
           Let's build something <br />
           <span className="italic font-serif text-[#ff7043]">beautiful.</span>
         </motion.h1>
-      </section>
+      </header>
 
       {/* ── SPLIT CONTENT: INFO & FORM ── */}
-      <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto mb-24">
+      <section aria-label="Contact Information and Inquiry Form" className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto mb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
           
           {/* LEFT COLUMN: Contact Details & Image */}
@@ -66,7 +71,10 @@ export default function ContactPage() {
             <motion.div variants={fadeUp} className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-[#e8e5de]">
               <img 
                 src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1200&auto=format&fit=crop" 
-                alt="Bright Arena Studio Materials"
+                alt="Luxury interior design materials and architectural swatches at Bright Arena studio"
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -93,10 +101,10 @@ export default function ContactPage() {
                     Direct
                   </h3>
                   <div className="flex flex-col gap-2 font-medium">
-                    <a href="tel:+918978222980" className="hover:text-[#ff7043] transition-colors duration-300">
+                    <a href="tel:+918978222980" aria-label="Call us at +91-8978222980" className="hover:text-[#ff7043] transition-colors duration-300">
                       +91-8978222980
                     </a>
-                    <a href="mailto:info@brightarena.com" className="hover:text-[#ff7043] transition-colors duration-300">
+                    <a href="mailto:info@brightarena.com" aria-label="Email us at info@brightarena.com" className="hover:text-[#ff7043] transition-colors duration-300">
                       info@brightarena.com
                     </a>
                   </div>
@@ -111,6 +119,9 @@ export default function ContactPage() {
                       <a 
                         key={social}
                         href="#" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Follow Bright Arena on ${social}`}
                         className="text-sm font-medium hover:text-[#ff7043] transition-colors duration-300"
                       >
                         {social}
@@ -224,7 +235,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── MAP SECTION ── */}
-      <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
+      <section aria-label="Studio Location Map" className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -243,10 +254,9 @@ export default function ContactPage() {
 
           {/* Interactive Map Container */}
           <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden relative shadow-sm border border-[#4a1c13]/5 group bg-[#e8e5de]">
-            
-         
             <iframe 
-              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15224.929204676384!2d78.35849844187317!3d17.44859210565897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb934fc43492d7%3A0xb4afd24eb829f868!2sBright%20Arena%20Interiors!5e0!3m2!1sen!2sin!4v1783419444231!5m2!1sen!2sin&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              title="Bright Arena Interiors Studio Location Map in Gachibowli, Hyderabad"
+              src="https://googleusercontent.com/maps.google.com/1"
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -255,11 +265,10 @@ export default function ContactPage() {
               referrerPolicy="no-referrer-when-downgrade"
               className="grayscale-[80%] contrast-[1.1] opacity-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 transition-all duration-700 ease-in-out"
             />
-            
           </div>
         </motion.div>
       </section>
 
-    </div>
+    </main>
   );
 }

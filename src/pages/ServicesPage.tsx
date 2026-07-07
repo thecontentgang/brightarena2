@@ -15,9 +15,10 @@ function ServiceRow({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const isEven = index % 2 === 0;
+  const headingId = `service-heading-${index}`;
 
   return (
-    <div ref={ref} className="border-t border-[#E8E2DB]">
+    <div ref={ref} className="border-t border-[#E8E2DB]" aria-labelledby={headingId}>
       <div
         className={`
           flex flex-col
@@ -29,7 +30,9 @@ function ServiceRow({
         <div className="w-full md:w-[55%] overflow-hidden bg-[#EDE8E2]" style={{ minHeight: 300 }}>
           <motion.img
             src={service.images[0]}
-            alt={service.title}
+            alt={`Bright Arena interior service: ${service.title}`}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
             style={{ minHeight: 300 }}
             initial={{ scale: 1.06, opacity: 0 }}
@@ -54,7 +57,7 @@ function ServiceRow({
             0{index + 1}
           </span>
 
-          <h2 className="text-[clamp(26px,3.5vw,42px)] leading-tight mb-5" style={{ fontFamily: "Georgia, serif", color: "#2C1810" }}>
+          <h2 id={headingId} className="text-[clamp(26px,3.5vw,42px)] leading-tight mb-5" style={{ fontFamily: "Georgia, serif", color: "#2C1810" }}>
             {service.title}
           </h2>
 
@@ -66,10 +69,10 @@ function ServiceRow({
             <p className="text-[11px] tracking-[0.2em] uppercase font-medium mb-3" style={{ color: "#8A7570" }}>
               Key Benefits
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-2" aria-label={`Benefits of ${service.title}`}>
               {service.benefits.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[14px]" style={{ color: "#4A3630" }}>
-                  <span className="mt-[7px] w-[5px] h-[1px] shrink-0 bg-[#C4623A]" />
+                  <span className="mt-[7px] w-[5px] h-[1px] shrink-0 bg-[#C4623A]" aria-hidden="true" />
                   {item}
                 </li>
               ))}
@@ -80,6 +83,7 @@ function ServiceRow({
             {/* Phone */}
             <a
               href={`tel:${service.phone}`}
+              aria-label={`Call Bright Arena regarding ${service.title} at ${service.phone}`}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#E8D9D3] bg-[#F9F6F3] text-[#6B5752] hover:border-[#C4623A] hover:text-[#C4623A] transition-all duration-300"
             >
               <svg
@@ -89,6 +93,7 @@ function ServiceRow({
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={1.8}
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -105,10 +110,11 @@ function ServiceRow({
             {/* Learn More */}
             <a
               href={`/services/${service.slug}`}
+              aria-label={`Learn more details about our ${service.title} services`}
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C4623A] text-white text-[11px] font-semibold tracking-[0.18em] uppercase transition-all duration-300 hover:bg-[#A84E2C] hover:scale-105 hover:shadow-xl"
             >
               Learn More
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
+              <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
                 →
               </span>
             </a>
@@ -122,11 +128,10 @@ function ServiceRow({
 /* ─── PAGE ─── */
 export default function ServicesPage() {
   return (
-    <div style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
+    <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
 
       {/* HERO */}
-      {/* Changed min-h-screen to min-h-[80vh] to reveal 20% of the next section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
+      <section aria-labelledby="services-hero-heading" className="relative min-h-[80vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
         <motion.div
           className="w-full max-w-5xl text-center pt-20"
           initial={{ opacity: 0, y: 24 }}
@@ -136,7 +141,7 @@ export default function ServicesPage() {
           <p className="text-[11px] tracking-[0.3em] uppercase font-medium mb-7" style={{ color: "#8A7570" }}>
             Bright Arena Interiors · Services
           </p>
-          <h1 className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
+          <h1 id="services-hero-heading" className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
             Professional design <br />
             <span style={{ color: "#C4623A", fontStyle: "italic" }}>
               for your vision.
@@ -149,15 +154,15 @@ export default function ServicesPage() {
       </section>
 
       {/* SERVICE ROWS */}
-      <section>
+      <section aria-label="Our Interior Design Services">
         {servicesData.map((s, i) => (
           <ServiceRow key={s.slug} service={s} index={i} />
         ))}
-        <div className="border-t border-[#E8E2DB]" />
+        <div className="border-t border-[#E8E2DB]" aria-hidden="true" />
       </section>
 
       {/* QUIET TRUST BAR */}
-      <section className="px-8 md:px-16 lg:px-24 py-20 border-t border-[#E8E2DB]">
+      <section aria-label="Company Statistics" className="px-8 md:px-16 lg:px-24 py-20 border-t border-[#E8E2DB]">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           {[
             { val: "14+", label: "Years of practice" },
@@ -176,6 +181,7 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
-    </div>
+      
+    </main>
   );
 }

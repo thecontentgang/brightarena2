@@ -15,7 +15,7 @@ const stagger: Variants = {
   visible: { opacity: 1, transition: { staggerChildren: 0.18 } },
 };
 
-// Unsplash image URLs
+// Unsplash & Local image URLs
 const IMAGES = {
   heroRoom: "/projectsImg/my-home-bhooja/MHB-img2.jpg",
   studioWork: "/office.jpg",
@@ -43,14 +43,19 @@ export default function AboutPage() {
   const heroImgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
-    <div className="bg-[#f7f4ee] text-[#4a1c13] overflow-x-hidden">
-
+    <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-x-hidden">
+      
       {/* ─── 1. HERO ─── */}
-      <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+      <section ref={heroRef} aria-label="Introduction" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
         {/* Parallax background */}
         <motion.div style={{ y: heroImgY }} className="absolute inset-0 scale-110">
-          <img src={IMAGES.heroRoom} alt="Bright Arena signature room" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#1F1F1F]/60" />
+          <img 
+            src={IMAGES.heroRoom} 
+            alt="Luxurious signature living room interior designed by Bright Arena" 
+            className="w-full h-full object-cover"
+            fetchPriority="high" // Prioritize above-the-fold image
+          />
+          <div className="absolute inset-0 bg-[#1F1F1F]/60" aria-hidden="true" />
         </motion.div>
 
         {/* Hero text */}
@@ -68,24 +73,32 @@ export default function AboutPage() {
             unmistakably yours.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#founders" className="bg-[#ff7043] text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#4a1c13] transition-all duration-300">
+            <a 
+              href="#founders" 
+              aria-label="Navigate to meet the founders section"
+              className="bg-[#ff7043] text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#4a1c13] transition-all duration-300"
+            >
               Meet the Founders
             </a>
-            <a href="#philosophy" className="border border-white/40 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all duration-300">
+            <a 
+              href="#philosophy" 
+              aria-label="Navigate to our design philosophy section"
+              className="border border-white/40 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all duration-300"
+            >
               Our Story
             </a>
           </motion.div>
         </motion.div>
 
         {/* Scroll hint */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50" aria-hidden="true">
           <span className="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
           <div className="w-px h-12 bg-white/30 animate-pulse" />
         </motion.div>
       </section>
 
       {/* ─── 2. STUDIO SPLIT ─── */}
-      <section className="py-24 lg:py-32 bg-[#F8F6F2] overflow-hidden">
+      <section aria-labelledby="about-heading" className="py-24 lg:py-32 bg-[#F8F6F2] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
@@ -93,7 +106,7 @@ export default function AboutPage() {
               <span className="uppercase tracking-[0.4em] text-[#ff7043] text-xs font-semibold">
                 About Bright Arena
               </span>
-              <h2 className="mt-6 text-5xl md:text-6xl font-serif leading-[1.05]">
+              <h2 id="about-heading" className="mt-6 text-5xl md:text-6xl font-serif leading-[1.05]">
                 We Design<br />Spaces That<br />Inspire.
               </h2>
               <p className="mt-8 text-gray-600 leading-8">
@@ -116,10 +129,16 @@ export default function AboutPage() {
             {/* Image */}
             <motion.div className="lg:col-span-4 relative" initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <div className="overflow-hidden rounded-[30px]">
-                <img src={IMAGES.studioWork} alt="Studio" className="w-full h-[650px] object-cover hover:scale-105 transition duration-700" />
+                <img 
+                  src={IMAGES.studioWork} 
+                  alt="Bright Arena design studio workspace showing architectural plans" 
+                  loading="lazy" 
+                  decoding="async"
+                  className="w-full h-[650px] object-cover hover:scale-105 transition duration-700" 
+                />
               </div>
               <div className="absolute top-8 -left-6 bg-white shadow-2xl rounded-3xl px-6 py-5">
-                <div className="text-4xl font-bold">2010</div>
+                <div className="text-4xl font-bold text-[#4a1c13]">2010</div>
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500">Founded</p>
               </div>
             </motion.div>
@@ -128,19 +147,19 @@ export default function AboutPage() {
             <motion.div className="lg:col-span-3" initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <div className="space-y-10">
                 <div className="border-b border-gray-300 pb-8">
-                  <h3 className="text-5xl font-serif">350+</h3>
+                  <h3 className="text-5xl font-serif text-[#4a1c13]">350+</h3>
                   <p className="mt-2 text-gray-600">Completed Interior Projects</p>
                 </div>
                 <div className="border-b border-gray-300 pb-8">
-                  <h3 className="text-5xl font-serif">14+</h3>
+                  <h3 className="text-5xl font-serif text-[#4a1c13]">14+</h3>
                   <p className="mt-2 text-gray-600">Years of Experience</p>
                 </div>
                 <div className="border-b border-gray-300 pb-8">
-                  <h3 className="text-5xl font-serif">40+</h3>
+                  <h3 className="text-5xl font-serif text-[#4a1c13]">40+</h3>
                   <p className="mt-2 text-gray-600">Design Professionals</p>
                 </div>
                 <div>
-                  <h3 className="text-5xl font-serif">98%</h3>
+                  <h3 className="text-5xl font-serif text-[#4a1c13]">98%</h3>
                   <p className="mt-2 text-gray-600">Client Satisfaction</p>
                 </div>
               </div>
@@ -149,8 +168,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── 3. FOUNDERS (Alternating Grid Layout) ─── */}
-      <section id="founders" className="w-full bg-[#FFF8F2] px-6 md:px-12 lg:px-24 py-24 md:py-32">
+      {/* ─── 3. FOUNDERS ─── */}
+      <section id="founders" aria-labelledby="founders-heading" className="w-full bg-[#FFF8F2] px-6 md:px-12 lg:px-24 py-24 md:py-32">
         <div className="max-w-7xl mx-auto">
           
           {/* Header */}
@@ -161,17 +180,17 @@ export default function AboutPage() {
             <motion.p variants={fadeUp} className="uppercase tracking-[0.35em] text-[#ff7043] text-xs font-semibold mb-4">
               Our Leadership
             </motion.p>
-            <motion.h2 variants={fadeUp} className="text-[#4a1c13] text-4xl md:text-5xl font-serif leading-tight mb-8">
+            <motion.h2 id="founders-heading" variants={fadeUp} className="text-[#4a1c13] text-4xl md:text-5xl font-serif leading-tight mb-8">
               Meet The Founders
             </motion.h2>
-            <motion.div variants={fadeUp} className="w-full h-[1px] bg-[#4a1c13]/10" />
+            <motion.div variants={fadeUp} className="w-full h-[1px] bg-[#4a1c13]/10" aria-hidden="true" />
           </motion.div>
 
           {/* Founders Grid */}
           <div className="space-y-28">
             {founders.map((founder, index) => (
               <motion.div
-                key={index}
+                key={founder.name}
                 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}
                 className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center ${
                   index % 2 !== 0 ? "lg:[&>*:first-child]:order-2" : ""
@@ -181,9 +200,10 @@ export default function AboutPage() {
                 <motion.div variants={fadeUp} className="lg:col-span-5">
                   <div className="overflow-hidden shadow-xl aspect-[4/5] bg-white flex items-center justify-center border border-[#4a1c13]/10 rounded-[2rem]">
                     <img
-                      // Automatically swaps image based on the array index
                       src={index === 0 ? IMAGES.founderA : IMAGES.founderB}
-                      alt={founder.name}
+                      alt={`Portrait of ${founder.name}, ${founder.role} at Bright Arena`}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                     />
                   </div>
@@ -204,7 +224,7 @@ export default function AboutPage() {
                     {founder.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-3 mt-8">
+                  <div className="flex flex-wrap gap-3 mt-8" aria-label={`Specialties of ${founder.name}`}>
                     <span className="px-5 py-2.5 border border-[#4a1c13]/10 rounded-full text-[10px] uppercase tracking-widest text-[#4a1c13]/80">
                       Interior Design
                     </span>
@@ -223,12 +243,12 @@ export default function AboutPage() {
       </section>
 
       {/* ─── 4. SERVICE PILLARS ─── */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
+      <section aria-labelledby="commitments-heading" className="py-24 px-6 max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="text-center mb-14">
           <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
             What We Stand For
           </motion.span>
-          <motion.h2 variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4">
+          <motion.h2 id="commitments-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4">
             Our Six Commitments
           </motion.h2>
         </motion.div>
@@ -241,9 +261,9 @@ export default function AboutPage() {
             { title: "Transparent Pricing", desc: "Detailed, itemised quotes with zero hidden charges — ever.", icon: "◉" },
             { title: "Qualified Staff", desc: "200+ trained professionals, each vetted for craft, punctuality, and care.", icon: "⬡" },
             { title: "Timely Handover", desc: "We have never missed a handover date. We don't intend to start.", icon: "◎" },
-          ].map((item, i) => (
-            <motion.div key={i} variants={fadeUp} whileHover={{ y: -6 }} className="bg-white p-8 rounded-3xl border border-[#4a1c13]/8 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="w-11 h-11 bg-[#ff7043]/10 text-[#ff7043] rounded-2xl flex items-center justify-center mb-5 text-lg">
+          ].map((item) => (
+            <motion.div key={item.title} variants={fadeUp} whileHover={{ y: -6 }} className="bg-white p-8 rounded-3xl border border-[#4a1c13]/8 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div className="w-11 h-11 bg-[#ff7043]/10 text-[#ff7043] rounded-2xl flex items-center justify-center mb-5 text-lg" aria-hidden="true">
                 {item.icon}
               </div>
               <h3 className="text-lg font-bold mb-3">{item.title}</h3>
@@ -254,17 +274,23 @@ export default function AboutPage() {
       </section>
 
       {/* ─── 5. PHILOSOPHY ─── */}
-      <section id="philosophy" className="relative py-28 px-6 overflow-hidden">
+      <section id="philosophy" aria-labelledby="philosophy-heading" className="relative py-28 px-6 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={IMAGES.philosophyBg} alt="Philosophy background" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#1F1F1F]/60" />
+          <img 
+            src={IMAGES.philosophyBg} 
+            alt="Abstract architectural elements representing Bright Arena's design philosophy" 
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-[#1F1F1F]/60" aria-hidden="true" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
             <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
               Our Philosophy
             </motion.span>
-            <motion.h2 variants={fadeUp} className="text-[clamp(28px,5vw,56px)] font-serif text-white mt-5 mb-8 leading-tight">
+            <motion.h2 id="philosophy-heading" variants={fadeUp} className="text-[clamp(28px,5vw,56px)] font-serif text-white mt-5 mb-8 leading-tight">
               Unique by Doing. <br className="hidden sm:block" />
               Not by Saying.
             </motion.h2>
@@ -286,10 +312,18 @@ export default function AboutPage() {
               </motion.p>
             </motion.div>
             <motion.div variants={fadeUp} className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="bg-[#ff7043] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#4a1c13] transition-all duration-300">
+              <a 
+                href="/contact" 
+                aria-label="Start your interior design project with Bright Arena"
+                className="bg-[#ff7043] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#4a1c13] transition-all duration-300"
+              >
                 Start Your Project
               </a>
-              <a href="/projects" className="border border-white/30 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all duration-300">
+              <a 
+                href="/projects" 
+                aria-label="Explore the Bright Arena interior design portfolio"
+                className="border border-white/30 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all duration-300"
+              >
                 Explore Portfolio
               </a>
             </motion.div>
@@ -298,13 +332,13 @@ export default function AboutPage() {
       </section>
 
       {/* ─── 6. PROCESS TIMELINE ─── */}
-      <section className="py-24 px-6 bg-white">
+      <section aria-labelledby="process-heading" className="py-24 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger} className="text-center mb-14">
             <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
               How We Work
             </motion.span>
-            <motion.h2 variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4">
+            <motion.h2 id="process-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4 text-[#4a1c13]">
               The Bright Arena Process
             </motion.h2>
           </motion.div>
@@ -317,12 +351,12 @@ export default function AboutPage() {
               { step: "04", title: "Execution", desc: "Our in-house teams handle everything. You get a single point of contact. No juggling vendors." },
               { step: "05", title: "Handover & Beyond", desc: "We walk you through the finished space and remain on-call for 12 months post-handover." },
             ].map((item, i, arr) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeUp} className={`flex gap-8 items-start py-10 ${i < arr.length - 1 ? "border-b border-[#4a1c13]/10" : ""}`}>
-                <div className="text-[clamp(32px,4vw,52px)] font-serif text-[#ff7043]/30 leading-none shrink-0 w-14 text-right">
+              <motion.div key={item.step} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeUp} className={`flex gap-8 items-start py-10 ${i < arr.length - 1 ? "border-b border-[#4a1c13]/10" : ""}`}>
+                <div className="text-[clamp(32px,4vw,52px)] font-serif text-[#ff7043]/30 leading-none shrink-0 w-14 text-right" aria-hidden="true">
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#4a1c13]">{item.title}</h3>
                   <p className="text-[#4a1c13]/55 leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
@@ -331,6 +365,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-    </div>
+    </main>
   );
 }

@@ -22,6 +22,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     : "md:col-span-1 md:row-span-1 aspect-square";
 
   const safeImage = forceJpg(project.heroImage);
+  
+  // Prioritize loading for the first two images that appear above/near the fold
+  const isPriority = index < 2;
 
   return (
     <motion.div
@@ -33,21 +36,28 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
       className={`group relative overflow-hidden rounded-2xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
     >
-      <Link to={`/portfolio/${project.slug}`} className="block w-full h-full" aria-label={`View details for ${project.title}`}>
+      <Link 
+        to={`/portfolio/${project.slug}`} 
+        className="block w-full h-full" 
+        aria-label={`View details for ${project.title} interior design project`}
+      >
         <img
           src={safeImage}
-          alt={project.title}
+          alt={`Bright Arena interior project: ${project.title} located in ${project.location}`}
           decoding="async"
-          loading="lazy"
+          loading={isPriority ? "eager" : "lazy"}
+          fetchPriority={isPriority ? "high" : "auto"}
           className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
           onError={(e) => {
+            // Nullify the error handler to prevent infinite loops if the fallback also fails
+            e.currentTarget.onerror = null; 
             // Fallback to a beautiful placeholder if the local image is missing
             e.currentTarget.src = `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop`;
           }}
         />
 
         {/* Elegant Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 via-[#4a1c13]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-8">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 via-[#4a1c13]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-8" aria-hidden="true">
           <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
             <p className="text-[#ff7043] text-[10px] tracking-[0.25em] uppercase font-bold mb-2">
               {project.houseType} · {project.year}
@@ -67,9 +77,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 /* ─── PAGE COMPONENT ─── */
 export default function PortfolioPage() {
-  // Basic SEO Page Title
+  // Enhanced SEO Page Title
   useEffect(() => {
-    document.title = "Portfolio | Curated Interior Designs";
+    document.title = "Portfolio | Bright Arena Luxury Interiors Hyderabad";
   }, []);
 
   return (
@@ -86,6 +96,7 @@ export default function PortfolioPage() {
           Selected Works
         </motion.p>
         <motion.h1 
+          id="portfolio-heading"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: smoothEase }}
@@ -97,7 +108,10 @@ export default function PortfolioPage() {
       </header>
 
       {/* ── MASONRY GRID ── */}
-      <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto" aria-label="Project Gallery">
+      <section 
+        className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto" 
+        aria-labelledby="portfolio-heading"
+      >
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 grid-flow-dense"
@@ -109,6 +123,7 @@ export default function PortfolioPage() {
           </AnimatePresence>
         </motion.div>
       </section>
+      
     </main>
   );
 }
