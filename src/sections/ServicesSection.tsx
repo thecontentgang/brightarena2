@@ -10,28 +10,28 @@ const services = [
     title: "Home Interiors",
     slug: "home-interior-design",
     description: "Curated, minimalist living spaces tailored to your daily rhythms. We bring your vision of home to life with precision.",
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop",
+    image: "/projectsImg/my-home-bhooja/MHB-img8.jpg",
   },
   {
     id: "02",
     title: "Commercial Spaces",
     slug: "commercial-interior-design",
     description: "Photorealistic rendering and precise spatial planning designed to elevate customer experiences and brand identity.",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop",
+    image: "/projectsImg/rajapushpa/RP-img38.jpg",
   },
   {
     id: "03",
     title: "Office Environments",
     slug: "office-interior-design",
     description: "High-end corporate environments that foster productivity, well-being, and modern collaboration.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+    image: "/office.jpg",
   },
   {
     id: "04",
     title: "Virtual Design",
     slug: "2d-3d-virtual-design",
     description: "Custom-crafted architectural layouts and 3D walkthroughs so you can experience your space before it's built.",
-    image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?q=80&w=1600&auto=format&fit=crop",
+    image: "/virtual.jpg",
   },
 ];
 

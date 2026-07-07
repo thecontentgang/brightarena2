@@ -22,8 +22,7 @@ const staggerContainer = {
   }
 };
 
-// URL-encoded address for the Google Maps iframe
-const mapAddress = encodeURIComponent("4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500081");
+
 
 export default function ContactPage() {
   return (
@@ -245,12 +244,9 @@ export default function ContactPage() {
           {/* Interactive Map Container */}
           <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden relative shadow-sm border border-[#4a1c13]/5 group bg-[#e8e5de]">
             
-            {/* 
-              The filter class makes the map grayscale by default to match the luxury theme. 
-              When the user hovers over it, the group-hover removes the grayscale so they can navigate easily.
-            */}
+         
             <iframe 
-              src={`https://maps.google.com/maps?q=${mapAddress}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15224.929204676384!2d78.35849844187317!3d17.44859210565897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb934fc43492d7%3A0xb4afd24eb829f868!2sBright%20Arena%20Interiors!5e0!3m2!1sen!2sin!4v1783419444231!5m2!1sen!2sin&t=&z=15&ie=UTF8&iwloc=&output=embed`}
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 

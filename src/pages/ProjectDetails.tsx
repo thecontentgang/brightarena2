@@ -7,12 +7,6 @@ import { projectsData } from "./ProjectsData";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-// Utility to force the path to be a .jpg
-const forceJpg = (path?: string) => {
-  if (!path) return "";
-  return path.replace(/\.(png|jpeg|JPG|avif|webp)$/i, ".jpg");
-};
-
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -45,9 +39,6 @@ export default function ProjectDetailsPage() {
   }, [project, slug, navigate]);
 
   if (!project) return null;
-
-  // Safely format the hero image to .jpg
-  const heroImage = forceJpg(project.heroImage);
 
   return (
     <article className="bg-[#f7f4ee] text-[#4a1c13] w-full overflow-hidden antialiased font-sans selection:bg-[#ff7043] selection:text-white pb-24">
@@ -107,7 +98,7 @@ export default function ProjectDetailsPage() {
           
           <motion.div className="w-full h-full" style={{ y: heroImgY, scale: heroImgScale }}>
             <img
-              src={heroImage}
+              src={project.heroImage}
               alt={project.title}
               decoding="async"
               className="w-full h-full object-cover"
@@ -133,7 +124,6 @@ export default function ProjectDetailsPage() {
       <section className="py-20 md:py-28" aria-label="Project Details">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-
             <div className="lg:col-span-4">
               <div className="sticky top-32">
                 <motion.h2
@@ -150,11 +140,18 @@ export default function ProjectDetailsPage() {
             </div>
 
             <div className="lg:col-span-8">
-              
+              <motion.p
+                className="text-base md:text-lg leading-relaxed text-[#4a1c13]/75 max-w-3xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+                viewport={{ once: true, margin: "-60px" }}
+              >
+                {project.description}
+              </motion.p>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12">
                 {[
-                  
                   { label: "Location",  value: project.location },
                   { label: "Category",  value: project.houseType },
                   { label: "Year",      value: project.year },
@@ -181,42 +178,36 @@ export default function ProjectDetailsPage() {
         </div>
       </section>
 
-      {/* ── PINTEREST-STYLE MASONRY GALLERY ── */}
+      {/* ── MASONRY GALLERY ── */}
       {project.gallery && project.gallery.length > 0 && (
         <section className="pb-24 md:pb-32 px-4 md:px-6 lg:px-12 max-w-[1600px] mx-auto" aria-label="Project Image Gallery">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6">
-            {project.gallery.map((image, i) => {
-              const imgSrc = forceJpg(image);
-
-              return (
-                <div 
-                  key={i} 
-                  className="relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] bg-[#e8e5de] break-inside-avoid mb-4 md:mb-6 group"
-                >
-                  <motion.img
-                    src={imgSrc}
-                    alt={`${project.title} interior view ${i + 1}`}
-                    decoding="async"
-                    loading="lazy"
-                    className="w-full h-auto object-cover block"
-                    initial={{ scale: 1.05, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: EASE }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    whileHover={{ scale: 1.03, transition: { duration: 0.5 } }}
-                    onError={(e) => {
-                      // Uses a fallback to prevent layout breaks on 404s
-                      e.currentTarget.src = `https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop`;
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-[#4a1c13]/0 group-hover:bg-[#4a1c13]/5 transition-colors duration-500 pointer-events-none" />
-                </div>
-              );
-            })}
+            {project.gallery.map((image, i) => (
+              <div 
+                key={i} 
+                className="relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] bg-[#e8e5de] break-inside-avoid mb-4 md:mb-6 group"
+              >
+                <motion.img
+                  src={image}
+                  alt={`${project.title} view ${i + 1}`}
+                  decoding="async"
+                  loading="lazy"
+                  className="w-full h-auto object-cover block"
+                  initial={{ scale: 1.05, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.8, ease: EASE }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  whileHover={{ scale: 1.03, transition: { duration: 0.5 } }}
+                  onError={(e) => {
+                    e.currentTarget.src = `https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop`;
+                  }}
+                />
+                <div className="absolute inset-0 bg-[#4a1c13]/0 group-hover:bg-[#4a1c13]/5 transition-colors duration-500 pointer-events-none" />
+              </div>
+            ))}
           </div>
         </section>
       )}
-
     </article>
   );
 }

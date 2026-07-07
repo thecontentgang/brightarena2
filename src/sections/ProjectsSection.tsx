@@ -24,7 +24,7 @@ const projectsData: ProjectItem[] = [
   {
     id: 1,
     shortDescription: "Rajapushpa Provincia",
-    heroImage: "/projectsImg/rajapushpa/rp-img7.JPG",
+    heroImage: "/projectsImg/rajapushpa/RP-img7.jpg",
     year: "2026",
     houseType: "Residential",
     location: "Bangalore",
@@ -33,7 +33,7 @@ const projectsData: ProjectItem[] = [
   {
     id: 2,
     shortDescription: "Luxury Villa",
-    heroImage: "/projectsImg/villa/villa-img8.JPG",
+    heroImage: "/projectsImg/Villa/villa-img8.jpg",
     year: "2025",
     houseType: "Commercial",
     location: "Mumbai",
@@ -42,7 +42,7 @@ const projectsData: ProjectItem[] = [
   {
     id: 3,
     shortDescription: "Forest Edge",
-    heroImage: "/projectsImg/forest-edge/fe-img7.JPG",
+    heroImage: "/projectsImg/forest-edge/FE-img7.jpg",
     year: "2025",
     houseType: "Luxury",
     location: "Dubai",

@@ -96,7 +96,7 @@ const AboutSection: React.FC = () => {
             className="lg:col-span-2 lg:row-span-2 h-[350px] lg:h-full relative rounded-3xl overflow-hidden group cursor-pointer shadow-sm"
           >
             <img
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop"
+              src="/projectsImg/rajapushpa/RP-img36.jpg"
               alt="Our design philosophy in action"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
             />
@@ -116,7 +116,7 @@ const AboutSection: React.FC = () => {
             className="lg:col-span-1 lg:row-span-1 h-[220px] lg:h-full relative rounded-3xl overflow-hidden group cursor-pointer shadow-sm"
           >
             <img
-              src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?q=80&w=800&auto=format&fit=crop"
+              src="/projectsImg/rajapushpa/RP-img26.jpg"
               alt="Material details"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
             />

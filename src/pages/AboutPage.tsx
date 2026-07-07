@@ -17,8 +17,8 @@ const stagger: Variants = {
 
 // Unsplash image URLs
 const IMAGES = {
-  heroRoom: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1400&q=80",
-  studioWork: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1000&q=80",
+  heroRoom: "/projectsImg/my-home-bhooja/MHB-img2.jpg",
+  studioWork: "/office.jpg",
   philosophyBg: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1400&q=80",
   founderA: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
   founderB: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=800&q=80",

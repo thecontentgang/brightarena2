@@ -28,10 +28,10 @@ export const servicesData = [
 
    
     images: [
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop",
+      "/projectsImg/my-home-bhooja/MHB-img8.jpg",
+       "/projectsImg/my-home-bhooja/MHB-img3.jpg",
+        "/projectsImg/my-home-bhooja/MHB-img12.jpg",
+         "/projectsImg/my-home-bhooja/MHB-img2.jpg",
     ],
 
     benefits: [
@@ -70,10 +70,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366412874-3415097a27e7?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1600&auto=format&fit=crop",
+      "/projectsImg/mhk/MHk-img8.jpg",
+      "/projectsImg/mhk/MHk-img3.jpg",
+      "/projectsImg/mhk/MHk-img9.jpg",
+      "/projectsImg/mhk/MHk-img2.jpg",
     ],
 
     benefits: [
@@ -112,10 +112,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366412874-3415097a27e7?q=80&w=1600&auto=format&fit=crop",
+      "/projectsImg/rajapushpa/RP-img8.jpg",
+       "/projectsImg/rajapushpa/RP-img10.jpg",
+        "/projectsImg/rajapushpa/RP-img25.jpg",
+         "/projectsImg/rajapushpa/RP-img37.jpg",
     ],
 
     benefits: [
@@ -154,10 +154,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?q=80&w=1600&auto=format&fit=crop",
+      "/projectsImg/aparna-sarovar/AS-img5.jpg",
+      "/projectsImg/aparna-sarovar/AS-img11.jpg",
+      "/projectsImg/aparna-sarovar/AS-img7.jpg",
+      "/projectsImg/aparna-sarovar/AS-img3.jpg",
     ],
 
     benefits: [

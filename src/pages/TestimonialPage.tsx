@@ -1,85 +1,74 @@
 "use client";
-import React from "react";
-import { motion, type Variants } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
 
 // Premium Apple-like easing curve
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-// --- Dummy Data: Videos ---
+// ==========================================
+// 1. ADD YOUR YOUTUBE VIDEOS HERE
+// ==========================================
 const videoTestimonials = [
   {
     id: 1,
     client: "The Weston Family",
     project: "Luxury Condo Transformation",
-    thumbnail: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
-    duration: "2:15",
+    duration: "41",
+    youtubeId: "aZq2QRwiYsE", // <-- Replace with your YouTube Video ID
   },
   {
     id: 2,
     client: "David Chen",
     project: "Boutique Corporate Office",
-    thumbnail: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-    duration: "1:45",
+    duration: "1:30",
+    youtubeId: "ztyqShdYSEY", // <-- Replace with your YouTube Video ID
   },
   {
     id: 3,
     client: "Eleanor Richards",
     project: "Modern Minimalist Villa",
-    thumbnail: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-    duration: "3:02",
+    duration: "2:33",
+    youtubeId: "fc27D9buInM", // <-- Replace with your YouTube Video ID
   },
 ];
 
-// --- Dummy Data: Google Reviews ---
-const googleReviews = [
+// ==========================================
+// 2. PASTE YOUR ACTUAL GOOGLE REVIEWS HERE
+// ==========================================
+interface GoogleReview {
+  id: number;
+  author_name: string;
+  profile_photo_url: string;
+  rating: number;
+  relative_time_description: string;
+  text: string;
+}
+
+const staticReviews: GoogleReview[] = [
   {
     id: 1,
-    name: "Eleanor Richards",
-    date: "2 months ago",
-    text: "Bright Arena completely transformed our living space. Their attention to detail and ability to balance functionality with breathtaking aesthetics is unmatched. It finally feels like home.",
+    author_name: "Jhansi Janu",
+    profile_photo_url: "https://i.pravatar.cc/150?img=47", // <-- Link to their profile picture
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=47",
+    relative_time_description: "11 months ago",
+    text: "Bright Arena Interiors completely changed the look of my home with their amazing work. Their designs are very classy and gave my space a luxury feel. The team was very professional, always on time, and handled everything smoothly.If you are searching for the best luxury interior designers in Hyderabad, Bright Arena Interiors is the right choice. I’m really happy with the final result and would definitely suggest them to anyone.",
   },
   {
     id: 2,
-    name: "James Collins",
-    date: "3 months ago",
-    text: "Professional, visionary, and incredibly precise. They took our vague ideas and turned them into a masterpiece. Every guest we host asks who designed our interior.",
+    author_name: "Kavya ketha",
+    profile_photo_url: "https://i.pravatar.cc/150?img=11",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=11",
+    relative_time_description: "8 months ago",
+    text: "Mind-blowing! I've never seen this type of interior work before.",
   },
   {
     id: 3,
-    name: "Sophia Martinez",
-    date: "4 months ago",
-    text: "They managed to preserve the historical charm of our 1920s home while seamlessly integrating modern luxuries. A truly sensitive and spectacular design process.",
+    author_name: "rajesh shankar pandey",
+    profile_photo_url: "https://i.pravatar.cc/150?img=9",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=9",
-  },
-  {
-    id: 4,
-    name: "Marcus Thorne",
-    date: "5 months ago",
-    text: "From the initial consultation to the final reveal, the team was an absolute pleasure to work with. The color palettes they chose bring the ocean right into our living room.",
-    rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=68",
-  },
-  {
-    id: 5,
-    name: "Amelia Weston",
-    date: "6 months ago",
-    text: "The spatial planning was genius. They made our 1,200 sq ft condo feel twice its size. The bespoke cabinetry and material selection are stunning.",
-    rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=44",
-  },
-  {
-    id: 6,
-    name: "Liam O'Connor",
-    date: "8 months ago",
-    text: "Exceptional execution from start to finish. We wanted an office that felt like a luxury lounge but functioned perfectly for our team. The results exceeded our expectations.",
-    rating: 4,
-    avatar: "https://i.pravatar.cc/150?img=15",
+    relative_time_description: "4 months ago",
+    text: "Bright Arena Interiors transformed our ideal home into a reality. Their inventive designs and attention to detail are unparalleled. They built a gorgeous and useful environment, and we couldn't be happier. Thank you for making our home a true representation of our personal style.",
   },
 ];
 
@@ -112,33 +101,33 @@ const GoogleIcon = () => (
 );
 
 const Testimonials: React.FC = () => {
+  // Keeps track of which video IDs are playing inline
+  const [playingVideos, setPlayingVideos] = useState<Record<number, boolean>>({});
+
+  const handlePlayVideo = (id: number) => {
+    setPlayingVideos((prev) => ({ ...prev, [id]: true }));
+  };
+
   return (
     <main className="min-h-screen bg-[#fcfcfc] pt-32 pb-24 px-6 sm:px-8 md:px-16 lg:px-24 antialiased overflow-hidden">
       
-      {/* ========================================= */}
-      {/* HERO SECTION                              */}
-      {/* ========================================= */}
+      {/* HERO SECTION */}
       <motion.div
         className="w-full max-w-4xl mx-auto text-center mb-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: smoothEase }}
       >
-        
         <h1 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 pt-6 text-[#4a1c13] font-primary font-light">
           Don't just take our <br className="hidden sm:block" />
-          <span className="text-[#C4623A] italic">
-            word for it.
-          </span>
+          <span className="text-[#C4623A] italic">word for it.</span>
         </h1>
         <p className="max-w-2xl mx-auto text-[16px] leading-[1.8] text-[#6B5C57]">
           Watch and read what our clients have to say about their experience working with us to bring their dream spaces to life.
         </p>
       </motion.div>
 
-      {/* ========================================= */}
-      {/* VIDEO TESTIMONIALS                        */}
-      {/* ========================================= */}
+      {/* VIDEO TESTIMONIALS (INLINE PLAYBACK) */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -146,49 +135,81 @@ const Testimonials: React.FC = () => {
         viewport={{ once: true, margin: "-50px" }}
         className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-24"
       >
-        {videoTestimonials.map((video) => (
-          <motion.div
-            key={video.id}
-            variants={cardVariants}
-            whileHover={{ y: -5 }}
-            className="group relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-[1.5rem] overflow-hidden cursor-pointer shadow-lg"
-          >
-            {/* Background Image */}
-            <img 
-              src={video.thumbnail} 
-              alt={video.client}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            
-            {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+        {videoTestimonials.map((video) => {
+          const isPlaying = playingVideos[video.id];
 
-            {/* Play Button (Glassmorphism) */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#ff7043]/90 group-hover:border-transparent">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="ml-1">
-                  <path d="M5 3l14 9-14 9V3z" />
-                </svg>
-              </div>
-            </div>
+          return (
+            <motion.div
+              key={video.id}
+              variants={cardVariants}
+              whileHover={!isPlaying ? { y: -5 } : {}}
+              className="group relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-white border border-gray-100 shadow-md transition-shadow duration-300 hover:shadow-lg"
+            >
+              <AnimatePresence mode="wait">
+                {isPlaying ? (
+                  // Live YouTube Player replacing the placeholder
+                  <motion.div
+                    key="video-player"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full h-full bg-black"
+                  >
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
+                      title={video.client}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
+                    ></iframe>
+                  </motion.div>
+                ) : (
+                  // Premium Minimalist Placeholder
+                  <motion.div
+                    key="video-placeholder"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => handlePlayVideo(video.id)}
+                    className="absolute inset-0 flex flex-col justify-between p-8 cursor-pointer bg-gradient-to-br from-[#fdfbfb] to-[#ebedee]"
+                  >
+                    {/* Top Row: Duration Tag */}
+                    <div className="flex justify-between items-start">
+                      <span className="text-[10px] uppercase tracking-widest bg-[#4a1c13]/5 text-[#4a1c13] px-3 py-1 rounded-full border border-[#4a1c13]/10 font-medium">
+                        {video.duration}
+                      </span>
+                    </div>
 
-            {/* Text Content */}
-            <div className="absolute bottom-6 left-6 right-6 text-white">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] uppercase tracking-widest bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                  {video.duration}
-                </span>
-              </div>
-              <h4 className="font-bold text-[18px] leading-tight mb-1">{video.client}</h4>
-              <p className="text-white/70 text-[13px]">{video.project}</p>
-            </div>
-          </motion.div>
-        ))}
+                    {/* Middle: Custom Glassmorphism Play Button */}
+                    <div className="flex items-center justify-center my-auto">
+                      <div className="w-16 h-16 rounded-full bg-[#4a1c13]/5 flex items-center justify-center border border-[#4a1c13]/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-[#ff7043] group-hover:border-transparent">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1 text-[#4a1c13] group-hover:text-white transition-colors duration-300">
+                          <path d="M5 3l14 9-14 9V3z" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Bottom: Project Description Details */}
+                    <div className="border-t border-gray-200/60 pt-4">
+                      <h4 className="font-bold text-[18px] text-[#4a1c13] leading-tight mb-1">
+                        {video.client}
+                      </h4>
+                      <p className="text-[#6B5C57] text-[13px]">
+                        {video.project}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
       </motion.div>
 
-      {/* ========================================= */}
-      {/* GOOGLE REVIEWS SECTION                    */}
-      {/* ========================================= */}
+      {/* GOOGLE REVIEWS SECTION (HARDCODED) */}
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -202,16 +223,18 @@ const Testimonials: React.FC = () => {
             <div>
               <h2 className="text-[#4a1c13] font-bold text-[20px] leading-tight">Excellent</h2>
               <div className="flex items-center gap-1 text-[13px] text-gray-500">
-                <span className="font-bold text-[#4a1c13]">4.9/5</span> based on 45+ reviews
+                <span className="font-bold text-[#4a1c13]">4.9/5</span> based on Google Reviews
               </div>
             </div>
           </div>
-          <motion.button
-            whileHover={{ backgroundColor: "#f3f4f6" }}
-            className="px-6 py-2.5 rounded-full border border-gray-200 text-[14px] font-bold text-[#4a1c13] transition-colors"
-          >
-            Write a review
-          </motion.button>
+          <a href="YOUR_GMB_REVIEW_LINK" target="_blank" rel="noreferrer">
+            <motion.button
+              whileHover={{ backgroundColor: "#f3f4f6" }}
+              className="px-6 py-2.5 rounded-full border border-gray-200 text-[14px] font-bold text-[#4a1c13] transition-colors"
+            >
+              Write a review
+            </motion.button>
+          </a>
         </motion.div>
 
         <motion.div
@@ -221,7 +244,7 @@ const Testimonials: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
-          {googleReviews.map((review) => (
+          {staticReviews.map((review) => (
             <motion.div
               key={review.id}
               variants={cardVariants}
@@ -230,20 +253,19 @@ const Testimonials: React.FC = () => {
               className="bg-white border border-gray-100 rounded-[1.5rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between"
             >
               <div>
-                {/* Header: Avatar, Name, Date, Google Icon */}
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex gap-3 items-center">
                     <img 
-                      src={review.avatar} 
-                      alt={review.name} 
+                      src={review.profile_photo_url || `https://ui-avatars.com/api/?name=${review.author_name}`} 
+                      alt={review.author_name} 
                       className="w-11 h-11 rounded-full object-cover border border-gray-100"
                     />
                     <div>
                       <h4 className="text-[#4a1c13] font-bold text-[15px] leading-tight mb-0.5">
-                        {review.name}
+                        {review.author_name}
                       </h4>
                       <p className="text-[12px] text-gray-400">
-                        {review.date}
+                        {review.relative_time_description}
                       </p>
                     </div>
                   </div>
@@ -252,7 +274,6 @@ const Testimonials: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Star Rating */}
                 <div className="flex items-center space-x-1 mb-5">
                   {[...Array(5)].map((_, i) => (
                     <svg
@@ -268,7 +289,6 @@ const Testimonials: React.FC = () => {
                   ))}
                 </div>
                 
-                {/* Review Text */}
                 <p className="text-[#6B5C57] text-[14.5px] leading-[1.7]">
                   "{review.text}"
                 </p>
@@ -278,9 +298,7 @@ const Testimonials: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* ========================================= */}
-      {/* BOTTOM CTA                                */}
-      {/* ========================================= */}
+      {/* BOTTOM CTA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
