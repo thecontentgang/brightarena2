@@ -10,8 +10,8 @@ const categoriesData = Array.from(new Set(designsData.map(d => d.category))).map
   return {
     name: cat,
     count: designsInCategory.length,
-    coverImage: designsInCategory[0]?.coverImage || "", // Uses the first design's image as the category cover
-    slug: cat.toLowerCase().replace(/\s+/g, '-'), // Creates a clean URL slug (e.g., "living-room")
+    coverImage: designsInCategory[0]?.coverImage || "", 
+    slug: cat.toLowerCase().replace(/\s+/g, '-'), 
   };
 });
 
@@ -20,10 +20,10 @@ const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ─── CATEGORY CARD ─── */
 function CategoryCard({ category, index }: { category: typeof categoriesData[0]; index: number }) {
-  // Map index to CSS Grid classes for a beautiful bento-box layout
+  // The grid's 'auto-rows' safely controls the height without conflicts.
   const spanClasses = index % 4 === 0 || index % 4 === 3
-    ? "md:col-span-2 aspect-[4/3] md:aspect-auto" 
-    : "md:col-span-1 aspect-square md:aspect-auto";
+    ? "md:col-span-2" 
+    : "md:col-span-1";
 
   return (
     <motion.div
@@ -32,7 +32,7 @@ function CategoryCard({ category, index }: { category: typeof categoriesData[0];
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
-      className={`group relative overflow-hidden rounded-[2rem] cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-shadow duration-500 ${spanClasses}`}
+      className={`group relative w-full h-full overflow-hidden rounded-[2rem] cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-shadow duration-500 ${spanClasses}`}
     >
       <Link to={`/designs/${category.slug}`} className="block w-full h-full">
         <img
@@ -73,8 +73,16 @@ export default function DesignPage() {
   return (
     <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
+      {/* ── BREADCRUMB CLEARANCE AREA ── */}
+      {/* This creates the exact top padding needed for the navbar clearance. 
+          If your Breadcrumb component is scoped to the page, drop it right inside this div. */}
+      <div className="pt-24 md:pt-32 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
+         {/* <Breadcrumb /> */}
+      </div>
+
       {/* ── HERO ── */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+      {/* Reduced the pt-32 to pt-8 since the clearance is now handled by the breadcrumb wrapper above */}
+      <section className="pt-8 md:pt-12 pb-16 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -124,10 +124,8 @@ const Testimonials: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: smoothEase }}
       >
-        <p className="text-[11px] tracking-[0.3em] uppercase font-medium mb-5 text-[#8A7570]">
-          Client Stories
-        </p>
-        <h1 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 text-[#4a1c13] font-primary font-light">
+        
+        <h1 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 pt-6 text-[#4a1c13] font-primary font-light">
           Don't just take our <br className="hidden sm:block" />
           <span className="text-[#C4623A] italic">
             word for it.

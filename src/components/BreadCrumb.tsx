@@ -41,9 +41,9 @@ const Breadcrumb = () => {
       className="fixed top-0 left-0 w-full z-40 px-6 md:px-12 lg:px-16 pt-24 md:pt-32 pointer-events-none"
     >
       <div className="max-w-[1400px] mx-auto">
-        {/* 4. Disable pointer events on the list when hidden so invisible links aren't clickable */}
+        {/* 4. Added 'justify-center' to perfectly center the breadcrumb horizontally */}
         <ol 
-          className={`flex items-center gap-2 text-[10px] md:text-[11px] uppercase tracking-[0.25em] font-bold text-[#8A7570] ${
+          className={`flex items-center justify-center gap-2 text-[10px] md:text-[11px] uppercase tracking-[0.25em] font-bold text-[#8A7570] ${
             isTop ? "pointer-events-auto" : "pointer-events-none"
           }`}
         >

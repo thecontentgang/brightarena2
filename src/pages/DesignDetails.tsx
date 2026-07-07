@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { designsData } from "./designsData"; // Adjust path as needed
 
 export default function DesignDetailsPage() {
@@ -48,16 +48,16 @@ export default function DesignDetailsPage() {
   return (
     <main className="bg-[#f7f4ee] text-[#4a1c13] w-full overflow-hidden antialiased font-sans selection:bg-[#ff7043] selection:text-white pb-24">
       
-      {/* ── BACK BUTTON ── */}
+      {/* ── BREADCRUMB CLEARANCE AREA ── */}
+      {/* This creates the exact top padding needed for the navbar clearance. 
+          Matches the alignment of the hero section below it. */}
       <div className="pt-24 md:pt-32 px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto">
-        <Link to="/designs" className="inline-flex items-center gap-2 text-[#4a1c13]/60 hover:text-[#ff7043] transition-colors text-sm font-bold uppercase tracking-widest">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Back to Categories
-        </Link>
+         {/* <Breadcrumb /> */}
       </div>
 
       {/* ── DYNAMIC HERO ── */}
-      <section className="pt-10 md:pt-12 pb-12 md:pb-16 relative">
+      {/* Reduced padding here since clearance is now handled by the breadcrumb wrapper */}
+      <section className="pt-4 md:pt-8 pb-12 md:pb-16 relative">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 text-center">
           <h1 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary capitalize">
             {categoryName} <br />
@@ -84,14 +84,17 @@ export default function DesignDetailsPage() {
       <section className="px-4 md:px-12 lg:px-16 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[300px] md:auto-rows-[450px] gap-4 md:gap-6 grid-flow-dense">
           {galleryItems.map((item, index) => {
-            const spanClasses = index % 4 === 0 ? "md:col-span-2 aspect-video md:aspect-auto" : "md:col-span-1 aspect-square md:aspect-auto";
+            // FIXED: Removed aspect ratio classes to prevent grid height conflicts
+            const spanClasses = index % 4 === 0 ? "md:col-span-2" : "md:col-span-1";
+            
             return (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                className={`group relative overflow-hidden rounded-[2rem] bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
+                // FIXED: Added w-full h-full so the card perfectly fits the auto-row height
+                className={`group relative w-full h-full overflow-hidden rounded-[2rem] bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
               >
                 {item.src ? (
                   <img 

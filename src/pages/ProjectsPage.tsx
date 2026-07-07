@@ -2,18 +2,26 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { projectsData,type Project } from "./ProjectsData"; // Ensure path is correct
+import { useEffect } from "react";
+import { projectsData, type Project } from "./ProjectsData"; 
 
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+// Utility to force the path to be a .jpg
+const forceJpg = (path?: string) => {
+  if (!path) return "";
+  return path.replace(/\.(png|jpeg|JPG|avif|webp)$/i, ".jpg");
+};
+
 /* ─── PROJECT CARD ─── */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  // Logic to determine grid span based on index for a masonry look
   const spanClasses = index % 5 === 0 
     ? "md:row-span-2 md:col-span-1 aspect-[3/4]" 
     : index % 3 === 0 
     ? "md:col-span-2 md:row-span-1 aspect-video" 
     : "md:col-span-1 md:row-span-1 aspect-square";
+
+  const safeImage = forceJpg(project.heroImage);
 
   return (
     <motion.div
@@ -23,14 +31,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       viewport={{ once: true, margin: "-50px" }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
-      className={`group relative overflow-hidden rounded-2xl cursor-pointer bg-[#e8e5de] ${spanClasses}`}
+      className={`group relative overflow-hidden rounded-2xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
     >
-      <Link to={`/portfolio/${project.slug}`} className="block w-full h-full">
+      <Link to={`/portfolio/${project.slug}`} className="block w-full h-full" aria-label={`View details for ${project.title}`}>
         <img
-          src={project.heroImage}
+          src={safeImage}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+          decoding="async"
           loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+          onError={(e) => {
+            // Fallback to a beautiful placeholder if the local image is missing
+            e.currentTarget.src = `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop`;
+          }}
         />
 
         {/* Elegant Hover Overlay */}
@@ -54,16 +67,21 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 /* ─── PAGE COMPONENT ─── */
 export default function PortfolioPage() {
+  // Basic SEO Page Title
+  useEffect(() => {
+    document.title = "Portfolio | Curated Interior Designs";
+  }, []);
+
   return (
-    <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
+    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
       
       {/* ── HERO ── */}
-      <section className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16">
+      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16">
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: smoothEase }}
-          className="text-[#ff7043] text-xs tracking-[0.3em] uppercase font-bold mb-6"
+          className="text-[#ff7043] text-xs tracking-[0.3em] uppercase font-bold mb-6 pt-6"
         >
           Selected Works
         </motion.p>
@@ -76,10 +94,10 @@ export default function PortfolioPage() {
           Designing spaces with <br />
           <span className="italic font-serif text-[#ff7043]">purpose.</span>
         </motion.h1>
-      </section>
+      </header>
 
       {/* ── MASONRY GRID ── */}
-      <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
+      <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto" aria-label="Project Gallery">
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 grid-flow-dense"
@@ -91,6 +109,6 @@ export default function PortfolioPage() {
           </AnimatePresence>
         </motion.div>
       </section>
-    </div>
+    </main>
   );
 }
