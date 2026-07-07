@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type ReviewType = "video" | "google";
@@ -12,8 +12,6 @@ interface Testimonial {
   role: string;
   location: string;
   rotation: number;
-  delay: number;
-  floatDuration: number;
   videoId?: string;
   description?: string;
   rating?: number;
@@ -21,6 +19,7 @@ interface Testimonial {
   date?: string;
 }
 
+// We kept the rotations for the "scattered" look, but removed the float durations and delays.
 const testimonials: Testimonial[] = [
   {
     id: 1,
@@ -31,8 +30,6 @@ const testimonials: Testimonial[] = [
     description: "The transformation of our home was beyond what we imagined. Priya and her family wanted to create a space that felt both luxurious and livable.",
     location: "Mumbai",
     rotation: -3,
-    delay: 0,
-    floatDuration: 3.2,
   },
   {
     id: 2,
@@ -44,8 +41,6 @@ const testimonials: Testimonial[] = [
     date: "2 weeks ago",
     location: "Pune",
     rotation: 4,
-    delay: 0.5,
-    floatDuration: 4.1,
   },
   {
     id: 3,
@@ -56,8 +51,6 @@ const testimonials: Testimonial[] = [
     description: "Working with this team was a game-changer for our office space. Arjun needed an office that would inspire creativity.",
     location: "Bangalore",
     rotation: -2,
-    delay: 1.2,
-    floatDuration: 3.8,
   },
   {
     id: 4,
@@ -69,8 +62,6 @@ const testimonials: Testimonial[] = [
     date: "1 month ago",
     location: "Hyderabad",
     rotation: 5,
-    delay: 0.8,
-    floatDuration: 4.5,
   },
   {
     id: 5,
@@ -81,8 +72,6 @@ const testimonials: Testimonial[] = [
     description: "Our restaurant has never looked better. The ambiance they created is exceptional.",
     location: "Delhi",
     rotation: -4,
-    delay: 2.1,
-    floatDuration: 3.5,
   },
   {
     id: 6,
@@ -94,8 +83,6 @@ const testimonials: Testimonial[] = [
     date: "3 months ago",
     location: "Gurgaon",
     rotation: 2,
-    delay: 1.5,
-    floatDuration: 4.0,
   },
 ];
 
@@ -117,11 +104,7 @@ const GoogleIcon = () => (
 
 const ScatteredTestimonials: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  
   const [filter, setFilter] = useState<"all" | "video" | "google">("all");
-  const containerRef = useRef<HTMLDivElement>(null);
-
- 
 
   const selectedTestimonial = testimonials.find((t) => t.id === selectedId);
   const filteredTestimonials = testimonials.filter(t => filter === "all" || t.type === filter);
@@ -129,15 +112,14 @@ const ScatteredTestimonials: React.FC = () => {
   useEffect(() => {
     if (selectedId) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
+    return () => { document.body.style.overflow = "unset"; };
   }, [selectedId]);
 
-  
-
   return (
-    <section className="relative w-full min-h-[90vh] bg-[#f7f4ee] overflow-hidden py-16 md:py-24 px-4 flex flex-col items-center">
+    <section className="relative w-full min-h-[90vh] bg-[#f7f4ee] py-16 md:py-24 px-4 flex flex-col items-center overflow-hidden">
 
       {/* Header & Interactive Filters */}
-      <div className="relative z-10 text-center flex flex-col items-center pointer-events-auto w-full max-w-4xl mx-auto">
+      <div className="relative z-10 text-center flex flex-col items-center w-full max-w-4xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,32 +146,22 @@ const ScatteredTestimonials: React.FC = () => {
         </div>
       </div>
 
-      {/* Responsive Grid/Scatter Layout 
-          - Mobile: 3-column Grid
-          - Desktop: Flex Wrap (Scatter)
-      */}
-      <div
-        ref={containerRef}
-        className="relative w-full max-w-[1200px] mx-auto grid grid-cols-3 gap-3 sm:gap-4 md:flex md:flex-wrap md:items-center md:justify-center md:gap-8 lg:gap-12 pb-20"
-      >
+      {/* Scattered Layout Grid (Static but stylized) */}
+      <div className="relative w-full max-w-[1200px] mx-auto grid grid-cols-3 gap-3 sm:gap-4 md:flex md:flex-wrap md:items-center md:justify-center md:gap-8 lg:gap-12 pb-20">
         <AnimatePresence mode="popLayout">
           {filteredTestimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
               layoutId={`card-container-${testimonial.id}`}
-              drag
-              dragConstraints={containerRef}
-              whileDrag={{ scale: 1.05, cursor: "grabbing", zIndex: 60 }}
+              // Removed dragging & floating. Only static entry animation + rotation.
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{
                 rotate: testimonial.rotation,
                 opacity: 1,
                 scale: 1,
-                y: [0, -8, 0],
               }}
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
               transition={{
-                y: { duration: testimonial.floatDuration, repeat: Infinity, ease: "easeInOut", delay: testimonial.delay },
                 opacity: { duration: 0.4 },
                 layout: { duration: 0.4, type: "spring", bounce: 0.2 },
               }}
@@ -201,7 +173,7 @@ const ScatteredTestimonials: React.FC = () => {
               }}
               onClick={() => setSelectedId(testimonial.id)}
               className={`
-                cursor-grab group shadow-md md:shadow-lg bg-white 
+                cursor-pointer group shadow-md md:shadow-lg bg-white 
                 rounded-2xl md:rounded-[2rem] 
                 p-1.5 md:p-3 md:pr-6 lg:pr-8 
                 flex items-center justify-center md:justify-start gap-0 md:gap-4
@@ -209,8 +181,7 @@ const ScatteredTestimonials: React.FC = () => {
                 ${selectedId === testimonial.id ? "z-50 opacity-0 pointer-events-none" : "z-20"}
               `}
             >
-
-              {/* Thumbnail (Full width on mobile, fixed w/h on desktop) */}
+              {/* Thumbnail */}
               <motion.div
                 layoutId={`image-${testimonial.id}`}
                 className="w-full aspect-square md:w-16 md:h-16 rounded-xl md:rounded-3xl overflow-hidden relative flex-shrink-0 bg-[#f4f1eb] flex items-center justify-center shadow-inner"
@@ -224,12 +195,7 @@ const ScatteredTestimonials: React.FC = () => {
                       className="absolute inset-0 w-full h-full object-cover rounded-xl md:rounded-full group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
-                      {/* SVG Play Icon: Large on mobile, smaller on desktop */}
-                      <svg 
-                        className="w-8 h-8 md:w-5 md:h-5 text-white/95 ml-1 drop-shadow-md" 
-                        fill="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className="w-8 h-8 md:w-5 md:h-5 text-white/95 ml-1 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
@@ -241,7 +207,7 @@ const ScatteredTestimonials: React.FC = () => {
                 )}
               </motion.div>
 
-              {/* Text Label - HIDDEN on mobile, flex on md+ */}
+              {/* Text Label */}
               <motion.div layoutId={`text-content-${testimonial.id}`} className="hidden md:flex flex-col">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-[#4a1c13] text-sm md:text-base whitespace-nowrap">{testimonial.name}</h3>
@@ -262,7 +228,7 @@ const ScatteredTestimonials: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Expanded Modal State */}
+      {/* Expanded Modal State (Remains identical) */}
       <AnimatePresence>
         {selectedId && selectedTestimonial && (
           <React.Fragment>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { designsData } from "./designsData"; // Ensure this path points to your designsData file
+import { designsData } from "./designsData"; // Adjust path as needed
 
 // Dynamically extract categories, count them, and grab a cover image for each
 const categoriesData = Array.from(new Set(designsData.map(d => d.category))).map(cat => {
@@ -34,7 +34,6 @@ function CategoryCard({ category, index }: { category: typeof categoriesData[0];
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
       className={`group relative overflow-hidden rounded-[2rem] cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-shadow duration-500 ${spanClasses}`}
     >
-      {/* Route to a specific category page (e.g., /designs/modern-minimalist) */}
       <Link to={`/designs/${category.slug}`} className="block w-full h-full">
         <img
           src={category.coverImage}
@@ -58,7 +57,7 @@ function CategoryCard({ category, index }: { category: typeof categoriesData[0];
           </div>
           
           {/* Animated Arrow that appears on hover */}
-          <div className="absolute bottom-10 right-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20  items-center justify-center text-white opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out hidden md:flex">
+          <div className="absolute bottom-10 right-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 items-center justify-center text-white opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out hidden md:flex">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -126,7 +125,6 @@ export default function DesignPage() {
           </div>
         )}
       </section>
-
     </div>
   );
 }

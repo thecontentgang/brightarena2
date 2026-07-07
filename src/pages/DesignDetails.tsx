@@ -3,14 +3,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { designsData } from "./designsData"; 
-
-// const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+import { designsData } from "./designsData"; // Adjust path as needed
 
 export default function DesignDetailsPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  // Find all designs matching the category slug
   const categoryDesigns = designsData.filter(
     (d) => d.category.toLowerCase().replace(/\s+/g, "-") === slug
   );
@@ -34,6 +33,17 @@ export default function DesignDetailsPage() {
   const heroImgY = useTransform(heroScroll, [0, 1], ["-10%", "10%"]);
 
   if (categoryDesigns.length === 0) return null;
+
+  // IMPORTANT FIX: Extract ALL images from the matched designs 
+  // so the masonry grid shows the full gallery, not just the single cover object!
+  const galleryItems = categoryDesigns.flatMap(design => 
+    design.images.map((imgSrc, imgIndex) => ({
+      id: `${design.id}-${imgIndex}`,
+      src: imgSrc,
+      title: design.title,
+      description: design.description
+    }))
+  );
 
   return (
     <main className="bg-[#f7f4ee] text-[#4a1c13] w-full overflow-hidden antialiased font-sans selection:bg-[#ff7043] selection:text-white pb-24">
@@ -60,7 +70,6 @@ export default function DesignDetailsPage() {
       <section className="px-4 md:px-6 lg:px-12 max-w-[1600px] mx-auto mb-16 md:mb-24">
         <div ref={heroImgRef} className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-[#e8e5de] h-[40vh] md:h-[60vh] shadow-sm">
           <motion.div className="w-full h-full" style={{ y: heroImgY }}>
-            {/* Added onError handler to replace broken images with a solid color div */}
             <img 
                 src={heroImage} 
                 alt={categoryName} 
@@ -71,26 +80,23 @@ export default function DesignDetailsPage() {
         </div>
       </section>
 
-      {/* ── MASONRY GRID ── */}
+      {/* ── MASONRY GRID (Fixed Mapping) ── */}
       <section className="px-4 md:px-12 lg:px-16 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[300px] md:auto-rows-[450px] gap-4 md:gap-6 grid-flow-dense">
-          {categoryDesigns.map((design, index) => {
+          {galleryItems.map((item, index) => {
             const spanClasses = index % 4 === 0 ? "md:col-span-2 aspect-video md:aspect-auto" : "md:col-span-1 aspect-square md:aspect-auto";
             return (
               <motion.div
-                key={design.id}
+                key={item.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 className={`group relative overflow-hidden rounded-[2rem] bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
               >
-                {/* KEY FIX: Check if image exists, otherwise show a gray placeholder 
-                   with a slight pulse animation
-                */}
-                {design.coverImage ? (
+                {item.src ? (
                   <img 
-                    src={design.coverImage} 
-                    alt={design.title} 
+                    src={item.src} 
+                    alt={item.title} 
                     className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" 
                     loading="lazy" 
                   />
@@ -101,8 +107,8 @@ export default function DesignDetailsPage() {
                 )}
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h3 className="text-white font-primary text-2xl mb-2">{design.title}</h3>
-                  <p className="text-white/70 text-sm line-clamp-2">{design.description}</p>
+                  <h3 className="text-white font-primary text-2xl mb-2">{item.title}</h3>
+                  <p className="text-white/70 text-sm line-clamp-2">{item.description}</p>
                 </div>
               </motion.div>
             );

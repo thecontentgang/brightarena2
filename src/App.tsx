@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import PageTransitionLayout from './components/PageTransitionLayout'; // <-- Import the new wrapper
+import PageTransitionLayout from './components/PageTransitionLayout';
 
-// Your Page Imports
+// Page Imports
 import HomePage from './sections/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
@@ -25,11 +25,9 @@ const App = () => {
     <>
       <Navbar />
       <FloatingSocialBar />
-     
-        <Breadcrumb />
+      <Breadcrumb />
       
       <main>
-        {/* Wrap your Routes in the new Layout */}
         <PageTransitionLayout>
           <Routes>
             <Route path="/" element={<HomePage />} />

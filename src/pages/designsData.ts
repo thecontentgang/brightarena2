@@ -1,5 +1,3 @@
-// src/data/designsData.ts
-
 export const designsData = [
   {
     id: 1,
