@@ -12,24 +12,24 @@ const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const videoTestimonials = [
   {
     id: 1,
-    client: "The Weston Family",
-    project: "Luxury Condo Transformation",
-    duration: "41",
-    youtubeId: "aZq2QRwiYsE", // <-- Replace with your YouTube Video ID
+    client: "The Reddy Family",
+    project: "Luxury Jubilee Hills Villa",
+    duration: "0:41",
+    youtubeId: "aZq2QRwiYsE", 
   },
   {
     id: 2,
-    client: "David Chen",
-    project: "Boutique Corporate Office",
+    client: "Rao & Co. Technologies",
+    project: "HITEC City Corporate Office",
     duration: "1:30",
-    youtubeId: "ztyqShdYSEY", // <-- Replace with your YouTube Video ID
+    youtubeId: "ztyqShdYSEY", 
   },
   {
     id: 3,
-    client: "Eleanor Richards",
-    project: "Modern Minimalist Villa",
+    client: "Dr. Srinivas",
+    project: "Banjara Hills Modern Apartment",
     duration: "2:33",
-    youtubeId: "fc27D9buInM", // <-- Replace with your YouTube Video ID
+    youtubeId: "fc27D9buInM", 
   },
 ];
 
@@ -49,7 +49,7 @@ const staticReviews: GoogleReview[] = [
   {
     id: 1,
     author_name: "Jhansi Janu",
-    profile_photo_url: "https://i.pravatar.cc/150?img=47", // <-- Link to their profile picture
+    profile_photo_url: "https://i.pravatar.cc/150?img=47", 
     rating: 5,
     relative_time_description: "11 months ago",
     text: "Bright Arena Interiors completely changed the look of my home with their amazing work. Their designs are very classy and gave my space a luxury feel. The team was very professional, always on time, and handled everything smoothly.If you are searching for the best luxury interior designers in Hyderabad, Bright Arena Interiors is the right choice. I’m really happy with the final result and would definitely suggest them to anyone.",
@@ -143,11 +143,11 @@ const Testimonials: React.FC = () => {
               key={video.id}
               variants={cardVariants}
               whileHover={!isPlaying ? { y: -5 } : {}}
-              className="group relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-white border border-gray-100 shadow-md transition-shadow duration-300 hover:shadow-lg"
+              className="group relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-white shadow-md transition-shadow duration-300 hover:shadow-xl"
             >
               <AnimatePresence mode="wait">
                 {isPlaying ? (
-                  // Live YouTube Player replacing the placeholder
+                  // Live YouTube Player
                   <motion.div
                     key="video-player"
                     initial={{ opacity: 0 }}
@@ -167,39 +167,43 @@ const Testimonials: React.FC = () => {
                     ></iframe>
                   </motion.div>
                 ) : (
-                  // Premium Minimalist Placeholder
+                  // Thumbnail Placeholder State
                   <motion.div
                     key="video-placeholder"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => handlePlayVideo(video.id)}
-                    className="absolute inset-0 flex flex-col justify-between p-8 cursor-pointer bg-gradient-to-br from-[#fdfbfb] to-[#ebedee]"
+                    className="absolute inset-0 cursor-pointer"
                   >
-                    {/* Top Row: Duration Tag */}
-                    <div className="flex justify-between items-start">
-                      <span className="text-[10px] uppercase tracking-widest bg-[#4a1c13]/5 text-[#4a1c13] px-3 py-1 rounded-full border border-[#4a1c13]/10 font-medium">
-                        {video.duration}
-                      </span>
-                    </div>
+                    {/* YouTube Thumbnail Image */}
+                    <img 
+                      src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} 
+                      alt={video.client}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    
+                    {/* Dark Gradient Overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Middle: Custom Glassmorphism Play Button */}
-                    <div className="flex items-center justify-center my-auto">
-                      <div className="w-16 h-16 rounded-full bg-[#4a1c13]/5 flex items-center justify-center border border-[#4a1c13]/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-[#ff7043] group-hover:border-transparent">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1 text-[#4a1c13] group-hover:text-white transition-colors duration-300">
+                    {/* Glassmorphism Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#ff7043]/90 group-hover:border-transparent">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="ml-1">
                           <path d="M5 3l14 9-14 9V3z" />
                         </svg>
                       </div>
                     </div>
 
-                    {/* Bottom: Project Description Details */}
-                    <div className="border-t border-gray-200/60 pt-4">
-                      <h4 className="font-bold text-[18px] text-[#4a1c13] leading-tight mb-1">
-                        {video.client}
-                      </h4>
-                      <p className="text-[#6B5C57] text-[13px]">
-                        {video.project}
-                      </p>
+                    {/* Text Content over Thumbnail */}
+                    <div className="absolute bottom-6 left-6 right-6 text-white">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] uppercase tracking-widest bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                          {video.duration}
+                        </span>
+                      </div>
+                      <h4 className="font-bold text-[18px] leading-tight mb-1">{video.client}</h4>
+                      <p className="text-white/80 text-[13px]">{video.project}</p>
                     </div>
                   </motion.div>
                 )}
