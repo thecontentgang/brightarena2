@@ -19,7 +19,6 @@ export interface ProjectItem {
   slug: string;
 }
 
-// Mock data (Replace with your actual imported data)
 const projectsData: ProjectItem[] = [
   {
     id: 1,
@@ -48,7 +47,6 @@ const projectsData: ProjectItem[] = [
     location: "Dubai",
     slug: "lumina-penthouse",
   },
- 
 ];
 
 const PROJECTS = projectsData.map((p) => ({
@@ -64,7 +62,7 @@ const PROJECTS = projectsData.map((p) => ({
 const EASE_FADE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 // ==========================================
-// 2. WEBGL / OGL ENGINE
+// 2. WEBGL / OGL ENGINE  (unchanged, aside from the responsive plane sizing fix)
 // ==========================================
 
 type GL = OGLRenderingContext;
@@ -114,7 +112,6 @@ void main() {
   vUv = uv;
   vec3 newpos = position;
   
-  // Only apply distortion on desktop (uIsMobile < 0.5)
   if (uIsMobile < 0.5) {
     float norm = 0.5;
     float offset = (dot(distortionAxis, position) + norm / 2.) / norm;
@@ -241,7 +238,6 @@ class Media {
   if (planeWidth) this.planeWidth = planeWidth;
   if (planeHeight) this.planeHeight = planeHeight;
 
-  // Set mobile flag based on screen width
   this.program.uniforms.uIsMobile.value = this.screen.width < 768 ? 1 : 0;
 
   this.setScale();
@@ -251,10 +247,8 @@ class Media {
   }
 
   update(scroll: ScrollState) {
-    // Scroll smoothly moves the items UP
     this.plane.position.y = this.y + scroll.current;
     
-    // Pass position to shader for the waving distortion effect
     const position = map(this.plane.position.y, -this.viewport.height, this.viewport.height, 5, 15);
     this.program.uniforms.uPosition.value = position;
     this.program.uniforms.uTime.value += 0.04;
@@ -287,7 +281,6 @@ class Canvas {
     this.onResize();
     this.createGeometry();
     this.createMedias();
-    // Ensure maxScroll is calculated immediately
     if (this.medias.length > 0) this.maxScroll = (this.medias.length - 1) * this.medias[0].height;
     this.update();
     window.addEventListener('resize', this.onResize.bind(this));
@@ -325,25 +318,41 @@ class Canvas {
     const width = height * this.camera.aspect;
     this.viewport = { width, height };
 
-    const isMobile = this.screen.width < 768;
-    const planeW = isMobile ? this.screen.width * 0.75 : 450;
-    const planeH = isMobile ? this.screen.height * 0.55 : 650;
+    // Responsive plane sizing — a real fraction of the actual screen at
+    // every breakpoint, instead of a fixed desktop size that left large
+    // empty margins around the image.
+    let widthFrac: number;
+    let heightFrac: number;
+
+    if (this.screen.width < 640) {
+      widthFrac = 0.9;
+      heightFrac = 0.56;
+    } else if (this.screen.width < 1024) {
+      widthFrac = 0.72;
+      heightFrac = 0.62;
+    } else if (this.screen.width < 1536) {
+      widthFrac = 0.42;
+      heightFrac = 0.7;
+    } else {
+      widthFrac = 0.32;
+      heightFrac = 0.72;
+    }
+
+    const planeW = this.screen.width * widthFrac;
+    const planeH = this.screen.height * heightFrac;
 
     this.medias?.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport, planeWidth: planeW, planeHeight: planeH }));
     
-    // Update max scroll distance when screen changes
     if (this.medias && this.medias.length > 0) {
       this.maxScroll = (this.medias.length - 1) * this.medias[0].height;
     }
   }
 
-  // Receives native scroll progress (0 to 1) from Framer Motion
   setScrollProgress(progress: number) {
     this.scroll.target = progress * this.maxScroll;
   }
 
   update() {
-    // Smooth lerping towards the target dictated by native scrolling
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     
     let closestIndex = 0;
@@ -351,7 +360,6 @@ class Canvas {
 
     this.medias?.forEach(media => {
       media.update(this.scroll);
-      // Determine which poster is closest to the center of the screen
       const dist = Math.abs(media.plane.position.y);
       if (dist < minDistance) {
         minDistance = dist;
@@ -386,7 +394,6 @@ export default function ProjectsShowcase() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const instanceRef = useRef<Canvas | null>(null);
 
-  // Hook into native scroll progression of this specific section
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"]
@@ -412,7 +419,6 @@ export default function ProjectsShowcase() {
     };
   }, []);
 
-  // Map the native scroll progress directly to the WebGL Canvas target
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latestProgress) => {
       if (instanceRef.current) {
@@ -422,7 +428,6 @@ export default function ProjectsShowcase() {
     return () => unsubscribe();
   }, [scrollYProgress]);
 
-  // UI Handlers link directly to native window scroll
   const handleNext = () => window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   const handlePrev = () => window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
 
@@ -430,9 +435,7 @@ export default function ProjectsShowcase() {
 
   if (!activeProject) return null;
 
-  // Make the section height proportional to the number of projects. 
-  // e.g., 4 projects = 400vh tall section.
-  const containerHeight = `${PROJECTS.length * 100}vh`;
+  const containerHeight = `${100 + (PROJECTS.length - 1) * 85}vh`;
 
   return (
     <section 
@@ -441,31 +444,92 @@ export default function ProjectsShowcase() {
       className="relative w-full bg-[#2a110a] select-none"
     >
       
-      {/* ── STICKY WRAPPER (This stays on screen while user scrolls through the 400vh container) ── */}
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden">
-        
+
+        {/* Faint blueprint grid — same drafting-paper texture as Trusted By, ties the section back to the brand */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none z-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #ffc107 1px, transparent 1px), linear-gradient(to bottom, #ffc107 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+          }}
+        />
+
+        {/* Ambient glow so any exposed margin around the image reads as designed atmosphere */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] max-w-[900px] max-h-[900px] bg-[#ffc107]/[0.05] blur-[120px] rounded-full pointer-events-none z-0" />
+
         {/* 3D CANVAS BACKGROUND */}
-        <div ref={containerRef} className="absolute inset-0 z-0">
+        <div ref={containerRef} className="absolute inset-0 z-[1]">
           <canvas ref={canvasRef} className="block w-full h-full" />
         </div>
 
         {/* GRADIENT OVERLAYS */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent pointer-events-none z-10" />
 
-        {/* GLOBAL SLIDE COUNTER */}
-        <div className="absolute top-8 right-6 md:top-12 md:right-12 flex items-center gap-4 z-20 pointer-events-none">
-          <span className="text-white/60 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold">
-            Featured
-          </span>
-          <div className="w-px h-4 bg-white/20" />
-          <span className="text-white text-xs md:text-sm tracking-widest font-mono tabular-nums">
+        {/* TOP-LEFT EYEBROW — corner-bracket label, consistent with Trusted By */}
+        <div className="absolute top-10 left-6 md:top-14 md:left-16 z-20 pointer-events-none">
+          <div className="relative px-5 py-2">
+            <span className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#ffc107]/60" />
+            <span className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#ffc107]/60" />
+            <span className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#ffc107]/60" />
+            <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#ffc107]/60" />
+            <span className="text-[10px] md:text-xs font-semibold tracking-[0.3em] text-[#ffc107] uppercase">
+              Selected Works
+            </span>
+          </div>
+        </div>
+
+        {/* SIGNATURE ELEMENT — vertical project index rail.
+            A datum line running top-to-bottom with a tick per project;
+            the active tick gets a brass diamond marker and the project name,
+            so it doubles as wayfinding, not just a "1 / 3" counter. */}
+        <div className="hidden md:flex absolute top-1/2 right-10 lg:right-16 -translate-y-1/2 z-20 flex-col items-end gap-0 pointer-events-none">
+          {PROJECTS.map((project, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <div key={project.id} className="relative flex items-center gap-4 py-5">
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.span
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 8 }}
+                      transition={{ duration: 0.4, ease: EASE_FADE }}
+                      className="text-white text-xs tracking-[0.2em] uppercase font-medium whitespace-nowrap"
+                    >
+                      {project.title}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                <span className="text-white/40 text-[10px] font-mono tabular-nums w-5 text-right">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="relative w-px h-8 bg-white/15">
+                  {isActive && (
+                    <motion.span
+                      layoutId="rail-marker"
+                      transition={{ duration: 0.5, ease: EASE_FADE }}
+                      className="absolute -left-[3px] top-1/2 -translate-y-1/2 w-[7px] h-[7px] rotate-45 bg-[#ffc107]"
+                    />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* MOBILE COUNTER — simple fallback where the rail doesn't fit */}
+        <div className="flex md:hidden absolute top-10 right-6 z-20 items-center gap-4 pointer-events-none">
+          <span className="text-white text-xs tracking-widest font-mono tabular-nums">
             {String(activeIndex + 1).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
           </span>
         </div>
 
         {/* MAIN UI PANEL */}
-        <div className="absolute bottom-0 left-0 w-full p-6 pb-12 md:p-16 lg:p-24 z-20 flex flex-col justify-end pointer-events-none">
-          <div className="pointer-events-auto max-w-[90%] md:max-w-2xl">
+        <div className="absolute bottom-0 left-0 w-full px-6 pb-14 pt-24 md:px-16 md:pb-20 lg:px-24 lg:pb-24 z-20 flex flex-col justify-end pointer-events-none">
+          <div className="pointer-events-auto w-full max-w-[92%] sm:max-w-xl md:max-w-2xl">
             
             <AnimatePresence mode="wait">
               <motion.div
@@ -474,7 +538,7 @@ export default function ProjectsShowcase() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, ease: EASE_FADE }}
-                className="flex items-center gap-3 text-[9px] md:text-xs tracking-[0.3em] uppercase font-bold text-white/70 mb-4 md:mb-6"
+                className="flex items-center gap-3 text-[9px] md:text-xs tracking-[0.3em] uppercase font-bold text-white/70 mb-5 md:mb-7"
               >
                 <span>{activeProject.category}</span>
                 <span className="w-1 h-1 rounded-full bg-[#ff7043]" />
@@ -491,16 +555,16 @@ export default function ProjectsShowcase() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.7, ease: EASE_FADE, delay: 0.1 }}
-                className="text-[clamp(2.5rem,6vw,6rem)] font-light leading-[1] tracking-tight text-white mb-8 md:mb-16 font-primary drop-shadow-lg"
+                className="text-[clamp(2.25rem,6vw,6rem)] font-light leading-[1.05] tracking-tight text-white mb-10 md:mb-20 font-primary drop-shadow-lg"
               >
                 {activeProject.title}
               </motion.h2>
             </AnimatePresence>
 
-            <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-6">
               <Link 
                 to={`/portfolio/${activeProject.slug}`}
-                className="group relative inline-flex items-center gap-6 px-8 py-4 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-white/50 w-fit"
+                className="group relative inline-flex items-center gap-6 px-9 py-4 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-white/50 w-fit"
               >
                 <div className="absolute inset-0 bg-[#ff7043] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0" />
                 <span className="relative z-10 text-[10px] md:text-xs font-bold tracking-widest uppercase text-white transition-colors duration-500">
@@ -508,10 +572,10 @@ export default function ProjectsShowcase() {
                 </span>
               </Link>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-5">
                 <button 
                   onClick={handlePrev}
-                  className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-[52px] h-[52px] rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
                   disabled={activeIndex === 0}
                   aria-label="Previous Project"
                 >
@@ -522,7 +586,7 @@ export default function ProjectsShowcase() {
                 
                 <button 
                   onClick={handleNext}
-                  className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-[52px] h-[52px] rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
                   disabled={activeIndex === PROJECTS.length - 1}
                   aria-label="Next Project"
                 >

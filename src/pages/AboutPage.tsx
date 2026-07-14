@@ -26,13 +26,13 @@ const IMAGES = {
 
 const founders = [
   {
-    name: "Niveditha Reddy",
-    role: "Co-Founder & Chief Executive Officer",
+    name: "Srilatha Ravuri",
+    role: "Co-Founder & Director of Operations",
     description: "Niveditha Reddy is the creative force behind Bright Arena, bringing a refined vision for luxury interiors and modern living spaces. With a strong background in architecture and interior design, she focuses on creating timeless spaces that combine elegance, comfort, and functionality.",
   },
   {
-    name: "Anand Gunjur",
-    role: "Co-Founder & Director of Operations",
+    name: "Bhavani Shankar",
+    role: "Co-Founder & Chief Execuetive Officer",
     description: "Anand Gunjur leads the operational and strategic growth of Bright Arena with extensive experience in business management and global operations. His expertise in execution, client relationships, and project coordination ensures every project is delivered with excellence and precision.",
   },
 ];

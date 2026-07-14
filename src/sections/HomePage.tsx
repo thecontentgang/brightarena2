@@ -12,7 +12,7 @@ import TrustedBy from './TrustBy';
 // These are code-split and only downloaded after the initial render
 const Services = React.lazy(() => import('./ServicesSection'));
 const Philosophy = React.lazy(() => import('./PhilosophySection'));
-const ProjectsSection = React.lazy(() => import('./ProjectsSection'));
+// const ProjectsSection = React.lazy(() => import('./ProjectsSection'));
 const TestimonialsSection = React.lazy(() => import('./TestimonialSection'));
 
 // A minimal, on-brand loading skeleton for suspended components
@@ -40,7 +40,7 @@ const HomePage = () => {
       <Suspense fallback={<SectionLoader />}>
         <Services />
         <Philosophy />
-        <ProjectsSection />
+        {/* <ProjectsSection /> */}
         <TestimonialsSection />
       </Suspense>
       

@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
@@ -37,48 +40,75 @@ const services = [
 
 const HorizontalServices: React.FC = () => {
   const navigate = useNavigate();
-  const targetRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll progress of the 400vh section
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      if (!track) return;
 
-  // Updated Spring physics for a more cinematic, fluid glide
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 20,
-    mass: 0.5,
-  });
+      // Total horizontal distance the track needs to travel:
+      // track scrollWidth - viewport width = how far left it must shift
+      // so the last card ends flush with the right edge.
+      const getScrollAmount = () => {
+        const trackWidth = track.scrollWidth;
+        return -(trackWidth - window.innerWidth);
+      };
 
-  // 4 items = 400vw total width.
-  // 300vw is exactly 75% of 400vw.
-  const x = useTransform(smoothProgress, [0, 1], ["0%", "-75%"]);
+      const tween = gsap.to(track, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${Math.abs(getScrollAmount())}`, // pin lasts exactly as long as the horizontal travel needs
+          scrub: 1,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true, // recalculates getScrollAmount() on resize
+          // markers: true, // uncomment while tuning
+        },
+      });
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section ref={targetRef} className="relative h-[400vh] bg-[#f7f4ee] antialiased">
+    <section
+      ref={sectionRef}
+      className="relative h-screen bg-[#f7f4ee] antialiased overflow-hidden"
+    >
+      {/* Pinned Viewport */}
+      <div className="h-screen flex flex-col justify-center overflow-hidden py-6 md:py-12">
 
-      {/* The Sticky Viewport — Changed to strictly center the entire visual block inside the screen */}
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-6 md:py-12">
-
-        {/* Section Header — Replaced top padding with fixed bottom padding to lock the gap */}
+        {/* Section Header */}
         <div className="shrink-0 w-full px-4 pb-4 md:pb-6 text-center z-20">
           <h2 className="text-[#4a1c13] font-primary text-[clamp(32px,5vw,72px)] leading-[1.05] tracking-tight">
             We Do What{" "}
-            <span className="text-[#ff7043] font-primary">
-              We Know
-            </span>
+            <span className="text-[#ff7043] font-primary">We Know</span>
           </h2>
         </div>
 
-        {/* The Moving Track — Height is now constrained at the track level instead of the card level */}
+        {/* The Moving Track */}
         <div className="relative w-full flex-1 min-h-0 max-h-[460px] md:max-h-[640px] overflow-hidden">
-          <motion.div style={{ x }} className="flex w-[400vw] h-full items-start">
+          <div
+            ref={trackRef}
+            className="flex h-full items-start will-change-transform"
+            style={{ width: `${services.length * 100}vw` }}
+          >
             {services.map((service) => (
-
-              <div key={service.id} className="w-[100vw] h-full flex justify-center px-4 md:px-8">
-
-                {/* Massive Card Layout — Inherits height entirely from the track wrapper so it stays glued to the header */}
+              <div
+                key={service.id}
+                className="w-screen h-full flex justify-center px-4 md:px-8"
+              >
                 <div
                   className="
                     relative
@@ -93,7 +123,6 @@ const HorizontalServices: React.FC = () => {
                     shadow-2xl
                   "
                 >
-
                   {/* Background Image */}
                   <img
                     src={service.image}
@@ -101,7 +130,7 @@ const HorizontalServices: React.FC = () => {
                     className="absolute inset-0 w-full h-full object-cover opacity-70 transition-transform duration-[1.5s] ease-out group-hover:scale-110"
                   />
 
-                  {/* Heavier Gradient for text readability */}
+                  {/* Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-opacity duration-700 group-hover:opacity-80" />
 
                   {/* Content Overlay */}
@@ -125,13 +154,11 @@ const HorizontalServices: React.FC = () => {
                       Explore Service
                     </button>
                   </div>
-
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
-
       </div>
     </section>
   );

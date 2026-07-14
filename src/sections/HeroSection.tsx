@@ -1,201 +1,201 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 import ProjectModal from "../components/ProjectModal";
 
-// Premium Apple-like easing curve for fluid, expensive-feeling motion
-const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+gsap.registerPlugin(ScrollTrigger);
 
 const MinimalHero: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // --- Dynamic Gap Logic to match Navbar (px-5 / md:px-10) ---
-  const [horizontalGap, setHorizontalGap] = useState("80px");
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoWrapRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
+  // ---------------------------------------------------------------
+  // 1. LENIS — smooth scroll, synced to GSAP's ticker so ScrollTrigger
+  //    and Lenis agree on scroll position every single frame.
+  // ---------------------------------------------------------------
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setHorizontalGap("40px");
-      } else {
-        setHorizontalGap("80px");
-      }
-    };
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
-    handleResize(); // Set on initial load
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const rafCallback = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(rafCallback);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(rafCallback);
+      lenis.destroy();
+    };
   }, []);
 
-  // Track the scroll progress within the container
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  // ---------------------------------------------------------------
+  // 2. GSAP SCROLLTRIGGER — pins the section and holds it pinned
+  //    for the FULL scrub duration. The section will not release
+  //    until the timeline (shrink + reveal) completes.
+  // ---------------------------------------------------------------
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+      const gap = isMobile ? 40 : 80;
 
-  // Add a spring to smooth out the scroll scrubbing slightly
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 20,
-    mass: 0.5,
-  });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=150%", // <-- scroll distance the pin lasts for. Bump this up/down to control how long it takes to complete.
+          scrub: 1, // smoothed scrub, tied to scroll position
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          // markers: true, // uncomment while tuning to see start/end in viewport
+        },
+      });
 
-  // Map scroll progress (0 to 0.33) to shrink the video
-  const videoWidth = useTransform(
-    smoothProgress,
-    [0, 0.33],
-    ["100%", `calc(100% - ${horizontalGap})`]
-  );
-  
-  // FIXED: Start at 100vh on both mobile and desktop for true full screen
-  const videoHeight = useTransform(
-    smoothProgress,
-    [0, 0.33],
-    ["100vh", "60vh"] 
-  );
-  
-  const videoBR = useTransform(smoothProgress, [0, 0.33], ["0px", "32px"]);
-  const videoBottom = useTransform(smoothProgress, [0, 0.33], ["0px", "32px"]);
+      // Heading fades/slides in first
+      tl.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, ease: "power2.out", duration: 0.35 },
+        0.15
+      );
 
-  // TEXT REVEAL: Text fades IN and slides UP as the video moves out of the way
-  const textOpacity = useTransform(smoothProgress, [0.1, 0.33], [0, 1]);
-  const textY = useTransform(smoothProgress, [0.1, 0.33], ["40px", "0px"]);
+      // Video shrinks from full-bleed to framed card
+      tl.fromTo(
+        videoWrapRef.current,
+        {
+          width: "100%",
+          height: "100dvh",
+          borderRadius: "0px",
+          bottom: "0px",
+        },
+        {
+          width: `calc(100% - ${gap}px)`,
+          height: "60dvh",
+          borderRadius: "32px",
+          bottom: "32px",
+          ease: "power2.inOut",
+          duration: 0.55,
+        },
+        0.05
+      );
+
+      // Stats/buttons bar fades in slightly after the video settles
+      tl.fromTo(
+        statsRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, ease: "power2.out", duration: 0.3 },
+        0.5
+      );
+
+      // Everything from ~0.75 -> 1 is a HOLD: no keyframes placed there,
+      // so the timeline (and therefore the pin) just sits still while the
+      // user keeps scrolling, until "end" is reached and it releases.
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const navigate = useNavigate();
 
   return (
     <>
-      {/* Semantic main section for SEO */}
       <section
-        ref={containerRef}
+        ref={sectionRef}
         aria-label="Hero Section"
-        className="relative w-full h-[300vh] bg-[#f7f4ee] antialiased"
+        className="relative w-full h-[100dvh] bg-[#f7f4ee] antialiased z-10 overflow-hidden"
       >
-        {/* Pinned Viewport Container */}
-        <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start overflow-hidden">
-          
-          {/* Heading Area (Behind the video initially) */}
-          <motion.div
-            style={{ opacity: textOpacity, y: textY }}
-            className="w-full h-[40vh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0"
-          >
-            <div className="overflow-hidden flex justify-center w-full">
-              <motion.h1 className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto">
-                Live <span className="text-[#ffc107]">Beautifully</span>
-                <br className="block lg:hidden" />
-                <span className="hidden lg:inline"> </span>
-                Every Day
-              </motion.h1>
-            </div>
-          </motion.div>
+        {/* Heading Area */}
+        <div
+          ref={headingRef}
+          className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0"
+        >
+          <div className="overflow-hidden flex justify-center w-full">
+            <h1 className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto">
+              Live <span className="text-[#ffc107]">Beautifully</span>
+              <br className="block lg:hidden" />
+              <span className="hidden lg:inline"> </span>
+              Every Day
+            </h1>
+          </div>
+        </div>
 
-          {/* Video Area (Starts Full Screen, z-10 puts it above the text) */}
-          <motion.div
+        {/* Video Area */}
+        <div
+          ref={videoWrapRef}
+          className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl will-change-transform"
+          style={{ width: "100%", height: "100dvh", bottom: 0 }}
+        >
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/video-fallback-poster.jpg"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-90"
+          >
+            <source src="/bright-hero-video.mp4" type="video/mp4" />
+          </video>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+          {/* Stats & Buttons Container */}
+          <div
+            ref={statsRef}
+            className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl opacity-0"
             style={{
-              width: videoWidth,
-              height: videoHeight,
-              borderRadius: videoBR,
-              bottom: videoBottom,
+              paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, ease: smoothEase }}
-            className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl will-change-transform"
           >
-            {/* The Video Element - Added accessibility and performance attributes */}
-            <motion.video
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 2.5, ease: smoothEase }}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster="/video-fallback-poster.jpg" // IMPORTANT: Replace with a real static image path to prevent blank flashes
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover opacity-90"
-            >
-              <source src="/bright-hero-video.mp4" type="video/mp4" />
-            </motion.video>
-
-            {/* Gradient Overlay for contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-            {/* Stats & Buttons Inner Container */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.8 }}
-              // FIXED: bottom-24 bumps it higher on mobile. w-[92%] ensures it scales nicely without touching edges.
-              className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl"
-              style={{
-                paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
-              }}
-            >
-              {/* Stats Row */}
-              <div className="flex items-center justify-center gap-8 md:gap-10 w-full md:w-auto">
-                <div className="flex flex-col items-center">
-                  <span className="text-white text-2xl md:text-3xl font-bold">
-                    13+
-                  </span>
-                  <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">
-                    Projects
-                  </span>
-                </div>
-
-                <div className="w-px h-10 md:h-12 bg-white/20" />
-
-                <div className="flex flex-col items-center">
-                  <span className="text-white text-2xl md:text-3xl font-bold">
-                    05+
-                  </span>
-                  <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">
-                    Years Exp.
-                  </span>
-                </div>
+            <div className="flex items-center justify-center gap-8 md:gap-10 w-full md:w-auto">
+              <div className="flex flex-col items-center">
+                <span className="text-white text-2xl md:text-3xl font-bold">13+</span>
+                <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">Projects</span>
               </div>
-
-              {/* Buttons Row - FIXED ALIGNMENT */}
-              <div className="flex items-center justify-center gap-3 w-full md:w-auto mt-2 md:mt-0">
-                <motion.button
-                  aria-label="View our portfolio of projects"
-                  onClick={() => navigate("/portfolio")}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "#ffc107",
-                    color: "#4a1c13",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap transition-colors"
-                >
-                  View Projects
-                </motion.button>
-
-                <motion.button
-                  aria-label="Open contact modal to talk now"
-                  onClick={() => setIsModalOpen(true)}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "rgba(255,255,255,.2)",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 md:flex-none w-full md:w-auto bg-white/5 border border-white/30 text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase text-center whitespace-nowrap transition-colors"
-                >
-                  Talk Now
-                </motion.button>
+              <div className="w-px h-10 md:h-12 bg-white/20" />
+              <div className="flex flex-col items-center">
+                <span className="text-white text-2xl md:text-3xl font-bold">05+</span>
+                <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">Years Exp.</span>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 w-full md:w-auto mt-2 md:mt-0">
+              <button
+                aria-label="View our portfolio of projects"
+                onClick={() => navigate("/portfolio")}
+                className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95"
+              >
+                View Projects
+              </button>
+
+              <button
+                aria-label="Open contact modal to talk now"
+                onClick={() => setIsModalOpen(true)}
+                className="flex-1 md:flex-none w-full md:w-auto bg-white/5 border border-white/30 text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase text-center whitespace-nowrap transition-colors hover:bg-white/20 active:scale-95"
+              >
+                Talk Now
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <ProjectModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
