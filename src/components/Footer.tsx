@@ -75,7 +75,7 @@ export default function CardFooter() {
 
                             <div className="mt-6 flex items-center justify-center lg:justify-start gap-2 text-white/40 text-[10px] md:text-xs">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                                Available Mon – Sat · 9 AM – 7 PM
+                                Available Mon – Sat · 10 AM – 7 PM
                             </div>
                         </div>
                     </div>

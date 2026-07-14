@@ -27,13 +27,13 @@ const IMAGES = {
 const founders = [
   {
     name: "Srilatha Ravuri",
-    role: "Co-Founder & Director of Operations",
-    description: "Niveditha Reddy is the creative force behind Bright Arena, bringing a refined vision for luxury interiors and modern living spaces. With a strong background in architecture and interior design, she focuses on creating timeless spaces that combine elegance, comfort, and functionality.",
+    role: "Co-Founder",
+    description: "Srilatha Ravuri is the creative force behind Bright Arena, bringing a refined vision for luxury interiors and modern living spaces. With a strong background in architecture and interior design, she focuses on creating timeless spaces that combine elegance, comfort, and functionality.",
   },
   {
-    name: "Bhavani Shankar",
-    role: "Co-Founder & Chief Execuetive Officer",
-    description: "Anand Gunjur leads the operational and strategic growth of Bright Arena with extensive experience in business management and global operations. His expertise in execution, client relationships, and project coordination ensures every project is delivered with excellence and precision.",
+    name: "Bhawani Shankar",
+    role: "Co-Founder",
+    description: "Bhawani shankar leads the operational and strategic growth of Bright Arena with extensive experience in business management and global operations. His expertise in execution, client relationships, and project coordination ensures every project is delivered with excellence and precision.",
   },
 ];
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
         {/* Hero text */}
         <motion.div initial="hidden" animate="visible" variants={stagger} className="relative z-10 px-6 max-w-4xl mx-auto">
           <motion.span variants={fadeUp} className="inline-block text-[#ff7043] tracking-[0.35em] uppercase font-bold text-xs mb-6">
-            Est. 2010 · Hyderabad, India
+            Est. 2012 · Hyderabad, India
           </motion.span>
           <motion.h1 variants={fadeUp} className="text-[clamp(40px,9vw,108px)] leading-[0.92] font-serif text-white mb-8">
             We Design <br />
@@ -110,13 +110,13 @@ export default function AboutPage() {
                 We Design<br />Spaces That<br />Inspire.
               </h2>
               <p className="mt-8 text-gray-600 leading-8">
-                Since 2010, Bright Arena has transformed homes, offices, and
+                Since 2012, Bright Arena has transformed homes, offices, and
                 commercial spaces into timeless environments that balance beauty,
                 comfort, and functionality.
               </p>
               <p className="mt-6 text-gray-600 leading-8">
-                Every project begins with understanding people—their lifestyle,
-                aspirations, and personality—before translating those ideas into
+                Every project begins with understanding people their lifestyle,
+                aspirations, and personality before translating those ideas into
                 thoughtfully crafted interiors.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
@@ -138,7 +138,7 @@ export default function AboutPage() {
                 />
               </div>
               <div className="absolute top-8 -left-6 bg-white shadow-2xl rounded-3xl px-6 py-5">
-                <div className="text-4xl font-bold text-[#4a1c13]">2010</div>
+                <div className="text-4xl font-bold text-[#4a1c13]">2012</div>
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500">Founded</p>
               </div>
             </motion.div>
@@ -255,10 +255,10 @@ export default function AboutPage() {
 
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { title: "Customised Designs", desc: "Tailored to your unique lifestyle and aesthetic — not drawn from a catalogue.", icon: "✦" },
+            { title: "Customised Designs", desc: "Tailored to your unique lifestyle and aesthetic not drawn from a catalogue.", icon: "✦" },
             { title: "Reflects Your Style", desc: "We listen deeply before we draw. Every corner is a reflection of you.", icon: "◈" },
             { title: "Expert Consultation", desc: "Guidance from India's finest minds, available throughout your project.", icon: "◇" },
-            { title: "Transparent Pricing", desc: "Detailed, itemised quotes with zero hidden charges — ever.", icon: "◉" },
+            { title: "Transparent Pricing", desc: "Detailed, itemised quotes with zero hidden charges ever.", icon: "◉" },
             { title: "Qualified Staff", desc: "200+ trained professionals, each vetted for craft, punctuality, and care.", icon: "⬡" },
             { title: "Timely Handover", desc: "We have never missed a handover date. We don't intend to start.", icon: "◎" },
           ].map((item) => (
@@ -297,7 +297,7 @@ export default function AboutPage() {
             <motion.div variants={stagger} className="text-white/70 space-y-6 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
               <motion.p variants={fadeUp}>
                 We are the premier luxury interior designers in Hyderabad because we
-                let our work speak. Every project is a complete turnkey journey — from
+                let our work speak. Every project is a complete turnkey journey from
                 the first sketch on a napkin to the last cushion placed on a sofa.
               </motion.p>
               <motion.p variants={fadeUp}>
@@ -306,7 +306,7 @@ export default function AboutPage() {
                 every decision we make.
               </motion.p>
               <motion.p variants={fadeUp}>
-                Innovation, craft, and a fierce attention to detail — that's the
+                Innovation, craft, and a fierce attention to detail that's the
                 Bright Arena guarantee. Come experience the finest luxury interiors
                 in India.
               </motion.p>
@@ -346,7 +346,7 @@ export default function AboutPage() {
           <div className="space-y-0">
             {[
               { step: "01", title: "Discovery Call", desc: "We listen. Tell us your dreams, your budget, your lifestyle. We ask the questions other studios forget to ask." },
-              { step: "02", title: "Concept & Moodboard", desc: "Within 7 days we present a full concept — palette, material library, spatial flow, and reference imagery." },
+              { step: "02", title: "Concept & Moodboard", desc: "Within 7 days we present a full concept palette, material library, spatial flow, and reference imagery." },
               { step: "03", title: "Design Development", desc: "3D renders, elevation drawings, custom furniture selections. You see every detail before we build." },
               { step: "04", title: "Execution", desc: "Our in-house teams handle everything. You get a single point of contact. No juggling vendors." },
               { step: "05", title: "Handover & Beyond", desc: "We walk you through the finished space and remain on-call for 12 months post-handover." },

@@ -245,7 +245,7 @@ export default function ContactPage() {
         >
           <div className="flex flex-col items-center text-center mb-4">
             <h2 className="text-2xl md:text-4xl font-primary leading-tight mb-3">
-              Visit Our Studio
+              Visit Our Office
             </h2>
             <p className="text-[#4a1c13]/60 text-sm md:text-base max-w-md">
               We'd love to host you for a coffee and a conversation about your upcoming project.

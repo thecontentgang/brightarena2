@@ -17,10 +17,10 @@ const servicesList = [
   "Custom Furniture",
 ];
 
-const sqFtRanges = ["< 500", "500 - 1000", "1000 - 2000", "2000+"];
+const sqFtRanges = ["1000 - 2000", "2000 - 3000", "3000+"];
 
 // Added Indian Rupee budget ranges to match your Hyderabad location
-const budgetRanges = ["Under ₹10L", "₹10L - 25L", "₹25L - 50L", "₹50L+"];
+const budgetRanges = ["₹15L - 25L", "₹25L - 40L", "40L - 50L", "₹50L+"];
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, onClose }) => {
   // Form State

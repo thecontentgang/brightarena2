@@ -59,7 +59,7 @@ const AboutSection: React.FC = () => {
           >
             <p className="text-[#4a1c13]/80 text-[16px] md:text-lg leading-relaxed max-w-lg">
               We don’t waste time with hierarchy. Our small team gives you
-              direct access to the designers who will create your space —
+              direct access to the designers who will create your space
               from the first conversation to the final details.
             </p>
 
@@ -104,10 +104,10 @@ const AboutSection: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
             
             {/* Floating Glass Badge */}
-            <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 bg-white/20 backdrop-blur-md border border-white/30 px-5 py-3 rounded-2xl flex items-center gap-3 transform transition-transform duration-500 group-hover:-translate-y-1">
+            {/* <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 bg-white/20 backdrop-blur-md border border-white/30 px-5 py-3 rounded-2xl flex items-center gap-3 transform transition-transform duration-500 group-hover:-translate-y-1">
               <div className="w-2.5 h-2.5 rounded-full bg-[#ffc107] animate-pulse" />
               <span className="text-white text-sm font-bold tracking-wide">Award-Winning Design</span>
-            </div>
+            </div> */}
           </motion.div>
 
           {/* 2. Top Right: Detail/Material Image */}

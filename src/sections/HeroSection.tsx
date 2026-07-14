@@ -124,11 +124,11 @@ const MinimalHero: React.FC = () => {
           className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0"
         >
           <div className="overflow-hidden flex justify-center w-full">
-            <h1 className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto">
-              Live <span className="text-[#ffc107]">Beautifully</span>
+            <h1 className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,6vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto">
+              Dream | <span className="text-[#ff7043]">Experience</span>
               <br className="block lg:hidden" />
               <span className="hidden lg:inline"> </span>
-              Every Day
+              | Live
             </h1>
           </div>
         </div>
@@ -164,12 +164,12 @@ const MinimalHero: React.FC = () => {
           >
             <div className="flex items-center justify-center gap-8 md:gap-10 w-full md:w-auto">
               <div className="flex flex-col items-center">
-                <span className="text-white text-2xl md:text-3xl font-bold">13+</span>
+                <span className="text-white text-2xl md:text-3xl font-bold">350+</span>
                 <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">Projects</span>
               </div>
               <div className="w-px h-10 md:h-12 bg-white/20" />
               <div className="flex flex-col items-center">
-                <span className="text-white text-2xl md:text-3xl font-bold">05+</span>
+                <span className="text-white text-2xl md:text-3xl font-bold">14+</span>
                 <span className="text-white/70 text-[10px] md:text-xs tracking-[0.2em] uppercase mt-0.5 md:mt-1">Years Exp.</span>
               </div>
             </div>

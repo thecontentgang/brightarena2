@@ -24,11 +24,11 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     type: "video",
-    name: "Priya Sharma",
+    name: "Somi Reddy",
     role: "Homeowner",
     videoId: "aZq2QRwiYsE",
-    description: "The transformation of our home was beyond what we imagined. Priya and her family wanted to create a space that felt both luxurious and livable.",
-    location: "Mumbai",
+    description: "The transformation of our home was beyond what we imagined. Somi Reddy and his family wanted to create a space that felt both luxurious and livable.",
+    location: "Hyderabad",
     rotation: -3,
   },
   {
@@ -45,11 +45,11 @@ const testimonials: Testimonial[] = [
   {
     id: 3,
     type: "video",
-    name: "Arjun Mehta",
-    role: "Founder & CEO",
+    name: "Anjani & Praveen",
+    role: "Aparna Sarovar Zenith",
     videoId: "ztyqShdYSEY",
-    description: "Working with this team was a game-changer for our office space. Arjun needed an office that would inspire creativity.",
-    location: "Bangalore",
+    description: "Working with this team was a game-changer for our Residence. Praveen needed a Home that would inspire creativity.",
+    location: "Hyderabad",
     rotation: -2,
   },
   {
@@ -66,7 +66,7 @@ const testimonials: Testimonial[] = [
   {
     id: 5,
     type: "video",
-    name: "Sarah & David",
+    name: "Haseeb Mohammed",
     role: "Restaurant Owners",
     videoId: "fc27D9buInM",
     description: "Our restaurant has never looked better. The ambiance they created is exceptional.",
@@ -290,9 +290,9 @@ const ScatteredTestimonials: React.FC = () => {
                         <h3 className="text-xl md:text-2xl font-bold text-[#4a1c13]">
                           {selectedTestimonial.name}
                         </h3>
-                        <p className="text-[#ff7043] font-medium text-sm md:text-lg">
+                        {/* <p className="text-[#ff7043] font-medium text-sm md:text-lg">
                           {selectedTestimonial.role}
-                        </p>
+                        </p> */}
                       </div>
                       {selectedTestimonial.type === "google" && (
                         <span className="text-xs md:text-sm text-[#4a1c13]/50">{selectedTestimonial.date}</span>
