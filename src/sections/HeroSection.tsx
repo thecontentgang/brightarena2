@@ -9,6 +9,9 @@ import ProjectModal from "../components/ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// FIX 1: Prevents GSAP pins from violently jumping on iOS/Android when the address bar hides/shows
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 const MinimalHero: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -56,12 +59,11 @@ const MinimalHero: React.FC = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=150%", // <-- scroll distance the pin lasts for. Bump this up/down to control how long it takes to complete.
+          end: "+=150%", // <-- scroll distance the pin lasts for.
           scrub: 1, // smoothed scrub, tied to scroll position
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          // markers: true, // uncomment while tuning to see start/end in viewport
         },
       });
 
@@ -78,7 +80,7 @@ const MinimalHero: React.FC = () => {
         videoWrapRef.current,
         {
           width: "100%",
-          height: "100dvh",
+          height: "100dvh", // Using dvh is fine, GSAP handles it well with ignoreMobileResize
           borderRadius: "0px",
           bottom: "0px",
         },
@@ -100,10 +102,6 @@ const MinimalHero: React.FC = () => {
         { opacity: 1, y: 0, ease: "power2.out", duration: 0.3 },
         0.5
       );
-
-      // Everything from ~0.75 -> 1 is a HOLD: no keyframes placed there,
-      // so the timeline (and therefore the pin) just sits still while the
-      // user keeps scrolling, until "end" is reached and it releases.
     }, sectionRef);
 
     return () => ctx.revert();
@@ -121,27 +119,29 @@ const MinimalHero: React.FC = () => {
         {/* Heading Area */}
         <div
           ref={headingRef}
-          className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0"
+          // FIX 2: Added transform-gpu to force hardware acceleration and prevent iOS Safari flickering during opacity/y transforms
+          className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0 transform-gpu"
         >
           <div className="flex w-full justify-center overflow-hidden px-4">
-  <h1 className="mx-auto text-center font-primary leading-[1.15] tracking-tight text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)]">
-    Dream
-    <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
-    <span className="text-[#ff7043]">Experience</span>
-    
-    {/* Breaks to a new line ONLY on mobile */}
-    <br className="block md:hidden" />
-    
-    <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
-    Live
-  </h1>
-</div>
+            <h1 className="mx-auto text-center font-primary leading-[1.15] tracking-tight text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)]">
+              Dream
+              <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
+              <span className="text-[#ff7043]">Experience</span>
+              
+              {/* Breaks to a new line ONLY on mobile */}
+              <br className="block md:hidden" />
+              
+              <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
+              Live
+            </h1>
+          </div>
         </div>
 
         {/* Video Area */}
         <div
           ref={videoWrapRef}
-          className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl will-change-transform"
+          // FIX 3: Added transform-gpu to prevent layout thrashing and repaints on mobile when animating width/height/borderRadius
+          className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl will-change-[width,height,border-radius,bottom] transform-gpu"
           style={{ width: "100%", height: "100dvh", bottom: 0 }}
         >
           <video
@@ -152,7 +152,8 @@ const MinimalHero: React.FC = () => {
             preload="auto"
             poster="/video-fallback-poster.jpg"
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover opacity-90"
+            // FIX 4: Added pointer-events-none. If a user taps the video on iOS, it can force-open the native fullscreen Apple video player. This prevents touch interactions on the video itself.
+            className="absolute inset-0 h-full w-full object-cover opacity-90 pointer-events-none"
           >
             <source src="/bright-hero-video.mp4" type="video/mp4" />
           </video>
@@ -162,7 +163,8 @@ const MinimalHero: React.FC = () => {
           {/* Stats & Buttons Container */}
           <div
             ref={statsRef}
-            className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl opacity-0"
+            // FIX 5: transform-gpu added for smooth fade-in without artifacts on Android
+            className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl opacity-0 transform-gpu"
             style={{
               paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
             }}
@@ -183,7 +185,7 @@ const MinimalHero: React.FC = () => {
               <button
                 aria-label="View our portfolio of projects"
                 onClick={() => navigate("/portfolio")}
-                className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95"
+                className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95 touch-manipulation"
               >
                 View Projects
               </button>
@@ -191,7 +193,7 @@ const MinimalHero: React.FC = () => {
               <button
                 aria-label="Open contact modal to talk now"
                 onClick={() => setIsModalOpen(true)}
-                className="flex-1 md:flex-none w-full md:w-auto bg-white/5 border border-white/30 text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase text-center whitespace-nowrap transition-colors hover:bg-white/20 active:scale-95"
+                className="flex-1 md:flex-none w-full md:w-auto bg-white/5 border border-white/30 text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase text-center whitespace-nowrap transition-colors hover:bg-white/20 active:scale-95 touch-manipulation"
               >
                 Talk Now
               </button>
