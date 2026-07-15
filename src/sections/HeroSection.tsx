@@ -123,14 +123,19 @@ const MinimalHero: React.FC = () => {
           ref={headingRef}
           className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0"
         >
-          <div className="overflow-hidden flex justify-center w-full">
-            <h1 className="text-[#4a1c13] font-primary text-[clamp(48px,8vw,80px)] lg:text-[clamp(40px,6vw,96px)] leading-[1.05] tracking-tight text-center whitespace-normal lg:whitespace-nowrap mx-auto">
-              Dream | <span className="text-[#ff7043]">Experience</span>
-              <br className="block lg:hidden" />
-              <span className="hidden lg:inline"> </span>
-              | Live
-            </h1>
-          </div>
+          <div className="flex w-full justify-center overflow-hidden px-4">
+  <h1 className="mx-auto text-center font-primary leading-[1.15] tracking-tight text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)]">
+    Dream
+    <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
+    <span className="text-[#ff7043]">Experience</span>
+    
+    {/* Breaks to a new line ONLY on mobile */}
+    <br className="block md:hidden" />
+    
+    <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
+    Live
+  </h1>
+</div>
         </div>
 
         {/* Video Area */}
