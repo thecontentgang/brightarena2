@@ -28,10 +28,10 @@ export const servicesData = [
 
    
     images: [
-      "/projectsImg/my-home-bhooja/MHB-img8.jpg",
-       "/projectsImg/my-home-bhooja/MHB-img3.jpg",
-        "/projectsImg/my-home-bhooja/MHB-img12.jpg",
-         "/projectsImg/my-home-bhooja/MHB-img2.jpg",
+      "/projectsImg/varaprasad/vp-img1.png",
+       "/projectsImg/varaprasad/vp-img5.png",
+        "/projectsImg/varaprasad/vp-img11.png",
+         "/projectsImg/varaprasad/vp-img15.",
     ],
 
     benefits: [
@@ -70,10 +70,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "/projectsImg/mhk/MHk-img8.jpg",
-      "/projectsImg/mhk/MHk-img3.jpg",
-      "/projectsImg/mhk/MHk-img9.jpg",
-      "/projectsImg/mhk/MHk-img2.jpg",
+      "/projectsImg/banali/bf-img5.png",
+      "/projectsImg/banali/bf-img3.png",
+      "/projectsImg/banali/bf-img2.png",
+      "/projectsImg/banali/bf-img1.png",
     ],
 
     benefits: [
@@ -112,10 +112,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "/projectsImg/rajapushpa/RP-img8.jpg",
-       "/projectsImg/rajapushpa/RP-img10.jpg",
-        "/projectsImg/rajapushpa/RP-img25.jpg",
-         "/projectsImg/rajapushpa/RP-img37.jpg",
+      "/projectsImg/varaprasad/vp-img11.png",
+       "/projectsImg/varaprasad/vp-img15.png",
+        "/projectsImg/varaprasad/vp-img13.png",
+         "/projectsImg/varaprasad/vp-img14.png",
     ],
 
     benefits: [
@@ -154,10 +154,10 @@ export const servicesData = [
     workingHours: "9 AM to 9 PM",
 
     images: [
-      "/projectsImg/aparna-sarovar/AS-img5.jpg",
-      "/projectsImg/aparna-sarovar/AS-img11.jpg",
-      "/projectsImg/aparna-sarovar/AS-img7.jpg",
-      "/projectsImg/aparna-sarovar/AS-img3.jpg",
+      "/projectsImg/varaprasad/vp-img15.png",
+      "/projectsImg/varaprasad/vp-img14.png",
+      "/projectsImg/kollur/kl-img10.png",
+      "/projectsImg/kollur/kl-img12.png",
     ],
 
     benefits: [
