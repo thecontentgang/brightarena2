@@ -9,7 +9,6 @@ interface Testimonial {
   id: number;
   type: ReviewType;
   name: string;
-  role: string;
   location: string;
   rotation: number;
   videoId?: string;
@@ -17,72 +16,96 @@ interface Testimonial {
   rating?: number;
   reviewText?: string;
   date?: string;
+  avatarUrl?: string; // <-- Added avatarUrl property
 }
 
-// We kept the rotations for the "scattered" look, but removed the float durations and delays.
 const testimonials: Testimonial[] = [
   {
     id: 1,
     type: "video",
     name: "Somi Reddy",
-    role: "Homeowner",
     videoId: "aZq2QRwiYsE",
-    description: "The transformation of our home was beyond what we imagined. Somi Reddy and his family wanted to create a space that felt both luxurious and livable.",
+    description: "The transformation of our home was completely beyond what we imagined. We really wanted to create a space that felt luxurious but still totally livable for the family, and they nailed it.",
     location: "Hyderabad",
     rotation: -3,
   },
   {
     id: 2,
     type: "google",
-    name: "Vikram Desai",
-    role: "Local Guide",
+    name: "Kavya ketha",
     rating: 5,
-    reviewText: "Absolutely phenomenal service! The team was highly professional and delivered the project 2 weeks ahead of schedule.",
-    date: "2 weeks ago",
-    location: "Pune",
+    reviewText: "Mind-blowing! I've never seen this type of interior work before.",
+    date: "11 months ago",
+    location: "Hyderabad",
     rotation: 4,
+    avatarUrl: "/review1.png", // Example Avatar
   },
   {
     id: 3,
     type: "video",
     name: "Anjani & Praveen",
-    role: "Aparna Sarovar Zenith",
     videoId: "ztyqShdYSEY",
-    description: "Working with this team was a game-changer for our Residence. Praveen needed a Home that would inspire creativity.",
+    description: "Working with this team was a total game-changer for our home. We really needed a space that would inspire creativity while still feeling cozy, and the final result is just perfect.",
     location: "Hyderabad",
     rotation: -2,
   },
   {
     id: 4,
     type: "google",
-    name: "Anita Rao",
-    role: "Customer",
+    name: "rajesh shankar pandey",
     rating: 5,
-    reviewText: "I was skeptical at first, but the 3D renders matched the final outcome perfectly. The quality of materials used is top-notch.",
+    reviewText: "I'll admit I was a bit skeptical at first, but the 3D renders matched the final outcome perfectly! The quality of the materials they used is top-notch. I couldn't be happier.",
     date: "1 month ago",
     location: "Hyderabad",
     rotation: 5,
+    avatarUrl: "", // Example Avatar
   },
   {
     id: 5,
     type: "video",
     name: "Haseeb Mohammed",
-    role: "Restaurant Owners",
     videoId: "fc27D9buInM",
-    description: "Our restaurant has never looked better. The ambiance they created is exceptional.",
-    location: "Delhi",
+    description: "Our 3 BHK has literally never looked better. The team understood our vibe immediately, and the ambiance they created is just exceptional. We absolutely love our new space!",
+    location: "Hyderabad",
     rotation: -4,
   },
   {
     id: 6,
     type: "google",
-    name: "Karan Singh",
-    role: "Customer",
+    name: "ASHRITA PATRO",
     rating: 4,
-    reviewText: "Great experience overall. The design team is very receptive to feedback.",
+    reviewText: "I turned to Bright Arena Interiors for help with my home’s color scheme, and they delivered beautifully! They selected colors that flow seamlessly from room to room, creating a cohesive and calming atmosphere throughout my house. I love how it all came together.",
     date: "3 months ago",
-    location: "Gurgaon",
+    location: "Hyderabad",
     rotation: 2,
+    avatarUrl: "/review2.png", // Example Avatar
+  },
+  {
+    id: 7,
+    type: "video",
+    name: "Naga Sreenu",
+    videoId: "K38FUJ3IPhQ",
+    description: "Bright Arena Interiors completely transformed the look and feel of our home. They brought in so much elegance and beauty, and it genuinely feels like a brand-new space.",
+    location: "Hyderabad",
+    rotation: -4,
+  },
+  {
+    id: 8,
+    type: "video",
+    name: "Ramu & Hema",
+    videoId: "Dhx2CLR350Y",
+    description: "The team at Bright Arena Interiors perfectly understood our vision for our 3 BHK flat. They shared high-quality 3D renders with us, and the final execution matched them exactly! We strongly recommend them.",
+    location: "Hyderabad",
+    rotation: -4,
+  },
+  {
+    id: 9,
+    type: "video",
+    name: "Jazz & Dolphiny",
+    videoId: "_NQ_TWdarSk",
+    description: "We had an amazing experience working with the Bright Arena team. They took the time to understand exactly what we wanted, and the transition from the 3D designs to the actual reality was seamless. Beautiful work!",
+    location: "Hyderabad",
+    rotation: -4,
   },
 ];
 
@@ -146,14 +169,13 @@ const ScatteredTestimonials: React.FC = () => {
         </div>
       </div>
 
-      {/* Scattered Layout Grid (Static but stylized) */}
+      {/* Scattered Layout Grid */}
       <div className="relative w-full max-w-[1200px] mx-auto grid grid-cols-3 gap-3 sm:gap-4 md:flex md:flex-wrap md:items-center md:justify-center md:gap-8 lg:gap-12 pb-20">
         <AnimatePresence mode="popLayout">
           {filteredTestimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
               layoutId={`card-container-${testimonial.id}`}
-              // Removed dragging & floating. Only static entry animation + rotation.
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{
                 rotate: testimonial.rotation,
@@ -195,12 +217,21 @@ const ScatteredTestimonials: React.FC = () => {
                       className="absolute inset-0 w-full h-full object-cover rounded-xl md:rounded-full group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
-                      <svg className="w-8 h-8 md:w-5 md:h-5 text-white/95 ml-1 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-14 h-14 md:w-5 md:h-5 text-white/95 ml-1 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
                   </>
+                ) : testimonial.avatarUrl ? (
+                  /* Google Review Avatar */
+                  <img
+                    src={testimonial.avatarUrl}
+                    alt={testimonial.name}
+                    draggable={false}
+                    className="absolute inset-0 w-full h-full object-cover rounded-xl md:rounded-full group-hover:scale-110 transition-transform duration-500"
+                  />
                 ) : (
+                  /* Fallback Initial */
                   <div className="w-full h-full flex items-center justify-center bg-[#4285F4]/10 text-[#4285F4] text-3xl md:text-xl font-bold font-serif">
                     {testimonial.name.charAt(0)}
                   </div>
@@ -228,7 +259,7 @@ const ScatteredTestimonials: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Expanded Modal State (Remains identical) */}
+      {/* Expanded Modal State */}
       <AnimatePresence>
         {selectedId && selectedTestimonial && (
           <React.Fragment>
@@ -267,8 +298,22 @@ const ScatteredTestimonials: React.FC = () => {
                       allowFullScreen
                     />
                   ) : (
-                    <div className="text-center flex flex-col items-center justify-center">
-                      <div className="scale-150 mb-4"><GoogleIcon /></div>
+                    <div className="text-center flex flex-col items-center justify-center w-full h-full">
+                      {selectedTestimonial.avatarUrl ? (
+                        <div className="relative mb-6">
+                          <img 
+                            src={selectedTestimonial.avatarUrl} 
+                            alt={selectedTestimonial.name} 
+                            className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-xl border-4 border-white" 
+                          />
+                          <div className="absolute -bottom-2 -right-2 bg-white p-2 rounded-full shadow-md flex items-center justify-center">
+                            <GoogleIcon />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="scale-150 mb-4"><GoogleIcon /></div>
+                      )}
+                      
                       <h2 className="text-[#4a1c13] text-5xl font-serif font-bold mt-2 mb-3">{selectedTestimonial.rating}.0</h2>
                       <div className="flex items-center gap-1.5 mb-4 scale-125">
                         {[...Array(selectedTestimonial.rating || 5)].map((_, i) => (
@@ -290,9 +335,6 @@ const ScatteredTestimonials: React.FC = () => {
                         <h3 className="text-xl md:text-2xl font-bold text-[#4a1c13]">
                           {selectedTestimonial.name}
                         </h3>
-                        {/* <p className="text-[#ff7043] font-medium text-sm md:text-lg">
-                          {selectedTestimonial.role}
-                        </p> */}
                       </div>
                       {selectedTestimonial.type === "google" && (
                         <span className="text-xs md:text-sm text-[#4a1c13]/50">{selectedTestimonial.date}</span>

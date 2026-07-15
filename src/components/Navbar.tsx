@@ -99,7 +99,7 @@ const Header: React.FC = () => {
           <Link to="/" className="inline-flex items-center justify-center h-full">
             <img
               src="/bright-logo1.png"
-              alt="Clickora Logo"
+              alt="Bright Arena LOGO"
               className="h-9 w-auto object-contain"
             />
           </Link>

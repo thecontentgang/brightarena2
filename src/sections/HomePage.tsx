@@ -7,6 +7,8 @@ import React, { Suspense, useEffect } from 'react';
 import Hero from './HeroSection';
 import About from './AboutSection';
 import TrustedBy from './TrustBy';
+// import { ProjectShowcase } from './ProjectShowcase';
+import ProjectShowcase from './ProjectShowcase';
 
 // ─── LAZY IMPORTS (BELOW THE FOLD) ───
 // These are code-split and only downloaded after the initial render
@@ -40,7 +42,7 @@ const HomePage = () => {
       <Suspense fallback={<SectionLoader />}>
         <Services />
         <Philosophy />
-        {/* <ProjectsSection /> */}
+        <ProjectShowcase />
         <TestimonialsSection />
       </Suspense>
       

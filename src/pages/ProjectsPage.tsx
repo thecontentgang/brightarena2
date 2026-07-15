@@ -7,23 +7,15 @@ import { projectsData, type Project } from "./ProjectsData";
 
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-// Utility to force the path to be a .jpg
-const forceJpg = (path?: string) => {
-  if (!path) return "";
-  return path.replace(/\.(png|jpeg|JPG|avif|webp)$/i, ".jpg");
-};
-
 /* ─── PROJECT CARD ─── */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  // Masonry-style layout logic
   const spanClasses = index % 5 === 0 
     ? "md:row-span-2 md:col-span-1 aspect-[3/4]" 
     : index % 3 === 0 
     ? "md:col-span-2 md:row-span-1 aspect-video" 
     : "md:col-span-1 md:row-span-1 aspect-square";
 
-  const safeImage = forceJpg(project.heroImage);
-  
-  // Prioritize loading for the first two images that appear above/near the fold
   const isPriority = index < 2;
 
   return (
@@ -34,39 +26,29 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       viewport={{ once: true, margin: "-50px" }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
-      className={`group relative overflow-hidden rounded-2xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
+      className={`group relative overflow-hidden rounded-3xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-2xl transition-all duration-700 ${spanClasses}`}
     >
       <Link 
         to={`/portfolio/${project.slug}`} 
         className="block w-full h-full" 
-        aria-label={`View details for ${project.title} interior design project`}
+        aria-label={`View details for ${project.title}`}
       >
         <img
-          src={safeImage}
-          alt={`Bright Arena interior project: ${project.title} located in ${project.location}`}
+          src={project.heroImage}
+          alt={project.title}
           decoding="async"
           loading={isPriority ? "eager" : "lazy"}
-          fetchPriority={isPriority ? "high" : "auto"}
-          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-          onError={(e) => {
-            // Nullify the error handler to prevent infinite loops if the fallback also fails
-            e.currentTarget.onerror = null; 
-            // Fallback to a beautiful placeholder if the local image is missing
-            e.currentTarget.src = `https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop`;
-          }}
+          className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
         />
 
-        {/* Elegant Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 via-[#4a1c13]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-8" aria-hidden="true">
+        {/* Updated Elegant Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8" aria-hidden="true">
           <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-            <p className="text-[#ff7043] text-[10px] tracking-[0.25em] uppercase font-bold mb-2">
-              {project.houseType} · {project.year}
-            </p>
-            <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-1">
+            <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-2">
               {project.title}
             </h3>
-            <p className="text-white/70 text-sm font-medium">
-              {project.location}
+            <p className="text-[#ff7043] text-xs tracking-[0.2em] uppercase font-bold">
+              {project.shortDescription}
             </p>
           </div>
         </div>
@@ -77,16 +59,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 /* ─── PAGE COMPONENT ─── */
 export default function PortfolioPage() {
-  // Enhanced SEO Page Title
   useEffect(() => {
-    document.title = "Portfolio | Bright Arena Luxury Interiors Hyderabad";
+    document.title = "Portfolio | Bright Arena Luxury Interiors";
   }, []);
 
   return (
     <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
       
       {/* ── HERO ── */}
-      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16">
+      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-20">
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -96,7 +77,6 @@ export default function PortfolioPage() {
           Selected Works
         </motion.p>
         <motion.h1 
-          id="portfolio-heading"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: smoothEase }}
@@ -110,11 +90,10 @@ export default function PortfolioPage() {
       {/* ── MASONRY GRID ── */}
       <section 
         className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto" 
-        aria-labelledby="portfolio-heading"
       >
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 grid-flow-dense"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 grid-flow-dense"
         >
           <AnimatePresence mode="popLayout">
             {projectsData.map((project, i) => (

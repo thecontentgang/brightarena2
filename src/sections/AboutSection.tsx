@@ -96,18 +96,14 @@ const AboutSection: React.FC = () => {
             className="lg:col-span-2 lg:row-span-2 h-[350px] lg:h-full relative rounded-3xl overflow-hidden group cursor-pointer shadow-sm"
           >
             <img
-              src="/projectsImg/rajapushpa/RP-img36.jpg"
+              src="/projectsImg/rajapushpa/rp-img12.webp"
               alt="Our design philosophy in action"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
             />
             {/* Subtle overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
             
-            {/* Floating Glass Badge */}
-            {/* <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 bg-white/20 backdrop-blur-md border border-white/30 px-5 py-3 rounded-2xl flex items-center gap-3 transform transition-transform duration-500 group-hover:-translate-y-1">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ffc107] animate-pulse" />
-              <span className="text-white text-sm font-bold tracking-wide">Award-Winning Design</span>
-            </div> */}
+            
           </motion.div>
 
           {/* 2. Top Right: Detail/Material Image */}
@@ -116,7 +112,7 @@ const AboutSection: React.FC = () => {
             className="lg:col-span-1 lg:row-span-1 h-[220px] lg:h-full relative rounded-3xl overflow-hidden group cursor-pointer shadow-sm"
           >
             <img
-              src="/projectsImg/rajapushpa/RP-img26.jpg"
+              src="/projectsImg/rajapushpa/rp-img11.webp"
               alt="Material details"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
             />

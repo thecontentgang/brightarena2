@@ -7,34 +7,55 @@ import { Link } from "react-router-dom";
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 // ==========================================
-// 1. ADD YOUR YOUTUBE VIDEOS HERE
+// 1. UPDATED YOUTUBE VIDEOS 
 // ==========================================
 const videoTestimonials = [
   {
     id: 1,
-    client: "The Reddy Family",
-    project: "Luxury Jubilee Hills Villa",
-    duration: "0:41",
+    client: "Somi Reddy",
+    project: "Luxury Home Transformation",
+    duration: "1:45",
     youtubeId: "aZq2QRwiYsE", 
   },
   {
     id: 2,
-    client: "Rao & Co. Technologies",
-    project: "HITEC City Corporate Office",
-    duration: "1:30",
+    client: "Anjani & Praveen",
+    project: "Creative & Cozy Residence",
+    duration: "2:12",
     youtubeId: "ztyqShdYSEY", 
   },
   {
     id: 3,
-    client: "Dr. Srinivas",
-    project: "Banjara Hills Modern Apartment",
-    duration: "2:33",
+    client: "Haseeb Mohammed",
+    project: "Modern 3 BHK Flat",
+    duration: "1:30",
     youtubeId: "fc27D9buInM", 
+  },
+  {
+    id: 4,
+    client: "Naga Sreenu",
+    project: "Elegant Home Design",
+    duration: "1:58",
+    youtubeId: "K38FUJ3IPhQ", 
+  },
+  {
+    id: 5,
+    client: "Ramu & Hema",
+    project: "3 BHK Concept to Reality",
+    duration: "2:05",
+    youtubeId: "Dhx2CLR350Y", 
+  },
+  {
+    id: 6,
+    client: "Jazz & Dolphiny",
+    project: "Seamless 3D Execution",
+    duration: "1:42",
+    youtubeId: "_NQ_TWdarSk", 
   },
 ];
 
 // ==========================================
-// 2. PASTE YOUR ACTUAL GOOGLE REVIEWS HERE
+// 2. UPDATED GOOGLE REVIEWS
 // ==========================================
 interface GoogleReview {
   id: number;
@@ -48,27 +69,27 @@ interface GoogleReview {
 const staticReviews: GoogleReview[] = [
   {
     id: 1,
-    author_name: "Jhansi Janu",
-    profile_photo_url: "https://i.pravatar.cc/150?img=47", 
+    author_name: "Kavya ketha",
+    profile_photo_url: "/review1.png", // Replaced with your avatar url
     rating: 5,
     relative_time_description: "11 months ago",
-    text: "Bright Arena Interiors completely changed the look of my home with their amazing work. Their designs are very classy and gave my space a luxury feel. The team was very professional, always on time, and handled everything smoothly.If you are searching for the best luxury interior designers in Hyderabad, Bright Arena Interiors is the right choice. I’m really happy with the final result and would definitely suggest them to anyone.",
-  },
-  {
-    id: 2,
-    author_name: "Kavya ketha",
-    profile_photo_url: "https://i.pravatar.cc/150?img=11",
-    rating: 5,
-    relative_time_description: "8 months ago",
     text: "Mind-blowing! I've never seen this type of interior work before.",
   },
   {
-    id: 3,
+    id: 2,
     author_name: "rajesh shankar pandey",
-    profile_photo_url: "https://i.pravatar.cc/150?img=9",
+    profile_photo_url: "https://i.pravatar.cc/150?img=11", // Placeholder if no avatar provided
     rating: 5,
-    relative_time_description: "4 months ago",
-    text: "Bright Arena Interiors transformed our ideal home into a reality. Their inventive designs and attention to detail are unparalleled. They built a gorgeous and useful environment, and we couldn't be happier. Thank you for making our home a true representation of our personal style.",
+    relative_time_description: "1 month ago",
+    text: "I'll admit I was a bit skeptical at first, but the 3D renders matched the final outcome perfectly! The quality of the materials they used is top-notch. I couldn't be happier.",
+  },
+  {
+    id: 3,
+    author_name: "ASHRITA PATRO",
+    profile_photo_url: "/review2.png", // Replaced with your avatar url
+    rating: 4,
+    relative_time_description: "3 months ago",
+    text: "I turned to Bright Arena Interiors for help with my home’s color scheme, and they delivered beautifully! They selected colors that flow seamlessly from room to room, creating a cohesive and calming atmosphere.",
   },
 ];
 
@@ -178,8 +199,12 @@ const Testimonials: React.FC = () => {
                   >
                     {/* YouTube Thumbnail Image */}
                     <img 
-                      src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} 
+                      src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`} 
                       alt={video.client}
+                      onError={(e) => {
+                        // Fallback to hqdefault if maxresdefault isn't available for that specific video
+                        (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                      }}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     
@@ -213,7 +238,7 @@ const Testimonials: React.FC = () => {
         })}
       </motion.div>
 
-      {/* GOOGLE REVIEWS SECTION (HARDCODED) */}
+      {/* GOOGLE REVIEWS SECTION */}
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
