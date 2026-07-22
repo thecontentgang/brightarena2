@@ -112,7 +112,7 @@ export default function ServiceDetailsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
               >
-                We create luxurious interior experiences tailored for modern lifestyles —
+                We create luxurious interior experiences tailored for modern lifestyles
                 blending elegance, comfort, functionality, and architectural precision
                 into every detail.
               </motion.p>

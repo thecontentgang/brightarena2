@@ -81,8 +81,8 @@ const Header: React.FC = () => {
 
   // --- Reusable Dynamic Background Classes (Upgraded for Apple Glassmorphism) ---
   const glassClasses = isScrolled
-    ? "bg-white/60 backdrop-blur-xl border border-white/50 shadow-md"
-    : "bg-white/30 backdrop-blur-lg border border-white/30 shadow-sm";
+    ? "bg-white/60 backdrop-blur-xl border border-white/50"
+    : "bg-white/30 backdrop-blur-lg border border-white/30";
 
   return (
     <>
