@@ -1,20 +1,17 @@
 "use client";
 
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
+import SEO from '../components/SEO';
 
 // ─── EAGER IMPORTS (ABOVE THE FOLD) ───
-// These load immediately to ensure a fast First Contentful Paint (FCP)
 import Hero from './HeroSection';
 import About from './AboutSection';
 import TrustedBy from './TrustBy';
-// import { ProjectShowcase } from './ProjectShowcase';
 import ProjectShowcase from './ProjectShowcase';
 
 // ─── LAZY IMPORTS (BELOW THE FOLD) ───
-// These are code-split and only downloaded after the initial render
 const Services = React.lazy(() => import('./ServicesSection'));
 const Philosophy = React.lazy(() => import('./PhilosophySection'));
-// const ProjectsSection = React.lazy(() => import('./ProjectsSection'));
 const TestimonialsSection = React.lazy(() => import('./TestimonialSection'));
 
 // A minimal, on-brand loading skeleton for suspended components
@@ -25,28 +22,29 @@ const SectionLoader = () => (
 );
 
 const HomePage = () => {
-  // ─── SEO ENHANCEMENT ───
-  useEffect(() => {
-    document.title = "Bright Arena | Luxury Interior Designers in Hyderabad";
-  }, []);
-
   return (
-    <main id="main-content" className="bg-[#f7f4ee] overflow-x-hidden antialiased">
-      
-      {/* ── PRIORITY SECTIONS ── */}
-      <Hero />
-      <About />
-      <TrustedBy />
+    <>
+      <SEO
+        title="Best Interior Designers in Hyderabad for Luxury Home Interiors"
+        description="Looking for Interior Designers in Hyderabad? Bright Arena Interiors delivers luxury home and office interiors with 14+ years of expertise and craftsmanship."
+        keywords="Interior Designers Hyderabad, Luxury Interior Designers, Home Interior Design, Office Interiors, Commercial Interior Designers, Residential Interior Designers, Modular Kitchen Designers"
+        url="https://www.brightarenainteriors.com/"
+      />
+      <main id="main-content" className="bg-[#f7f4ee] overflow-x-hidden antialiased">
+        {/* ── PRIORITY SECTIONS ── */}
+        <Hero />
+        <About />
+        <TrustedBy />
 
-      {/* ── DEFERRED SECTIONS ── */}
-      <Suspense fallback={<SectionLoader />}>
-        <Services />
-        <Philosophy />
-        <ProjectShowcase />
-        <TestimonialsSection />
-      </Suspense>
-      
-    </main>
+        {/* ── DEFERRED SECTIONS ── */}
+        <Suspense fallback={<SectionLoader />}>
+          <Services />
+          <Philosophy />
+          <ProjectShowcase />
+          <TestimonialsSection />
+        </Suspense>
+      </main>
+    </>
   );
 };
 

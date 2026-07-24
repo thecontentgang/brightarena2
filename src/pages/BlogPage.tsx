@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { blogsData } from "./blogsData"; // Ensure this points to the file we made earlier
+import { blogsData } from "./blogsData";
+import SEO from "../components/SEO";
 
 // Create a special component that merges Framer Motion with React Router Links
 const MotionLink = motion(Link);
@@ -11,13 +12,17 @@ const MotionLink = motion(Link);
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function BlogPage() {
-  // We'll treat the first item in your data file as the featured post, 
-  // and the rest as standard posts.
   const featuredPost = blogsData[0];
   const standardPosts = blogsData.slice(1);
 
   return (
-    <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <>
+      <SEO 
+        title="Interior Design Ideas and Tips - Bright Arena Interiors"
+        description="Explore expert interior design ideas, home decor tips, design trends, and practical guides from Bright Arena Interiors to create beautiful living spaces."
+        url="https://www.brightarenainteriors.com/blogs"
+      />
+      <div className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── HERO SECTION ── */}
       <section className="pt-32 pb-16 md:pt-48 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
@@ -53,16 +58,16 @@ export default function BlogPage() {
             className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-white rounded-[3rem] p-6 shadow-sm border border-[#4a1c13]/5"
           >
             {/* Featured Image */}
-             <div className="lg:col-span-8 overflow-hidden rounded-[2rem] h-full min-h-[500px]">
-    <img
-      src={featuredPost.coverImage}
-      alt={featuredPost.title}
-      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-    />
-  </div>
+            <div className="lg:col-span-8 overflow-hidden rounded-[2rem] h-full min-h-[500px]">
+              <img
+                src={featuredPost.coverImage}
+                alt={featuredPost.title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+            </div>
             
             {/* Featured Content */}
-             <div className="lg:col-span-4 flex flex-col justify-center py-4">
+            <div className="lg:col-span-4 flex flex-col justify-center py-4">
               <div className="flex items-center gap-3 mb-6">
                 <span className="bg-[#ff7043]/10 text-[#ff7043] px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
                   {featuredPost.category}
@@ -157,6 +162,7 @@ export default function BlogPage() {
         </button>
       </div>
 
-    </div>
+      </div>
+    </>
   );
 }

@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { blogsData, type BlogContentBlock } from "./blogsData"; // Adjust path as needed
+import { blogsData, type BlogContentBlock } from "./blogsData";
+import SEO from "../components/SEO";
 
 // Premium easing curve
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -118,7 +119,14 @@ export default function BlogDetailsPage() {
   };
 
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] w-full min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <>
+      <SEO 
+        title={post.seo?.metaTitle || `${post.title} | Bright Arena Interiors Journal`}
+        description={post.seo?.description || post.excerpt}
+        keywords={post.seo?.keywords}
+        url={`https://www.brightarenainteriors.com/blogs/${post.slug}`}
+      />
+      <main className="bg-[#f7f4ee] text-[#4a1c13] w-full min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── READING PROGRESS BAR ── */}
       <motion.div
@@ -197,8 +205,6 @@ export default function BlogDetailsPage() {
             {post.content.map((block, index) => renderContentBlock(block, index))}
           </div>
 
-          
-
         </section>
       </article>
 
@@ -236,6 +242,7 @@ export default function BlogDetailsPage() {
         </section>
       )}
 
-    </main>
+      </main>
+    </>
   );
 }

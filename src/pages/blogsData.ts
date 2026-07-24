@@ -1,3 +1,11 @@
+// src/data/blogsData.ts
+
+export interface BlogSEO {
+  metaTitle: string;
+  description: string;
+  keywords: string;
+}
+
 export interface BlogContentBlock {
   type: "paragraph" | "heading" | "quote" | "image";
   value: string;
@@ -16,6 +24,7 @@ export interface BlogPost {
   coverImage: string;
   excerpt: string;
   content: BlogContentBlock[];
+  seo?: BlogSEO;
 }
 
 // High-end Unsplash placeholders for luxury interiors
@@ -63,7 +72,12 @@ export const blogsData: BlogPost[] = [
         type: "paragraph",
         value: "As we look to the future of luxury interiors, the ultimate premium is not gold or marble—it is peace. By integrating biophilic principles, we construct environments that don't just look beautiful, but actively care for the people who inhabit them."
       }
-    ]
+    ],
+    seo: {
+      metaTitle: "Art of Biophilic Design for Modern Homes | Bright Arena Interiors",
+      description: "Discover the art of biophilic design with Bright Arena Interiors. Learn how natural light, greenery, and organic materials create healthier, stylish living spaces.",
+      keywords: "Biophilic interior design, natural interior design, organic materials in home, luxury home wellness, restorative interiors",
+    }
   },
   {
     id: 2,
@@ -98,6 +112,11 @@ export const blogsData: BlogPost[] = [
         type: "paragraph",
         value: "The mistake most homeowners make is relying entirely on overhead downlights. This creates a flat, clinical environment akin to a supermarket. By turning off the overheads and utilizing low-level floor lamps, table lamps, and concealed LED strips, you instantly inject mystery, depth, and warmth into the architecture."
       }
-    ]
+    ],
+    seo: {
+      metaTitle: "Mastering Lighting: The Invisible Architecture Guide | Bright Arena Interiors",
+      description: "Discover how lighting transforms interiors with Bright Arena Interiors. Learn how invisible architecture creates elegant, functional, and inviting spaces through smart lighting design.",
+      keywords: "Interior lighting design, ambient lighting, accent lighting tips, luxury home lighting, architectural lighting",
+    }
   }
 ];

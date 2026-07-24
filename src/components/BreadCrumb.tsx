@@ -6,30 +6,28 @@ import { motion } from "framer-motion";
 
 const Breadcrumb = () => {
   const location = useLocation();
-  // 1. State to track if we are at the top of the page
   const [isTop, setIsTop] = useState(true);
 
-  // 2. Effect to listen to the scroll event
   useEffect(() => {
     const handleScroll = () => {
-      // If scroll position is less than 50px, we consider it "at the top"
       setIsTop(window.scrollY < 50);
     };
 
-    // Attach event listener
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup listener on unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Do not render on the home page
-  if (location.pathname === "/") return null;
-
+  // Split the pathname into segments (e.g., "/services/home-interior" becomes ["services", "home-interior"])
   const pathnames = location.pathname.split("/").filter((x) => x);
 
+  // HIDE LOGIC:
+  // 1. If pathnames.length === 0, we are on the Home page ("/").
+  // 2. If pathnames.length > 1, we are on an internal/detail page (e.g., "/services/:slug").
+  if (pathnames.length === 0 || pathnames.length > 1) {
+    return null; 
+  }
+
   return (
-    // 3. Change <nav> to <motion.nav> to animate it based on the isTop state
     <motion.nav
       initial={{ opacity: 1, y: 0 }}
       animate={{ 
@@ -41,7 +39,6 @@ const Breadcrumb = () => {
       className="fixed top-0 left-0 w-full z-40 px-6 md:px-12 lg:px-16 pt-24 md:pt-32 pointer-events-none"
     >
       <div className="max-w-[1400px] mx-auto">
-        {/* 4. Added 'justify-center' to perfectly center the breadcrumb horizontally */}
         <ol 
           className={`flex items-center justify-center gap-2 text-[10px] md:text-[11px] uppercase tracking-[0.25em] font-bold text-[#8A7570] ${
             isTop ? "pointer-events-auto" : "pointer-events-none"

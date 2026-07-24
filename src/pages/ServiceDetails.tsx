@@ -1,23 +1,25 @@
 "use client";
 
 import { Link, useParams } from "react-router-dom";
-import { servicesData } from "./ServicesData";
+import { servicesData } from "./servicesData"; 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import SEO from "../components/SEO";
 
-// Explicit tuple to fix Framer Motion typescript errors
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+// Gentle, premium easing curve
+const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
 interface RevealHeadingProps {
   children: string;
   className?: string;
   delay?: number;
-  animate?: boolean;
 }
 
-function RevealHeading({ children, className, delay = 0, animate = false }: RevealHeadingProps) {
+function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
+  if (!children) return null;
   const lines = children.split("\n");
   let wordIndex = 0;
+  
   return (
     <h2 className={className}>
       {lines.map((line: string, li: number) => (
@@ -28,13 +30,10 @@ function RevealHeading({ children, className, delay = 0, animate = false }: Reve
               <span key={wi} className="inline-block overflow-hidden pb-2 mr-[0.22em]">
                 <motion.span
                   className="block"
-                  initial={{ y: "110%", opacity: 0 }}
-                  {...(animate
-                    ? { animate: { y: "0%", opacity: 1 } }
-                    : { whileInView: { y: "0%", opacity: 1 } }
-                  )}
-                  transition={{ duration: 0.9, delay: delay + wi * 0.08, ease: EASE }}
-                  viewport={animate ? undefined : { once: true, margin: "-60px" }}
+                  initial={{ y: "120%", opacity: 0 }}
+                  whileInView={{ y: "0%", opacity: 1 }}
+                  transition={{ duration: 1.2, delay: delay + wi * 0.04, ease: EASE }}
+                  viewport={{ once: true, margin: "-40px" }}
                 >
                   {word}
                 </motion.span>
@@ -51,324 +50,240 @@ export default function ServiceDetailsPage() {
   const { slug } = useParams();
   const service = servicesData.find((item) => item.slug === slug);
 
-  const heroImgRef = useRef<HTMLDivElement>(null);
-  const bigImgRef  = useRef<HTMLDivElement>(null);
+  const primaryImgRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroImgRef,
+  const { scrollYProgress: imgScroll } = useScroll({
+    target: primaryImgRef,
     offset: ["start end", "end start"],
   });
-  const { scrollYProgress: bigScroll } = useScroll({
-    target: bigImgRef,
-    offset: ["start end", "end start"],
-  });
-
-  const heroImgY  = useTransform(heroScroll, [0, 1], ["0%", "12%"]);
-  const bigImgY   = useTransform(bigScroll,  [0, 1], ["0%", "10%"]);
+  
+  // Subtle parallax for the primary image
+  const imgY = useTransform(imgScroll, [0, 1], ["-8%", "8%"]);
 
   if (!service) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee] text-[#4a1c13]">
+      <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee] text-[#4a1c13] font-primary text-2xl">
         Service not found
       </div>
     );
   }
 
+  const cleanImgSrc = (src: string) => src.endsWith('.') ? `${src}png` : src;
+
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans">
+    <>
+      {/* ── UPDATED SEO COMPONENT PULLING FROM DATA ── */}
+      <SEO 
+        title={service.seo?.metaTitle || `${service.title} | Bright Arena Interiors`}
+        description={service.seo?.description || service.description || service.longDescription || `Explore our ${service.title} interior design services.`}
+        keywords={service.seo?.keywords}
+        url={`https://www.brightarenainteriors.com/services/${service.slug}`}
+      />
+      
+      <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-32 pb-24">
+        
+        {/* ── 1. COMPACT EDITORIAL HEADER ── */}
+        <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
+          {/* Internal Breadcrumb */}
+          <motion.nav 
+            className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#4a1c13]/50 font-bold mb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE }}
+          >
+            <Link to="/services" className="hover:text-[#ff7043] transition-colors">Services</Link>
+            <span className="w-1 h-1 rounded-full bg-[#4a1c13]/30 mx-1" />
+            <span className="text-[#4a1c13]">{service.title}</span>
+          </motion.nav>
 
-      {/* ── HERO ── */}
-      <section className="relative min-h-screen bg-[#f7f4ee] overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+          <RevealHeading
+            className="font-primary text-[clamp(36px,5vw,64px)] leading-[1.1] tracking-tight text-[#4a1c13] max-w-4xl"
+          >
+            {service.heroTitle || "Crafting Timeless Spaces"}
+          </RevealHeading>
 
-          {/* LEFT CONTENT */}
-          <div className="relative flex items-center px-6 md:px-10 lg:px-16 py-28 lg:py-20 z-10">
+          {service.subtitle && (
+            <motion.p
+              className="mt-6 max-w-2xl text-base md:text-lg text-[#4a1c13]/70 font-light leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4, ease: EASE }}
+            >
+              {service.subtitle}
+            </motion.p>
+          )}
+        </section>
 
-            {/* Subtle dot pattern */}
-            <div
-              className="absolute inset-0 opacity-[0.03]"
-              style={{
-                backgroundImage: "radial-gradient(#4a1c13 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
-              }}
-            />
-
-            <div className="relative z-10 max-w-2xl">
-             
-
-              {/* Title */}
-              <RevealHeading
-                animate
-                delay={0.1}
-                className="mt-6 font-primary text-[clamp(40px,5vw,80px)] leading-[1.05] tracking-tight text-[#4a1c13]"
-              >
-                {service.title || "Designing\nspaces that\nfeel timeless"}
-              </RevealHeading>
-
-              {/* Description */}
-              <motion.p
-                className="mt-8 max-w-xl text-base md:text-lg leading-relaxed text-[#4a1c13]/70"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
-              >
-                We create luxurious interior experiences tailored for modern lifestyles
-                blending elegance, comfort, functionality, and architectural precision
-                into every detail.
-              </motion.p>
-
-              {/* Divider */}
-              <motion.div
-                className="mt-10 h-px bg-[#4a1c13]/10"
-                initial={{ scaleX: 0, originX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1.1, delay: 0.7, ease: EASE }}
+        {/* ── 2. MINIMAL PRIMARY IMAGE ── */}
+        {service.images?.[0] && (
+          <section className="max-w-[1600px] mx-auto px-4 md:px-8 mb-20 md:mb-32">
+            <div ref={primaryImgRef} className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-[2rem] shadow-sm">
+              <motion.img
+                src={cleanImgSrc(service.images[0])}
+                alt={service.title}
+                className="w-full h-full object-cover"
+                style={{ y: imgY, scale: 1.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5, ease: EASE }}
               />
-
-              {/* Buttons (Softened with rounded-full) */}
               <motion.div
-                className="mt-10 flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.75, ease: EASE }}
-              >
-                <Link
-                  to="/contact"
-                  className="bg-[#4a1c13] text-white px-8 py-4 rounded-full uppercase tracking-widest text-[10px] font-bold hover:bg-[#ff7043] transition-colors duration-500"
-                >
-                  Enquire Now
-                </Link>
-                <Link
-                  to="/portfolio"
-                  className="border border-[#4a1c13]/20 text-[#4a1c13] px-8 py-4 rounded-full uppercase tracking-widest text-[10px] font-bold hover:bg-[#4a1c13] hover:text-white transition-colors duration-500"
-                >
-                  View Portfolio
-                </Link>
-              </motion.div>
+                className="absolute inset-0 bg-[#f7f4ee]"
+                style={{ transformOrigin: "left" }}
+                initial={{ scaleX: 1 }}
+                whileInView={{ scaleX: 0 }}
+                transition={{ duration: 1.2, ease: EASE }}
+                viewport={{ once: true, margin: "-60px" }}
+              />
             </div>
-          </div>
+          </section>
+        )}
 
-          {/* RIGHT IMAGE */}
-          <div ref={heroImgRef} className="relative min-h-[50vh] lg:min-h-screen bg-[#e8e5de] overflow-hidden lg:rounded-bl-[4rem]">
-            {/* Parallax Image */}
-            <motion.img
-              src={service.images?.[0] || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"}
-              alt={service.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ y: heroImgY, scale: 1.05 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: EASE }}
-            />
-            
-            {/* Soft Dark Overlay */}
-            <div className="absolute inset-0 bg-[#4a1c13]/10" />
+        {/* ── 3. DETAILED EXPLANATION & STICKY METADATA ── */}
+        <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-24 md:mb-32">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-16 lg:gap-24">
 
-            {/* Elegant Wipe Reveal */}
-            <motion.div
-              className="absolute inset-0 bg-[#f7f4ee]"
-              style={{ transformOrigin: "top" }}
-              initial={{ scaleY: 1 }}
-              animate={{ scaleY: 0 }}
-              transition={{ duration: 1.3, delay: 0.15, ease: EASE }}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTENT ── */}
-      <section className="py-24 md:py-32">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-16 lg:gap-24">
-
-            {/* LEFT Sticky Info */}
-            <div>
-              <div className="sticky top-32 bg-white rounded-3xl p-8 md:p-10 border border-[#4a1c13]/5 shadow-sm">
-                <motion.span
-                  className="uppercase tracking-[0.2em] text-[10px] font-bold text-[#ff7043]"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: EASE }}
-                  viewport={{ once: true }}
-                >
-                  Service Information
-                </motion.span>
-
-                <div className="mt-10 space-y-8">
-                  {[
-                    { label: "Phone",         value: service.phone || "+91 89782 22980",        big: true },
-                    { label: "Working Days",  value: service.workingDays || "Monday - Saturday", big: false },
-                    { label: "Working Hours", value: service.workingHours || "09:00 AM - 07:00 PM", big: false },
-                  ].map((item, i) => (
+            {/* LEFT: Sticky Service Information & CTA */}
+            <div className="relative order-2 lg:order-1">
+              <div className="sticky top-32 space-y-10 pr-6 border-t lg:border-t-0 border-[#4a1c13]/10 pt-10 lg:pt-0">
+                
+                <div className="space-y-8">
+                  {service.phone && (
                     <motion.div
-                      key={item.label}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
+                      transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
                       viewport={{ once: true }}
                     >
-                      <div className="text-[#4a1c13]/50 text-xs tracking-widest uppercase mb-2">{item.label}</div>
-                      <div className={item.big ? "font-primary text-2xl md:text-3xl text-[#4a1c13]" : "text-[#4a1c13] font-medium"}>
-                        {item.value}
+                      <div className="text-[#4a1c13]/50 text-[10px] tracking-widest uppercase mb-1 font-bold">Contact</div>
+                      <div className="font-primary text-xl md:text-2xl text-[#4a1c13]">
+                        {service.phone}
                       </div>
                     </motion.div>
-                  ))}
+                  )}
+
+                  {service.workingDays && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+                      viewport={{ once: true }}
+                    >
+                      <div className="text-[#4a1c13]/50 text-[10px] tracking-widest uppercase mb-1 font-bold">Availability</div>
+                      <div className="text-[#4a1c13] font-medium text-sm md:text-base">{service.workingDays}</div>
+                      {service.workingHours && (
+                        <div className="text-[#4a1c13]/70 text-sm mt-0.5">{service.workingHours}</div>
+                      )}
+                    </motion.div>
+                  )}
                 </div>
-              </div>
-            </div>
 
-            {/* RIGHT Details */}
-            <div className="pt-8">
-              <RevealHeading
-                delay={0.05}
-                className="font-primary text-[clamp(32px,4vw,56px)] leading-[1.05] tracking-tight max-w-2xl text-[#4a1c13]"
-              >
-                {"Interior experiences\ndesigned with elegance."}
-              </RevealHeading>
-
-              <motion.div
-                className="mt-8 mb-12 h-px bg-[#4a1c13]/10"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 1.1, ease: EASE }}
-                viewport={{ once: true }}
-              />
-
-              <div className="space-y-8 text-[#4a1c13]/70 text-base md:text-lg leading-relaxed max-w-3xl">
-                {[service.description, service.longDescription].map((text, i) => (
-                  <motion.p
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
-                    viewport={{ once: true }}
-                  >
-                    {text}
-                  </motion.p>
-                ))}
-              </div>
-
-              {/* Big Image Reveal */}
-              <div ref={bigImgRef} className="mt-16 overflow-hidden relative aspect-[16/9] rounded-3xl">
-                <motion.img
-                  src={service.images?.[1] || "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop"}
-                  alt={service.title}
-                  className="w-full h-full object-cover"
-                  style={{ y: bigImgY, scale: 1.05 }}
-                  initial={{ scale: 1.1 }}
-                  whileInView={{ scale: 1.05 }}
-                  transition={{ duration: 1.4, ease: EASE }}
-                  viewport={{ once: true }}
-                />
-                {/* Cover Wipe */}
+                {/* Sticky CTA */}
                 <motion.div
-                  className="absolute inset-0 bg-[#f7f4ee]"
-                  style={{ transformOrigin: "top" }}
-                  initial={{ scaleY: 1 }}
-                  whileInView={{ scaleY: 0 }}
-                  transition={{ duration: 1.2, ease: EASE }}
-                  viewport={{ once: true, margin: "-60px" }}
-                />
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── BENEFITS ── */}
-      <section className="pb-24 md:pb-32">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
-          <div className="mb-16">
-            <motion.span
-              className="uppercase tracking-[0.3em] text-[10px] font-bold text-[#ff7043]"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: EASE }}
-              viewport={{ once: true }}
-            >
-              Why Choose Us
-            </motion.span>
-
-            <RevealHeading
-              delay={0.08}
-              className="mt-4 font-primary text-[clamp(32px,5vw,64px)] leading-tight tracking-tight text-[#4a1c13]"
-            >
-              {"Built around luxury,\ncomfort & precision"}
-            </RevealHeading>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {service.benefits?.map((item, i) => (
-              <motion.div
-                key={i}
-                className="bg-[#4a1c13] text-[#f7f4ee] p-8 md:p-10 min-h-[260px] rounded-3xl flex flex-col justify-between"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
-                viewport={{ once: true, margin: "-40px" }}
-              >
-                <motion.div
-                  className="text-xs font-bold text-[#ff7043] tracking-widest"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 + 0.3, ease: EASE }}
-                  viewport={{ once: true }}
-                >
-                  0{i + 1}
-                </motion.div>
-                <motion.h3
-                  className="font-primary text-2xl md:text-3xl leading-snug"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: i * 0.1 + 0.4, ease: EASE }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
                   viewport={{ once: true }}
+                  className="pt-4"
                 >
-                  {item}
-                </motion.h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── IMAGE STRIP ── */}
-      <section className="pb-24 md:pb-32">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {service.images?.slice(0, 4).map((img, i) => (
-              <div
-                key={i}
-                className={`relative overflow-hidden group rounded-2xl md:rounded-3xl ${i % 2 === 0 ? "aspect-[3/4]" : "aspect-square mt-auto"}`}
-              >
-                <motion.img
-                  src={img}
-                  alt="Service Detail"
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.1 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ duration: 1.3, delay: i * 0.1, ease: EASE }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  whileHover={{ scale: 1.05, transition: { duration: 0.7 } }}
-                />
-                {/* Soft overlay to match theme */}
-                <div className="absolute inset-0 bg-[#4a1c13]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Cover Wipe */}
-                <motion.div
-                  className="absolute inset-0 bg-[#f7f4ee]"
-                  style={{ transformOrigin: "top" }}
-                  initial={{ scaleY: 1 }}
-                  whileInView={{ scaleY: 0 }}
-                  transition={{ duration: 1.0, delay: i * 0.1, ease: EASE }}
-                  viewport={{ once: true, margin: "-40px" }}
-                />
+                  <Link
+                    to="/contact"
+                    className="inline-block w-full text-center bg-[#4a1c13] text-[#f7f4ee] px-8 py-4 rounded-xl uppercase tracking-widest text-[11px] font-bold hover:bg-[#ff7043] transition-colors duration-500"
+                  >
+                    Discuss Your Project
+                  </Link>
+                </motion.div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-    </main>
+            {/* RIGHT: In-Depth Service Content */}
+            <div className="order-1 lg:order-2">
+              {service.description && (
+                <RevealHeading
+                  delay={0.1}
+                  className="font-primary text-[clamp(28px,3.5vw,48px)] leading-[1.2] tracking-tight text-[#4a1c13] mb-8"
+                >
+                  {service.description}
+                </RevealHeading>
+              )}
+
+              <div className="prose prose-lg prose-p:text-[#4a1c13]/75 prose-p:leading-[1.8] max-w-3xl font-sans text-base md:text-lg">
+                {service.longDescription && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2, ease: EASE }}
+                    viewport={{ once: true }}
+                  >
+                    {service.longDescription}
+                  </motion.p>
+                )}
+                
+                {service.content && (
+                  <motion.p
+                    className="mt-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.3, ease: EASE }}
+                    viewport={{ once: true }}
+                  >
+                    {service.content}
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Compact Benefits List */}
+              {service.benefits && service.benefits.length > 0 && (
+                <div className="mt-16 pt-12 border-t border-[#4a1c13]/10">
+                  <span className="uppercase tracking-[0.2em] text-[10px] font-bold text-[#ff7043] block mb-8">
+                    Key Advantages
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+                    {service.benefits.map((benefit, i) => (
+                      <motion.div
+                        key={i}
+                        className="flex items-start gap-4"
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
+                        viewport={{ once: true }}
+                      >
+                        <span className="text-[#ff7043] font-bold text-sm mt-1">0{i + 1}.</span>
+                        <span className="text-[#4a1c13] font-medium leading-relaxed">{benefit}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. MINIMAL SUPPLEMENTARY IMAGES ── */}
+        {service.images && service.images.length > 1 && (
+          <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {service.images.slice(1, 3).map((img, i) => (
+                <motion.div
+                  key={i}
+                  className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: i * 0.2, ease: EASE }}
+                  viewport={{ once: true, margin: "-40px" }}
+                >
+                  <img
+                    src={cleanImgSrc(img)}
+                    alt={`${service.title} Detail ${i + 1}`}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </main>
+    </>
   );
 }

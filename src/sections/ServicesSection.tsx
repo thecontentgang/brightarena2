@@ -13,21 +13,21 @@ const services = [
     title: "Home Interiors",
     slug: "home-interior-design",
     description: "Curated, minimalist living spaces tailored to your daily rhythms. We bring your vision of home to life with precision.",
-    image: "/projectsImg/varaprasad/vp-img1.png",
+    image: "/home-interiors.webp",
   },
   {
     id: "02",
     title: "Commercial Spaces",
     slug: "commercial-interior-design",
     description: "Photorealistic rendering and precise spatial planning designed to elevate customer experiences and brand identity.",
-    image: "/projectsImg/banali/bf-img5.png",
+    image: "/projectsImg/banali/bf-img3.png",
   },
   {
     id: "03",
     title: "Office Environments",
     slug: "office-interior-design",
     description: "High-end corporate environments that foster productivity, well-being, and modern collaboration.",
-    image: "/projectsImg/varaprasad/vp-img11.png",
+    image: "/office-spaces.webp",
   },
   {
     id: "04",
@@ -136,13 +136,11 @@ const HorizontalServices: React.FC = () => {
                   {/* Content Overlay */}
                   <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12">
                     <div className="flex-1 max-w-2xl">
-                      <span className="inline-block text-[#ff7043] text-lg md:text-xl font-bold tracking-[0.2em] mb-4 bg-black/30 px-4 py-1 rounded-full backdrop-blur-sm border border-white/10">
-                        {service.id}
-                      </span>
-                      <h3 className="text-white text-4xl md:text-7xl font-medium tracking-tight mt-2 mb-4 md:mb-6 drop-shadow-lg">
+                      
+                      <h3 className="text-white text-4xl md:text-5xl font-medium font-primary tracking-tight mt-2 mb-4 md:mb-6 drop-shadow-lg">
                         {service.title}
                       </h3>
-                      <p className="text-white/80 text-sm md:text-lg leading-relaxed md:leading-loose">
+                      <p className="text-white/80 text-sm md:text-lg leading-relaxed md:leading-loose font-secondary">
                         {service.description}
                       </p>
                     </div>

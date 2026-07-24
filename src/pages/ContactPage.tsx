@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import SEO from "../components/SEO";
 
 // Explicitly typed easing tuple to satisfy TypeScript
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -24,13 +24,14 @@ const staggerContainer = {
 };
 
 export default function ContactPage() {
-  // Enhanced SEO Page Title
-  useEffect(() => {
-    document.title = "Contact Us | Bright Arena Luxury Interiors Hyderabad";
-  }, []);
-
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <>
+      <SEO 
+        title="Contact - Bright Arena Interiors Interior Designers in Hyderabad"
+        description="Contact Bright Arena Interiors, trusted interior designers in Hyderabad, to discuss your home or office interior project and book a free consultation today."
+        url="https://www.brightarenainteriors.com/contact"
+      />
+      <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── HERO SECTION ── */}
       <header aria-labelledby="contact-heading" className="pt-32 pb-12 md:pt-48 md:pb-16 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
@@ -102,7 +103,7 @@ export default function ContactPage() {
                   </h3>
                   <div className="flex flex-col gap-2 font-medium">
                     <a href="tel:+918978222980" aria-label="Call us at +91-8978222980" className="hover:text-[#ff7043] transition-colors duration-300">
-                      +91-8978222980
+                      +91 8978 222 980
                     </a>
                     <a href="mailto:info@brightarena.com" aria-label="Email us at info@brightarena.com" className="hover:text-[#ff7043] transition-colors duration-300">
                       info@brightarena.com
@@ -256,7 +257,7 @@ export default function ContactPage() {
           <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden relative shadow-sm border border-[#4a1c13]/5 group bg-[#e8e5de]">
             <iframe 
               title="Bright Arena Interiors Studio Location Map in Gachibowli, Hyderabad"
-              src="https://googleusercontent.com/maps.google.com/1"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2691.5108603682183!2d78.36538624751807!3d17.441940515237768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb934fc43492d7%3A0xb4afd24eb829f868!2sBright%20Arena%20Interiors!5e0!3m2!1sen!2sin!4v1784722465708!5m2!1sen!2sin"
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -270,5 +271,6 @@ export default function ContactPage() {
       </section>
 
     </main>
+    </>
   );
 }

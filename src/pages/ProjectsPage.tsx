@@ -2,8 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { projectsData, type Project } from "./ProjectsData"; 
+import { projectsData, type Project } from "./ProjectsData";
+import SEO from "../components/SEO";
 
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -59,12 +59,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 /* ─── PAGE COMPONENT ─── */
 export default function PortfolioPage() {
-  useEffect(() => {
-    document.title = "Portfolio | Bright Arena Luxury Interiors";
-  }, []);
-
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
+    <>
+      <SEO 
+        title="Bright Arena Interiors Portfolio and Interior Design Projects"
+        description="Explore the Bright Arena Interiors portfolio showcasing completed home, villa, apartment, and office interior projects across Hyderabad with 14+ years of expertise."
+        url="https://www.brightarenainteriors.com/portfolio"
+      />
+      <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
       
       {/* ── HERO ── */}
       <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-20">
@@ -104,5 +106,6 @@ export default function PortfolioPage() {
       </section>
       
     </main>
+    </>
   );
 }

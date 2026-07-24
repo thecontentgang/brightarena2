@@ -1,7 +1,28 @@
-export const designsData = [
+// src/data/designsData.ts
+
+export interface DesignSEO {
+  metaTitle: string;
+  description: string;
+  keywords: string;
+}
+
+export interface Design {
+  id: number;
+  slug: string;
+  title: string;
+  category: string;
+  coverImage: string;
+  description: string;
+  longDescription: string;
+  features: string[];
+  images: string[];
+  seo?: DesignSEO;
+}
+
+export const designsData: Design[] = [
   {
     id: 1,
-    slug: "modern-luxury-living-room",
+    slug: "living-room-interior-design-hyderabad",
     title: "Modern Luxury Living Room",
     category: "Living Room",
     coverImage: "/projectsImg/forest-edge/fe-img2.webp",
@@ -20,10 +41,15 @@ export const designsData = [
       "/projectsImg/varaprasad/vp-img1.png",
       "/projectsImg/kollur/kl-img1.webp",
     ],
+    seo: {
+      metaTitle: "Living Room Interior Design in Hyderabad | Bright Arena Interiors",
+      description: "Discover stylish living room interior design in Hyderabad with Bright Arena Interiors. Explore modern layouts, premium finishes, and customized designs for every home.",
+      keywords: "luxury living room design, modern living room interiors, premium living room styling, custom living room furniture",
+    }
   },
   {
     id: 2,
-    slug: "minimal-bedroom-design",
+    slug: "bedroom-interior-design-hyderabad",
     title: "Minimal Bedroom Design",
     category: "Bedroom",
     coverImage: "/projectsImg/kollur/kl-img10.webp",
@@ -40,12 +66,17 @@ export const designsData = [
       "/projectsImg/kollur/kl-img8.webp",
       "/projectsImg/kollur/kl-img9.webp",
       "/projectsImg/etna/sr-img3.webp",
-      "/projectsIm/etna/sr-img12.webp",
+      "/projectsImg/etna/sr-img12.webp", // Fixed typo here (was projectsIm)
     ],
+    seo: {
+      metaTitle: "Bedroom Interior Design in Hyderabad | Bright Arena Interiors",
+      description: "Create your dream bedroom with Bright Arena Interiors. Explore modern bedroom interior design in Hyderabad featuring customized layouts, premium finishes, and elegant designs.",
+      keywords: "minimal bedroom design, modern bedroom interiors, luxury bedroom styling, relaxing bedroom decor",
+    }
   },
   {
     id: 3,
-    slug: "contemporary-kitchen-design",
+    slug: "kitchen-interior-design-hyderabad",
     title: "Contemporary Kitchen Design",
     category: "Kitchen",
     coverImage: "/projectsImg/etna/sr-img16.webp",
@@ -65,6 +96,10 @@ export const designsData = [
       "/projectsImg/kollur/kl-img6.webp",
       "/projectsImg/kollur/kl-img7.webp"
     ],
+    seo: {
+      metaTitle: "Modern Kitchen Interior Design in Hyderabad | Bright Arena Interiors",
+      description: "Discover modern kitchen interior design in Hyderabad with Bright Arena Interiors. Get customized layouts, smart storage solutions, and premium finishes for your dream kitchen.",
+      keywords: "contemporary kitchen design, luxury modular kitchens, modern kitchen interiors, premium kitchen layouts",
+    }
   },
-
 ];

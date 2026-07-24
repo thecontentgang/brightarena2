@@ -58,7 +58,7 @@ const AboutSection: React.FC = () => {
             className="flex flex-col gap-8 pt-2 md:pt-3"
           >
             <p className="text-[#4a1c13]/80 text-[16px] md:text-lg leading-relaxed max-w-lg">
-              We don’t waste time with hierarchy. Our small team gives you
+              We don’t waste time with hierarchy. Our close-nit team gives you
               direct access to the designers who will create your space
               from the first conversation to the final details.
             </p>

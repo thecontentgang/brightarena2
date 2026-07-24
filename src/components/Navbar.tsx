@@ -215,6 +215,8 @@ const Header: React.FC = () => {
               <div className="flex-1 flex justify-start">
                 <button
                   onClick={() => setIsMobileOpen(!isMobileOpen)}
+                  aria-expanded={isMobileOpen}
+                  aria-label={isMobileOpen ? "Close mobile menu" : "Open mobile menu"}
                   className="w-12 h-full flex items-center justify-center text-[#4a1c13]"
                 >
                   <div className="w-5 h-[14px] flex flex-col justify-between relative">

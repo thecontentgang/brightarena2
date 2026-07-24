@@ -118,24 +118,51 @@ const MinimalHero: React.FC = () => {
       >
         {/* Heading Area */}
         <div
-          ref={headingRef}
-          // FIX 2: Added transform-gpu to force hardware acceleration and prevent iOS Safari flickering during opacity/y transforms
-          className="absolute top-0 left-0 w-full h-[40dvh] flex flex-col items-center justify-center pt-20 px-4 md:px-8 z-0 opacity-0 transform-gpu"
-        >
-          <div className="flex w-full justify-center overflow-hidden px-4">
-            <h1 className="mx-auto text-center font-primary leading-[1.15] tracking-tight text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)]">
-              Dream
-              <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
-              <span className="text-[#ff7043]">Experience</span>
-              
-              {/* Breaks to a new line ONLY on mobile */}
-              <br className="block md:hidden" />
-              
-              <span className="mx-2 md:mx-4 font-light opacity-50">|</span>
-              Live
-            </h1>
-          </div>
-        </div>
+  ref={headingRef}
+  className="absolute top-0 left-0 w-full h-[40dvh] flex items-center justify-center pt-18 px-4 md:px-8 z-0 opacity-0 transform-gpu"
+>
+  <div className="flex flex-wrap md:flex-nowrap items-start justify-center gap-3 md:gap-16 text-center">
+
+    {/* Dream */}
+    <div className="flex flex-col items-center">
+      <h1 className="font-primary text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
+        Dream
+      </h1>
+      <p className="mt-0.5 text-sm md:text-base uppercase tracking-[0.25em] text-[#8c6b63]">
+        BIG
+      </p>
+    </div>
+
+    <span className=" md:flex items-center text-5xl font-light text-[#4a1c13]/30">
+      |
+    </span>
+
+    {/* Experience */}
+    <div className="flex flex-col items-center">
+      <h1 className="font-primary text-[#ff7043] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
+        Experience
+      </h1>
+      <p className="mt-0.5 text-sm md:text-base uppercase tracking-[0.2em] text-[#8c6b63]">
+        Exceptional Design
+      </p>
+    </div>
+
+    <span className=" md:flex items-center text-5xl font-light text-[#4a1c13]/30">
+      |
+    </span>
+
+    {/* Live */}
+    <div className="flex flex-col items-center">
+      <h1 className="font-primary text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
+        Live
+      </h1>
+      <p className="mt-0.5 text-sm md:text-base uppercase tracking-[0.2em] text-[#8c6b63]">
+        in Comfort
+      </p>
+    </div>
+
+  </div>
+</div>
 
         {/* Video Area */}
         <div

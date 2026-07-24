@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 
 // Premium Apple-like easing curve
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -40,15 +41,15 @@ const videoTestimonials = [
   },
   {
     id: 5,
-    client: "Ramu & Hema",
+    client: "Hema & Ramu",
     project: "3 BHK Concept to Reality",
     duration: "2:05",
     youtubeId: "Dhx2CLR350Y", 
   },
   {
     id: 6,
-    client: "Jazz & Dolphiny",
-    project: "Seamless 3D Execution",
+    client: "Gouthami & Naz",
+    project: "Seamless 3bhk interiors",
     duration: "1:42",
     youtubeId: "_NQ_TWdarSk", 
   },
@@ -130,7 +131,13 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#fcfcfc] pt-32 pb-24 px-6 sm:px-8 md:px-16 lg:px-24 antialiased overflow-hidden">
+    <>
+      <SEO 
+        title="Client Testimonials - Bright Arena Interiors"
+        description="Read client testimonials for Bright Arena Interiors and discover why homeowners and businesses across Hyderabad trust us for luxury interior design projects."
+        url="https://www.brightarenainteriors.com/testimonials"
+      />
+      <main className="min-h-screen bg-[#fcfcfc] pt-32 pb-24 px-6 sm:px-8 md:px-16 lg:px-24 antialiased overflow-hidden">
       
       {/* HERO SECTION */}
       <motion.div
@@ -351,6 +358,7 @@ const Testimonials: React.FC = () => {
       </motion.div>
       
     </main>
+    </>
   );
 };
 

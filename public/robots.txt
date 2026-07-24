@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.brightarenainteriors.com/sitemap.xml
+Sitemap: https://www.brightarenainteriors.com/blog-sitemap.xml
+Sitemap: https://www.brightarenainteriors.com/image-sitemap.xml

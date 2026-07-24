@@ -52,7 +52,7 @@ const testimonials: Testimonial[] = [
   {
     id: 4,
     type: "google",
-    name: "rajesh shankar pandey",
+    name: "Rajesh Shankar Pandey",
     rating: 5,
     reviewText: "I'll admit I was a bit skeptical at first, but the 3D renders matched the final outcome perfectly! The quality of the materials they used is top-notch. I couldn't be happier.",
     date: "1 month ago",
@@ -92,7 +92,7 @@ const testimonials: Testimonial[] = [
   {
     id: 8,
     type: "video",
-    name: "Ramu & Hema",
+    name: "Hema & Ramu",
     videoId: "Dhx2CLR350Y",
     description: "The team at Bright Arena Interiors perfectly understood our vision for our 3 BHK flat. They shared high-quality 3D renders with us, and the final execution matched them exactly! We strongly recommend them.",
     location: "Hyderabad",
@@ -101,7 +101,7 @@ const testimonials: Testimonial[] = [
   {
     id: 9,
     type: "video",
-    name: "Jazz & Dolphiny",
+    name: "Gowthami & Naz",
     videoId: "_NQ_TWdarSk",
     description: "We had an amazing experience working with the Bright Arena team. They took the time to understand exactly what we wanted, and the transition from the 3D designs to the actual reality was seamless. Beautiful work!",
     location: "Hyderabad",

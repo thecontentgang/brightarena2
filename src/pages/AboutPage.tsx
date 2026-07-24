@@ -2,6 +2,7 @@
 
 import { motion, type Variants, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import SEO from "../components/SEO";
 
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -17,8 +18,8 @@ const stagger: Variants = {
 
 // Unsplash & Local image URLs
 const IMAGES = {
-  heroRoom: "/projectsImg/my-home-bhooja/MHB-img2.jpg",
-  studioWork: "/office.jpg",
+  heroRoom: "/projectsImg/forest-edge/fe-img5.webp",
+  studioWork: "/projectsImg/varaprasad/vp-img11.png",
   philosophyBg: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1400&q=80",
   founderA: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
   founderB: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=800&q=80",
@@ -43,7 +44,13 @@ export default function AboutPage() {
   const heroImgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-x-hidden">
+    <>
+      <SEO 
+        title="About - Bright Arena Interiors 14+ Years of Interior Design Excellence"
+        description="Learn about Bright Arena Interiors, a trusted interior design company in Hyderabad with 14+ years of experience creating beautiful, functional, and personalized spaces."
+        url="https://www.brightarenainteriors.com/about"
+      />
+      <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-x-hidden">
       
       {/* ─── 1. HERO ─── */}
       <section ref={heroRef} aria-label="Introduction" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
@@ -366,5 +373,6 @@ export default function AboutPage() {
       </section>
 
     </main>
+    </>
   );
 }

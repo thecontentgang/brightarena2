@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { designsData } from "./designsData"; // Adjust path as needed
+import { designsData } from "./designsData";
+import SEO from "../components/SEO";
 
 // Dynamically extract categories, count them, and grab a cover image for each
 const categoriesData = Array.from(new Set(designsData.map(d => d.category))).map(cat => {
@@ -85,13 +85,14 @@ function CategoryCard({
 
 /* ─── PAGE COMPONENT ─── */
 export default function DesignPage() {
-  // Enhanced SEO Page Title
-  useEffect(() => {
-    document.title = "Curated Design Concepts | Bright Arena Interiors";
-  }, []);
-
   return (
-    <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+    <>
+      <SEO 
+        title="Interior Design Ideas in Hyderabad – Bright Arena Interiors"
+        description="Explore home interior designs by Bright Arena Interiors featuring modern living rooms, kitchens, bedrooms, and luxury spaces in Hyderabad."
+        url="https://www.brightarenainteriors.com/designs"
+      />
+      <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
       
       {/* ── BREADCRUMB CLEARANCE AREA ── */}
       <div className="pt-24 md:pt-32 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto" aria-hidden="true">
@@ -157,5 +158,6 @@ export default function DesignPage() {
         )}
       </section>
     </main>
+    </>
   );
 }

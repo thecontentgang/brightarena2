@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { servicesData } from "./ServicesData"; // Ensure this path points to your data file
+import { servicesData } from "./servicesData"; 
+import SEO from "../components/SEO";
 
 /* ─── SERVICE ROW ─── */
 function ServiceRow({
@@ -128,7 +129,13 @@ function ServiceRow({
 /* ─── PAGE ─── */
 export default function ServicesPage() {
   return (
-    <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
+    <>
+      <SEO 
+        title="Home and Office Interior Design Services in Hyderabad - Bright Arena Interiors"
+        description="Bright Arena Interiors offers Interior Design Services in Hyderabad for luxury homes, offices, and commercial spaces with expert planning and execution."
+        url="https://www.brightarenainteriors.com/services"
+      />
+      <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
 
       {/* HERO */}
       <section aria-labelledby="services-hero-heading" className="relative min-h-[80vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
@@ -183,5 +190,6 @@ export default function ServicesPage() {
       </section>
       
     </main>
+    </>
   );
 }
