@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { projectsData } from '../src/pages/ProjectsData.ts';
-import { servicesData } from '../src/pages/ServicesData.ts';
+import { servicesData } from '../src/pages/data/servicesData.ts';
 import { blogsData } from '../src/pages/blogsData.ts';
 import { designsData } from '../src/pages/designsData.ts';
 
