@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 
 // Shortened text, tailored for digital experiences and clean aesthetics
-const text = "We shape rooms where negative space meets positive intention. True harmony is the exact amount of what you need.";
+const text = "We create thoughtfully designed spaces where simplicity meets intention. Through the perfect balance of form, function, and style, we craft interiors that feel truly yours";
 
 const PhilosophySection: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
