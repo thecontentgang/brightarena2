@@ -6,6 +6,28 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import SEO from "../components/SEO";
 
+// ── 1. DEFINE THE DATA INTERFACE ──
+// This tells TypeScript exactly what properties exist on a "service" object.
+export interface ServiceItem {
+  slug: string;
+  title: string;
+  heroTitle?: string;
+  subtitle?: string;
+  description?: string;
+  longDescription?: string;
+  content?: string;
+  images?: string[];
+  phone?: string;
+  workingDays?: string;
+  workingHours?: string;
+  benefits?: string[];
+  seo?: {
+    metaTitle?: string;
+    description?: string;
+    keywords?: string;
+  };
+}
+
 // Gentle, premium easing curve
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
@@ -47,8 +69,10 @@ function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
 }
 
 export default function ServiceDetailsPage() {
-  const { slug } = useParams();
-  const service = servicesData.find((item) => item.slug === slug);
+  const { slug } = useParams<{ slug: string }>();
+  
+  // ── 2. APPLY THE TYPE TO .find() ──
+  const service = servicesData.find((item: ServiceItem) => item.slug === slug);
 
   const primaryImgRef = useRef<HTMLDivElement>(null);
 
@@ -82,9 +106,8 @@ export default function ServiceDetailsPage() {
       
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-32 pb-24">
         
-        {/* ── 1. COMPACT EDITORIAL HEADER ── */}
+        {/* ── COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
-          {/* Internal Breadcrumb */}
           <motion.nav 
             className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#4a1c13]/50 font-bold mb-8"
             initial={{ opacity: 0, y: 10 }}
@@ -114,7 +137,7 @@ export default function ServiceDetailsPage() {
           )}
         </section>
 
-        {/* ── 2. MINIMAL PRIMARY IMAGE ── */}
+        {/* ── MINIMAL PRIMARY IMAGE ── */}
         {service.images?.[0] && (
           <section className="max-w-[1600px] mx-auto px-4 md:px-8 mb-20 md:mb-32">
             <div ref={primaryImgRef} className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-[2rem] shadow-sm">
@@ -139,7 +162,7 @@ export default function ServiceDetailsPage() {
           </section>
         )}
 
-        {/* ── 3. DETAILED EXPLANATION & STICKY METADATA ── */}
+        {/* ── DETAILED EXPLANATION & STICKY METADATA ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-24 md:mb-32">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-16 lg:gap-24">
 
@@ -178,7 +201,6 @@ export default function ServiceDetailsPage() {
                   )}
                 </div>
 
-                {/* Sticky CTA */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -232,14 +254,14 @@ export default function ServiceDetailsPage() {
                 )}
               </div>
 
-              {/* Compact Benefits List */}
+              {/* ── 3. APPLY TYPES TO .map() ── */}
               {service.benefits && service.benefits.length > 0 && (
                 <div className="mt-16 pt-12 border-t border-[#4a1c13]/10">
                   <span className="uppercase tracking-[0.2em] text-[10px] font-bold text-[#ff7043] block mb-8">
                     Key Advantages
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
-                    {service.benefits.map((benefit, i) => (
+                    {service.benefits.map((benefit: string, i: number) => (
                       <motion.div
                         key={i}
                         className="flex items-start gap-4"
@@ -259,11 +281,11 @@ export default function ServiceDetailsPage() {
           </div>
         </section>
 
-        {/* ── 4. MINIMAL SUPPLEMENTARY IMAGES ── */}
+        {/* ── 4. APPLY TYPES TO .map() ── */}
         {service.images && service.images.length > 1 && (
           <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {service.images.slice(1, 3).map((img, i) => (
+              {service.images.slice(1, 3).map((img: string, i: number) => (
                 <motion.div
                   key={i}
                   className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm"

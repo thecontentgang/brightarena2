@@ -21,8 +21,8 @@ const IMAGES = {
   heroRoom: "/projectsImg/forest-edge/fe-img5.webp",
   studioWork: "/projectsImg/varaprasad/vp-img11.png",
   philosophyBg: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1400&q=80",
-  founderA: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
-  founderB: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=800&q=80",
+  founderA: "https://images.unsplash.com/photo-",
+  founderB: "https://images.unsplash.c",
 };
 
 const founders = [
