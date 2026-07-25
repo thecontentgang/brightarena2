@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { servicesData } from "./servicesData"; 
+// 1. Updated the import path and imported the ServiceItem interface
+import { servicesData,type ServiceItem } from "./servicesData"; 
 import SEO from "../components/SEO";
 
 /* ─── SERVICE ROW ─── */
@@ -10,7 +11,7 @@ function ServiceRow({
   service,
   index,
 }: {
-  service: typeof servicesData[0];
+  service: ServiceItem; // 2. Replaced 'typeof servicesData[0]' with the strict interface
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -29,8 +30,9 @@ function ServiceRow({
       >
         {/* Image */}
         <div className="w-full md:w-[55%] overflow-hidden bg-[#EDE8E2]" style={{ minHeight: 300 }}>
+          {/* Added optional chaining (?.) just in case an image is missing */}
           <motion.img
-            src={service.images[0]}
+            src={service.images?.[0]}
             alt={`Bright Arena interior service: ${service.title}`}
             loading="lazy"
             decoding="async"
@@ -71,7 +73,8 @@ function ServiceRow({
               Key Benefits
             </p>
             <ul className="space-y-2" aria-label={`Benefits of ${service.title}`}>
-              {service.benefits.map((item) => (
+              {/* 3. Explicitly typed 'item' as string and added optional chaining */}
+              {service.benefits?.map((item: string) => (
                 <li key={item} className="flex items-start gap-3 text-[14px]" style={{ color: "#4A3630" }}>
                   <span className="mt-[7px] w-[5px] h-[1px] shrink-0 bg-[#C4623A]" aria-hidden="true" />
                   {item}
@@ -135,7 +138,7 @@ export default function ServicesPage() {
         description="Bright Arena Interiors offers Interior Design Services in Hyderabad for luxury homes, offices, and commercial spaces with expert planning and execution."
         url="https://www.brightarenainteriors.com/services"
       />
-      <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden">
+      <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden pt-16">
 
       {/* HERO */}
       <section aria-labelledby="services-hero-heading" className="relative min-h-[80vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
@@ -162,7 +165,8 @@ export default function ServicesPage() {
 
       {/* SERVICE ROWS */}
       <section aria-label="Our Interior Design Services">
-        {servicesData.map((s, i) => (
+        {/* 4. Explicitly typed 's' and 'i' parameters */}
+        {servicesData.map((s: ServiceItem, i: number) => (
           <ServiceRow key={s.slug} service={s} index={i} />
         ))}
         <div className="border-t border-[#E8E2DB]" aria-hidden="true" />

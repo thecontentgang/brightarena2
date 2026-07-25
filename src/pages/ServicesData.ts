@@ -1,6 +1,29 @@
 // src/data/servicesData.ts
 
-export const servicesData = [
+// 1. Export the interface so all pages know what a "Service" looks like
+export interface ServiceItem {
+  id: number;
+  slug: string;
+  title: string;
+  heroTitle?: string;
+  subtitle?: string;
+  description?: string;
+  longDescription?: string;
+  content?: string;
+  images?: string[];
+  phone?: string;
+  workingDays?: string;
+  workingHours?: string;
+  benefits?: string[];
+  seo?: {
+    metaTitle?: string;
+    description?: string;
+    keywords?: string;
+  };
+}
+
+// 2. Export the typed data array
+export const servicesData: ServiceItem[] = [
   {
     id: 1,
     slug: "home-interior-designs-hyderabad",

@@ -1,32 +1,11 @@
 "use client";
 
 import { Link, useParams } from "react-router-dom";
-import { servicesData } from "./servicesData"; 
+// Updated import path to match your folder structure
+import { servicesData,type ServiceItem } from "./servicesData"; 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import SEO from "../components/SEO";
-
-// ── 1. DEFINE THE DATA INTERFACE ──
-// This tells TypeScript exactly what properties exist on a "service" object.
-export interface ServiceItem {
-  slug: string;
-  title: string;
-  heroTitle?: string;
-  subtitle?: string;
-  description?: string;
-  longDescription?: string;
-  content?: string;
-  images?: string[];
-  phone?: string;
-  workingDays?: string;
-  workingHours?: string;
-  benefits?: string[];
-  seo?: {
-    metaTitle?: string;
-    description?: string;
-    keywords?: string;
-  };
-}
 
 // Gentle, premium easing curve
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -71,7 +50,7 @@ function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
 export default function ServiceDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   
-  // ── 2. APPLY THE TYPE TO .find() ──
+  // Applies the imported ServiceItem type
   const service = servicesData.find((item: ServiceItem) => item.slug === slug);
 
   const primaryImgRef = useRef<HTMLDivElement>(null);
@@ -96,7 +75,6 @@ export default function ServiceDetailsPage() {
 
   return (
     <>
-      {/* ── UPDATED SEO COMPONENT PULLING FROM DATA ── */}
       <SEO 
         title={service.seo?.metaTitle || `${service.title} | Bright Arena Interiors`}
         description={service.seo?.description || service.description || service.longDescription || `Explore our ${service.title} interior design services.`}
@@ -254,7 +232,6 @@ export default function ServiceDetailsPage() {
                 )}
               </div>
 
-              {/* ── 3. APPLY TYPES TO .map() ── */}
               {service.benefits && service.benefits.length > 0 && (
                 <div className="mt-16 pt-12 border-t border-[#4a1c13]/10">
                   <span className="uppercase tracking-[0.2em] text-[10px] font-bold text-[#ff7043] block mb-8">
@@ -281,7 +258,6 @@ export default function ServiceDetailsPage() {
           </div>
         </section>
 
-        {/* ── 4. APPLY TYPES TO .map() ── */}
         {service.images && service.images.length > 1 && (
           <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

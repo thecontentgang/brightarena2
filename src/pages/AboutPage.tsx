@@ -29,7 +29,7 @@ const founders = [
   {
     name: "Srilatha Ravuri",
     role: "Co-Founder",
-    description: "Srilatha Ravuri is the creative force behind Bright Arena, bringing a refined vision for luxury interiors and modern living spaces. With a strong background in architecture and interior design, she focuses on creating timeless spaces that combine elegance, comfort, and functionality.",
+    description: "Srilatha Ravuri is the Founder and Principal Interior Designer of Bright Arena, specializing in luxury residential and commercial interior design. With expertise in space planning, modern interiors, and bespoke design solutions, she creates elegant, functional spaces tailored to each client's lifestyle.Known for her attention to detail and client-focused approach, Srilatha oversees every project from concept to completion, delivering timeless interiors that combine aesthetics, comfort, and quality. Her vision has established Bright Arena as a trusted name in innovative interior design and customized living spaces.",
   },
   {
     name: "Bhawani Shankar",
