@@ -34,7 +34,7 @@ const founders = [
   {
     name: "Bhawani Shankar",
     role: "Co-Founder",
-    description: "Bhawani shankar leads the operational and strategic growth of Bright Arena with extensive experience in business management and global operations. His expertise in execution, client relationships, and project coordination ensures every project is delivered with excellence and precision.",
+    description: "Bhawani Shankar Guruvelli is the driving force behind the operational excellence and strategic growth of Bright Arena. With extensive experience in business management, global operations, and project execution, he has been instrumental in building a strong foundation for the company's long-term success.His vision goes beyond managing day-to-day operations. He is committed to creating sustainable business growth while transforming the interior design industry through innovation, quality, and customer-centric solutions. By combining strategic planning with operational precision, Bhawani ensures every project reflects Bright Arena's commitment to excellence, functionality, and timeless design.His expertise in business strategy, client relationship management, project coordination, and operational leadership enables Bright Arena to deliver exceptional interior solutions while fostering lasting partnerships with clients. Under his leadership, the company continues to expand its presence, embrace innovation, and set new benchmarks in interior design and business excellence.",
   },
 ];
 
