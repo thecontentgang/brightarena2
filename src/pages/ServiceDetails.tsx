@@ -2,7 +2,7 @@
 
 import { Link, useParams } from "react-router-dom";
 // Updated import path to match your folder structure
-import { servicesData,type ServiceItem } from "./servicesData"; 
+import { servicesData,type ServiceItem } from "./data/servicesData"; 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import SEO from "../components/SEO";

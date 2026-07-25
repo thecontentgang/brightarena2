@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 // 1. Updated the import path and imported the ServiceItem interface
-import { servicesData,type ServiceItem } from "./servicesData"; 
+import { servicesData,type ServiceItem } from "./data/servicesData"; 
 import SEO from "../components/SEO";
 
 /* ─── SERVICE ROW ─── */
