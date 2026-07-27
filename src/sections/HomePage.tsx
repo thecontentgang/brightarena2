@@ -11,6 +11,7 @@ import ProjectShowcase from './ProjectShowcase';
 
 // ─── LAZY IMPORTS (BELOW THE FOLD) ───
 const Services = React.lazy(() => import('./ServicesSection'));
+const Panoroma = React.lazy(() => import('./PanoromaSection'));
 const Philosophy = React.lazy(() => import('./PhilosophySection'));
 const TestimonialsSection = React.lazy(() => import('./TestimonialSection'));
 
@@ -40,6 +41,11 @@ const HomePage = () => {
         <Suspense fallback={<SectionLoader />}>
           <Services />
           <Philosophy />
+          <Panoroma
+            src="/Panorama.jpeg"
+            title="Walk Through the Home Theatre"
+            description="A full 360° look at the space — every finish, every angle."
+          />
           <ProjectShowcase />
           <TestimonialsSection />
         </Suspense>
