@@ -2,7 +2,7 @@
 
 import { Link, useParams } from "react-router-dom";
 // Updated import path to match your folder structure
-import { servicesData,type ServiceItem } from "./data/servicesData"; 
+import { servicesData, type ServiceItem } from "./data/servicesData"; 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import SEO from "../components/SEO";
@@ -86,6 +86,10 @@ export default function ServiceDetailsPage() {
         
         {/* ── COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
+          
+          {/* SEO H1 Tag - Visually Hidden - Unique per service category */}
+          <h1 className="sr-only">{service.seo?.h1 || service.title}</h1>
+
           <motion.nav 
             className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#4a1c13]/50 font-bold mb-8"
             initial={{ opacity: 0, y: 10 }}
@@ -97,6 +101,7 @@ export default function ServiceDetailsPage() {
             <span className="text-[#4a1c13]">{service.title}</span>
           </motion.nav>
 
+          {/* RevealHeading returns an <h2> keeping semantic structure intact */}
           <RevealHeading
             className="font-primary text-[clamp(36px,5vw,64px)] leading-[1.1] tracking-tight text-[#4a1c13] max-w-4xl"
           >

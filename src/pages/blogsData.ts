@@ -4,6 +4,7 @@ export interface BlogSEO {
   metaTitle: string;
   description: string;
   keywords: string;
+  h1?: string; // Added H1 property for unique SEO headings
 }
 
 export interface BlogContentBlock {
@@ -77,6 +78,7 @@ export const blogsData: BlogPost[] = [
       metaTitle: "Art of Biophilic Design for Modern Homes | Bright Arena Interiors",
       description: "Discover the art of biophilic design with Bright Arena Interiors. Learn how natural light, greenery, and organic materials create healthier, stylish living spaces.",
       keywords: "Biophilic interior design, natural interior design, organic materials in home, luxury home wellness, restorative interiors",
+      h1: "Art of Biophilic Design for Modern Homes",
     }
   },
   {
@@ -117,6 +119,7 @@ export const blogsData: BlogPost[] = [
       metaTitle: "Mastering Lighting: The Invisible Architecture Guide | Bright Arena Interiors",
       description: "Discover how lighting transforms interiors with Bright Arena Interiors. Learn how invisible architecture creates elegant, functional, and inviting spaces through smart lighting design.",
       keywords: "Interior lighting design, ambient lighting, accent lighting tips, luxury home lighting, architectural lighting",
+      h1: "Mastering Interior Lighting Design",
     }
   }
 ];

@@ -70,6 +70,12 @@ export default function PortfolioPage() {
       
       {/* ── HERO ── */}
       <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-20">
+        
+        {/* SEO H1 Tag - Visually Hidden */}
+        <h1 className="sr-only">
+          Interior Design Portfolio & Completed Projects in Hyderabad
+        </h1>
+
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,7 +84,9 @@ export default function PortfolioPage() {
         >
           Selected Works
         </motion.p>
-        <motion.h1 
+        
+        {/* Converted visual text to H2 to respect semantic HTML since the H1 is above */}
+        <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: smoothEase }}
@@ -86,7 +94,7 @@ export default function PortfolioPage() {
         >
           Designing spaces with <br />
           <span className="italic font-serif text-[#ff7043]">purpose.</span>
-        </motion.h1>
+        </motion.h2>
       </header>
 
       {/* ── MASONRY GRID ── */}

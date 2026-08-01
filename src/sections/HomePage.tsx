@@ -32,6 +32,11 @@ const HomePage = () => {
         url="https://www.brightarenainteriors.com/"
       />
       <main id="main-content" className="bg-[#f7f4ee] overflow-x-hidden antialiased">
+        
+        {/* ── SEO H1 TAG ── */}
+        {/* Visually hidden using 'sr-only' so it doesn't affect the layout, but perfectly visible to Google for SEO. */}
+        <h1 className="sr-only">Best Interior Designers in Hyderabad</h1>
+
         {/* ── PRIORITY SECTIONS ── */}
         <Hero />
         <About />

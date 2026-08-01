@@ -146,10 +146,14 @@ const Testimonials: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: smoothEase }}
       >
-        <h1 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 pt-6 text-[#4a1c13] font-primary font-light">
+        {/* SEO H1 Tag - Visually Hidden */}
+        <h1 className="sr-only">Client Testimonials</h1>
+
+        {/* Converted visual text to H2 to respect semantic HTML */}
+        <h2 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 pt-6 text-[#4a1c13] font-primary font-light">
           Don't just take our <br className="hidden sm:block" />
           <span className="text-[#C4623A] italic">word for it.</span>
-        </h1>
+        </h2>
         <p className="max-w-2xl mx-auto text-[16px] leading-[1.8] text-[#6B5C57]">
           Watch and read what our clients have to say about their experience working with us to bring their dream spaces to life.
         </p>

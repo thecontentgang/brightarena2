@@ -101,6 +101,12 @@ export default function DesignPage() {
 
       {/* ── HERO ── */}
       <header aria-labelledby="design-hero-heading" className="pt-8 md:pt-12 pb-16 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+        
+        {/* SEO H1 Tag - Visually Hidden */}
+        <h1 id="design-hero-heading" className="sr-only">
+          Interior Design Ideas in Hyderabad
+        </h1>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,8 +115,9 @@ export default function DesignPage() {
         >
           Curated Collections
         </motion.p>
-        <motion.h1
-          id="design-hero-heading"
+        
+        {/* Converted visual text to H2 to respect semantic HTML */}
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: smoothEase, delay: 0.1 }}
@@ -118,7 +125,8 @@ export default function DesignPage() {
         >
           Visualizing the <br className="hidden sm:block" />
           <span className="italic font-serif text-[#ff7043]">future.</span>
-        </motion.h1>
+        </motion.h2>
+        
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

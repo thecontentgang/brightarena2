@@ -19,6 +19,7 @@ export interface ServiceItem {
     metaTitle?: string;
     description?: string;
     keywords?: string;
+    h1?: string; // Added H1 property for unique SEO headings
   };
 }
 
@@ -52,6 +53,7 @@ export const servicesData: ServiceItem[] = [
       metaTitle: "Best Home Interior Design in Hyderabad for Modern Living Spaces",
       description: "Transform your home with expert home interior design in Hyderabad by Bright Arena Interiors. We create customized, luxury interiors backed by 14+ years of expertise.",
       keywords: "Home interior design, residential interior designers, villa interior design, luxury 3BHK interiors, 4BHK interior design, Bright Arena Interiors",
+      h1: "Best Home Interior Design in Hyderabad"
     }
   },
   {
@@ -82,6 +84,7 @@ export const servicesData: ServiceItem[] = [
       metaTitle: "Best Commercial Interior Designers in Hyderabad | Bright Arena Interiors",
       description: "Discover commercial interior designers in Hyderabad delivering customized office, retail, and corporate interiors with 14+ years of expertise and quality craftsmanship.",
       keywords: "Commercial interior design, retail interiors, showroom interior designers, hospitality interior design, business space interiors",
+      h1: "Best Commercial Interior Designers in Hyderabad"
     }
   },
   {
@@ -112,6 +115,7 @@ export const servicesData: ServiceItem[] = [
       metaTitle: "Luxury Office Interior Designer in Hyderabad | Bright Arena Interiors",
       description: "Discover office interior designers in Hyderabad creating modern, functional workspaces with 14+ years of expertise, customized designs, and quality craftsmanship.",
       keywords: "Office interior designers, corporate interior design, modern workspace layouts, ergonomic office design, commercial office interiors",
+      h1: "Luxury Office Interior Designers in Hyderabad"
     }
   },
   {
@@ -142,6 +146,7 @@ export const servicesData: ServiceItem[] = [
       metaTitle: "Best 2D and 3D Interior Design Services in Hyderabad | Bright Arena Interiors",
       description: "Transform your vision into reality with Bright Arena Interiors' 2D and 3D Interior Design Services in Hyderabad, featuring realistic visualizations and expert planning.",
       keywords: "3D interior rendering, 2D floor plans, virtual interior design, 3D architectural visualization, interior walkthroughs",
+      h1: "2D & 3D Interior Design Services in Hyderabad"
     }
   },
 ];

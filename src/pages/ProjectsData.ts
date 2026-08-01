@@ -4,6 +4,7 @@ export interface ProjectSEO {
   metaTitle: string;
   description: string;
   keywords: string;
+  h1?: string; // Added H1 property for unique SEO headings
 }
 
 export interface Project {
@@ -30,6 +31,7 @@ export const projectsData: Project[] = [
       metaTitle: "Forest Edge Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Explore the Forest Edge interior design project by Bright Arena Interiors, showcasing modern layouts, premium finishes, and thoughtfully designed living spaces in Hyderabad.",
       keywords: "ForestEdge interiors, luxury residential design, resort-style home interiors, premium interior designers",
+      h1: "Forest Edge Interior Design Project in Hyderabad"
     }
   },
   {
@@ -44,6 +46,7 @@ export const projectsData: Project[] = [
       metaTitle: "Rajapushpa Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Explore the Rajapushpa Interior Design Project by Bright Arena Interiors, showcasing elegant layouts, premium finishes, and modern living spaces in Hyderabad.",
       keywords: "Rajapushpa apartment interiors, premium apartment styling, modern luxury living, bespoke furniture design",
+      h1: "Rajapushpa Interior Design Project in Hyderabad"
     }
   },
   {
@@ -58,6 +61,7 @@ export const projectsData: Project[] = [
       metaTitle: "Vara Prasad Bachupally Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Explore the Vara Prasad Bachupally Interior Design Project by Bright Arena Interiors, featuring elegant interiors, premium finishes, and customized living spaces in Hyderabad.",
       keywords: "Bachupally interior design, modern family home interiors, contemporary residential finishes",
+      h1: "Vara Prasad Bachupally Interior Design Project"
     }
   },
   {
@@ -72,6 +76,7 @@ export const projectsData: Project[] = [
       metaTitle: "Etna by Phoenix Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Discover the Etna by Phoenix Interior Design Project by Bright Arena Interiors, featuring elegant interiors, premium finishes, and thoughtfully designed living spaces in Hyderabad",
       keywords: "Etna by Phoenix interiors, luxury apartment design, contemporary residential styling",
+      h1: "Etna by Phoenix Interior Design Project in Hyderabad"
     }
   },
   {
@@ -86,6 +91,7 @@ export const projectsData: Project[] = [
       metaTitle: "Banali Foods Commercial Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Explore the Banali Foods commercial interior design project by Bright Arena Interiors, showcasing modern workspaces, premium finishes, and smart space planning.",
       keywords: "Retail interior design, sweets shop interiors, commercial space styling, premium retail design",
+      h1: "Banali Foods Commercial Interior Design Project"
     }
   },
   {
@@ -100,6 +106,7 @@ export const projectsData: Project[] = [
       metaTitle: "Kollur Apartment Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Explore the Kollur Apartment Interior Design Project by Bright Arena Interiors, featuring modern interiors, premium finishes, and customized living spaces in Hyderabad.",
       keywords: "Kollur apartment interiors, space-saving interior design, modern apartment styling",
+      h1: "Kollur Apartment Interior Design Project in Hyderabad"
     }
   }
 ];

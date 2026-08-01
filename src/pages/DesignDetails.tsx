@@ -43,6 +43,9 @@ export default function DesignDetailsPage() {
   const pageDescription = firstDesign.seo?.description || firstDesign.description || `Explore our luxury ${categoryName} interior design concepts and transformations by Bright Arena.`;
   const pageKeywords = firstDesign.seo?.keywords;
   
+  // Extract the unique H1 tag for this specific category design
+  const pageH1 = firstDesign.seo?.h1 || `${categoryName} Interior Design in Hyderabad`;
+  
   // Use a reliable default Unsplash image if heroImage is missing
   const heroImage = firstDesign.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop";
 
@@ -75,10 +78,15 @@ export default function DesignDetailsPage() {
         {/* ── DYNAMIC HERO ── */}
         <section className="pt-4 md:pt-8 pb-12 md:pb-16 relative">
           <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 text-center">
-            <h1 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary capitalize">
+            
+            {/* SEO H1 Tag - Visually Hidden - Unique per design category */}
+            <h1 className="sr-only">{pageH1}</h1>
+
+            {/* Converted visual text to H2 to respect semantic HTML */}
+            <h2 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary capitalize">
               {categoryName} <br />
               <span className="italic text-[#ff7043]">Concepts.</span>
-            </h1>
+            </h2>
           </div>
         </section>
 

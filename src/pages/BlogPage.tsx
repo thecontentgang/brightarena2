@@ -26,6 +26,10 @@ export default function BlogPage() {
       
       {/* ── HERO SECTION ── */}
       <section className="pt-32 pb-16 md:pt-48 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+        
+        {/* SEO H1 Tag - Visually Hidden */}
+        <h1 className="sr-only">Interior Design Ideas & Tips</h1>
+
         <motion.span 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -35,7 +39,8 @@ export default function BlogPage() {
           Insights & Inspiration
         </motion.span>
         
-        <motion.h1 
+        {/* Converted visual text to H2 to respect semantic HTML */}
+        <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: smoothEase, delay: 0.1 }}
@@ -43,7 +48,7 @@ export default function BlogPage() {
         >
           The Design <br />
           <span className="italic font-serif text-[#ff7043]">Journal.</span>
-        </motion.h1>
+        </motion.h2>
       </section>
 
       {/* ── FEATURED POST ── */}

@@ -102,7 +102,7 @@ function ServiceRow({
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a1.5 1.5 0 001.5-1.5v-1.372a1.5 1.5 0 00-1.09-1.443l-4.423-1.106a1.5 1.5 0 00-1.465.417l-.97.97a12.042 12.042 0 01-5.431-5.431l.97-.97a1.5 1.5 0 00.417-1.465L7.937 4.34A1.5 1.5 0 006.494 3.25H5.122a1.5 1.5 0 00-1.5 1.5V6.75z"
+                  d="M2.25 6.75c0 8.284 6.716 15 15h2.25a1.5 1.5 0 001.5-1.5v-1.372a1.5 1.5 0 00-1.09-1.443l-4.423-1.106a1.5 1.5 0 00-1.465.417l-.97.97a12.042 12.042 0 01-5.431-5.431l.97-.97a1.5 1.5 0 00.417-1.465L7.937 4.34A1.5 1.5 0 006.494 3.25H5.122a1.5 1.5 0 00-1.5 1.5V6.75z"
                 />
               </svg>
 
@@ -139,6 +139,9 @@ export default function ServicesPage() {
         url="https://www.brightarenainteriors.com/services"
       />
       <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden pt-16">
+      
+      {/* SEO H1 TAG - Visually hidden using 'sr-only' for SEO without affecting the layout */}
+      <h1 className="sr-only">Home &amp; Office Interior Design Services in Hyderabad</h1>
 
       {/* HERO */}
       <section aria-labelledby="services-hero-heading" className="relative min-h-[80vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">
@@ -151,12 +154,12 @@ export default function ServicesPage() {
           <p className="text-[11px] tracking-[0.3em] uppercase font-medium mb-7" style={{ color: "#8A7570" }}>
             Bright Arena Interiors · Services
           </p>
-          <h1 id="services-hero-heading" className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
+          <h2 id="services-hero-heading" className="text-[clamp(40px,7vw,88px)] leading-[0.95] mb-8 font-primary">
             Professional design <br />
             <span style={{ color: "#C4623A", fontStyle: "italic" }}>
               for your vision.
             </span>
-          </h1>
+          </h2>
           <p className="max-w-2xl mx-auto text-[16px] leading-[1.8]" style={{ color: "#6B5C57" }}>
             We bring professional precision to every space, ensuring your project is handled with expertise, creativity, and absolute attention to detail.
           </p>

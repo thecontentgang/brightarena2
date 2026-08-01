@@ -86,6 +86,10 @@ export default function ProjectDetailsPage() {
         
         {/* ── 1. COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
+          
+          {/* SEO H1 Tag - Visually Hidden - Unique per project */}
+          <h1 className="sr-only">{project.seo?.h1 || project.title}</h1>
+
           {/* Internal Breadcrumb */}
           <motion.nav 
             className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#4a1c13]/50 font-bold mb-8"
@@ -98,6 +102,7 @@ export default function ProjectDetailsPage() {
             <span className="text-[#4a1c13]">{project.title}</span>
           </motion.nav>
 
+          {/* RevealHeading naturally renders an H2 for semantic structure */}
           <RevealHeading
             className="font-primary text-[clamp(40px,5vw,72px)] leading-[1.05] tracking-tight text-[#4a1c13] max-w-4xl"
           >

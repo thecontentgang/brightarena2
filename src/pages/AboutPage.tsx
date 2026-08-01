@@ -67,13 +67,20 @@ export default function AboutPage() {
 
         {/* Hero text */}
         <motion.div initial="hidden" animate="visible" variants={stagger} className="relative z-10 px-6 max-w-4xl mx-auto">
+          
+          {/* SEO H1 Tag - Visually Hidden */}
+          <h1 className="sr-only">About Bright Arena Interiors</h1>
+
           <motion.span variants={fadeUp} className="inline-block text-[#ff7043] tracking-[0.35em] uppercase font-bold text-xs mb-6">
             Est. 2012 · Hyderabad, India
           </motion.span>
-          <motion.h1 variants={fadeUp} className="text-[clamp(40px,9vw,108px)] leading-[0.92] font-serif text-white mb-8">
+          
+          {/* Converted visual text to H2 to respect semantic HTML */}
+          <motion.h2 variants={fadeUp} className="text-[clamp(40px,9vw,108px)] leading-[0.92] font-serif text-white mb-8">
             We Design <br />
             <span className="italic text-[#ff7043]">Living Stories.</span>
-          </motion.h1>
+          </motion.h2>
+          
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/75 max-w-xl mx-auto leading-relaxed">
             Bright Arena Interiors is Hyderabad's premier luxury design studio —
             14 years, 500+ transformations, one obsession: spaces that feel

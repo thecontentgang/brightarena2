@@ -43,7 +43,7 @@ export default function BlogDetailsPage() {
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee] text-[#4a1c13]">
-        <h1 className="text-2xl font-primary">Article Not Found</h1>
+        <h2 className="text-2xl font-primary">Article Not Found</h2>
         <button onClick={() => navigate("/blogs")} className="mt-4 text-[#ff7043] underline">Return to Journal</button>
       </div>
     );
@@ -67,7 +67,7 @@ export default function BlogDetailsPage() {
         );
       case "heading":
         return (
-          <motion.h2
+          <motion.h3
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ export default function BlogDetailsPage() {
             className="text-3xl md:text-4xl font-primary text-[#4a1c13] mt-16 mb-8 leading-snug"
           >
             {block.value}
-          </motion.h2>
+          </motion.h3>
         );
       case "quote":
         return (
@@ -137,6 +137,10 @@ export default function BlogDetailsPage() {
       <article ref={articleRef}>
         {/* ── HERO HEADER ── */}
         <header className="pt-32 md:pt-48 pb-12 md:pb-16 px-6 md:px-12 lg:px-16 max-w-[1200px] mx-auto text-center">
+          
+          {/* SEO H1 Tag - Visually Hidden - Unique per blog post */}
+          <h1 className="sr-only">{post.seo?.h1 || post.title}</h1>
+
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -152,14 +156,15 @@ export default function BlogDetailsPage() {
             </span>
           </motion.div>
 
-          <motion.h1
+          {/* Converted visual text to H2 to respect semantic HTML */}
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
             className="text-[clamp(36px,6vw,80px)] leading-[1.05] tracking-tight font-primary max-w-4xl mx-auto mb-10"
           >
             {post.title}
-          </motion.h1>
+          </motion.h2>
 
           <motion.div
             initial={{ opacity: 0 }}
