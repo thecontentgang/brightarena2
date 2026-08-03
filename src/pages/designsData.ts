@@ -48,7 +48,7 @@ export const designsData: Design[] = [
       metaTitle:
         "Living Room Interior Design in Hyderabad | Bright Arena Interiors",
       description:
-        "Discover stylish living room interior design in Hyderabad with Bright Arena Interiors. Explore modern layouts, premium finishes, and customized designs for every home.",
+        "Discover stylish living room interior design in Hyderabad with Bright Arena Interiors. Explore modern layouts, premium finishes, and customized designs for every home",
       keywords:
         "luxury living room design, modern living room interiors, premium living room styling, custom living room furniture",
       h1: " Living Room Interior Design in Hyderabad",
