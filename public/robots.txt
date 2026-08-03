@@ -1,9 +1,6 @@
-User-agent: * Allow: /
+User-agent: *
+Allow: /
 
-Sitemap
-
-Sitemap: https://www.brightliv.in/sitemap.xml
-
-Optional crawl-delay (ignored by Google)
-
-Crawl-delay: 1
+Sitemap: https://www.brightarenainteriors.com/sitemap.xml
+Sitemap: https://www.brightarenainteriors.com/blog-sitemap.xml
+Sitemap: https://www.brightarenainteriors.com/image-sitemap.xml

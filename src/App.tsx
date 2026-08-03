@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import PageTransitionLayout from './components/PageTransitionLayout';
 import FloatingSocialBar from './components/SocialMediaBar';
 import Breadcrumb from './components/BreadCrumb';
+import SEO from './components/SEO';
 
 // Lazy Load Pages
 const HomePage = React.lazy(() => import('./sections/HomePage'));
@@ -29,6 +30,7 @@ const Loader = () => (
 const App = () => {
   return (
     <>
+      <SEO />
       <Navbar />
       <FloatingSocialBar />
       <Breadcrumb />
