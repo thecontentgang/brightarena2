@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-
 interface SEOProps {
   title?: string;
   description?: string;
@@ -50,6 +49,7 @@ export default function SEO({
   };
 
   const finalSchema = schema || defaultSchema;
+  console.log("SEO Rendered", title, description);
 
   return (
     <Helmet>
@@ -78,6 +78,7 @@ export default function SEO({
 
       {/* Schema */}
       <script type='application/ld+json'>{JSON.stringify(finalSchema)}</script>
+
     </Helmet>
   );
 }

@@ -5,13 +5,13 @@ import Footer from './components/Footer';
 import PageTransitionLayout from './components/PageTransitionLayout';
 import FloatingSocialBar from './components/SocialMediaBar';
 import Breadcrumb from './components/BreadCrumb';
-import SEO from './components/SEO';
+
 
 // Lazy Load Pages
 const HomePage = React.lazy(() => import('./sections/HomePage'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage'));
 const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
-const ServiceDetailsPage = React.lazy(() => import('./pages/ServiceDetails')); 
+const ServiceDetailsPage = React.lazy(() => import('./pages/ServiceDetails'));
 const PortfolioPage = React.lazy(() => import('./pages/ProjectsPage'));
 const ProjectDetailsPage = React.lazy(() => import('./pages/ProjectDetails'));
 const DesignPage = React.lazy(() => import('./pages/DesignsPage'));
@@ -30,18 +30,18 @@ const Loader = () => (
 const App = () => {
   return (
     <>
-      <SEO />
+
       <Navbar />
       <FloatingSocialBar />
       <Breadcrumb />
-      
+
       <main>
         <PageTransitionLayout>
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />}/>
+              <Route path="/services" element={<ServicesPage />} />
               <Route path="/services/:slug" element={<ServiceDetailsPage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/portfolio/:slug" element={<ProjectDetailsPage />} />

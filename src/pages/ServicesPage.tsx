@@ -140,7 +140,7 @@ export default function ServicesPage() {
       />
       <main style={{ background: "#F9F7F3", color: "#2C1810" }} className="overflow-x-hidden pt-16">
       
-      {/* SEO H1 TAG - Visually hidden using 'sr-only' for SEO without affecting the layout */}
+
       <h1 className="sr-only">Home &amp; Office Interior Design Services in Hyderabad</h1>
 
       {/* HERO */}
