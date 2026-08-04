@@ -4,12 +4,13 @@ export interface DesignSEO {
   metaTitle: string;
   description: string;
   keywords: string;
-  h1?: string; // Added H1 property for unique SEO headings
+  h1?: string;
 }
 
 export interface Design {
   id: number;
   slug: string;
+  oldSlug?: string; // Added to handle 301-style client redirects
   title: string;
   category: string;
   coverImage: string;
@@ -23,7 +24,8 @@ export interface Design {
 export const designsData: Design[] = [
   {
     id: 1,
-    slug: "living-room-interior-design-hyderabad",
+    slug: "living-room-interior-design-hyderabad", // NEW SLUG
+    oldSlug: "living-room-interior-design-hyderabad", // OLD SLUG
     title: "Modern Luxury Living Room",
     category: "Living Room",
     coverImage: "/projectsImg/forest-edge/fe-img2.webp",
@@ -56,7 +58,8 @@ export const designsData: Design[] = [
   },
   {
     id: 2,
-    slug: "bedroom-interior-design-hyderabad",
+    slug: "bedroom-interior-design-hyderabad", // NEW SLUG
+    oldSlug: "bedroom-interior-design-hyderabad", // OLD SLUG
     title: "Minimal Bedroom Design",
     category: "Bedroom",
     coverImage: "/projectsImg/kollur/kl-img10.webp",
@@ -89,7 +92,8 @@ export const designsData: Design[] = [
   },
   {
     id: 3,
-    slug: "kitchen-interior-design-hyderabad",
+    slug: "kitchen-interior-design-hyderabad", // NEW SLUG
+    oldSlug: "kitchen-interior-design-hyderabad", // OLD SLUG
     title: "Contemporary Kitchen Design",
     category: "Kitchen",
     coverImage: "/projectsImg/etna/sr-img16.webp",

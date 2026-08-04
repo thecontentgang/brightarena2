@@ -10,17 +10,28 @@ export default function DesignDetailsPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  // Find all designs matching the category slug
-  const categoryDesigns = designsData.filter(
-    (d) => d.category.toLowerCase().replace(/\s+/g, "-") === slug
+  // 1. Find the target design matching either the new slug OR the old slug
+  const targetDesign = designsData.find(
+    (d) => d.slug === slug || d.oldSlug === slug
   );
 
-  // 1. ALL HOOKS MUST BE CALLED BEFORE ANY EARLY RETURNS
+  // 2. Find all designs in the same category for the masonry gallery
+  const categoryDesigns = targetDesign 
+    ? designsData.filter((d) => d.category === targetDesign.category)
+    : [];
+
+  // ALL HOOKS MUST BE CALLED BEFORE ANY EARLY RETURNS
   useEffect(() => {
-    if (categoryDesigns.length === 0 && slug) {
-      navigate("/designs");
+    if (!slug) return;
+
+    if (!targetDesign) {
+      // If no design matches at all, send to gallery
+      navigate("/designs", { replace: true });
+    } else if (targetDesign.oldSlug === slug) {
+      // If the URL matches the old slug, REDIRECT to the new slug seamlessly
+      navigate(`/designs/${targetDesign.slug}`, { replace: true });
     }
-  }, [categoryDesigns, slug, navigate]);
+  }, [slug, targetDesign, navigate]);
 
   const heroImgRef = useRef<HTMLDivElement>(null);
   
@@ -31,23 +42,22 @@ export default function DesignDetailsPage() {
   
   const heroImgY = useTransform(heroScroll, [0, 1], ["-10%", "10%"]);
 
-  // 2. NOW IT IS SAFE TO DO THE EARLY RETURN
-  if (categoryDesigns.length === 0) return null;
+  // SAFE EARLY RETURN AFTER HOOKS
+  if (!targetDesign || targetDesign.oldSlug === slug) return null;
 
-  // 3. Extract base data from the first matched item safely
-  const firstDesign = categoryDesigns[0];
-  const categoryName = firstDesign.category || "Gallery";
+  // Extract base data from the matched item safely
+  const categoryName = targetDesign.category || "Gallery";
   
-  // Extract SEO specifically from the first item
-  const pageTitle = firstDesign.seo?.metaTitle || `${categoryName} Interior Design Concepts | Bright Arena`;
-  const pageDescription = firstDesign.seo?.description || firstDesign.description || `Explore our luxury ${categoryName} interior design concepts and transformations by Bright Arena.`;
-  const pageKeywords = firstDesign.seo?.keywords;
+  // Extract SEO specifically from the matched item
+  const pageTitle = targetDesign.seo?.metaTitle || `${categoryName} Interior Design Concepts | Bright Arena`;
+  const pageDescription = targetDesign.seo?.description || targetDesign.description || `Explore our luxury ${categoryName} interior design concepts and transformations by Bright Arena.`;
+  const pageKeywords = targetDesign.seo?.keywords;
   
   // Extract the unique H1 tag for this specific category design
-  const pageH1 = firstDesign.seo?.h1 || `${categoryName} Interior Design in Hyderabad`;
+  const pageH1 = targetDesign.seo?.h1 || `${categoryName} Interior Design in Hyderabad`;
   
   // Use a reliable default Unsplash image if heroImage is missing
-  const heroImage = firstDesign.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop";
+  const heroImage = targetDesign.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop";
 
   // Extract ALL images from the matched designs 
   // so the masonry grid shows the full gallery, not just the single cover object!
@@ -66,7 +76,7 @@ export default function DesignDetailsPage() {
         title={pageTitle}
         description={pageDescription}
         keywords={pageKeywords}
-        url={`https://www.brightarenainteriors.com/designs/${slug}`}
+        url={`https://www.brightarenainteriors.com/designs/${targetDesign.slug}`}
       />
       <main className="bg-[#f7f4ee] text-[#4a1c13] w-full overflow-hidden antialiased font-sans selection:bg-[#ff7043] selection:text-white pb-24">
       

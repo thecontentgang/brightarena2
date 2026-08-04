@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { designsData } from "./designsData";
 import SEO from "../components/SEO";
 
-// Dynamically extract categories, count them, and grab a cover image for each
+// Dynamically extract categories, count them, and grab a cover image and actual slug for each
 const categoriesData = Array.from(new Set(designsData.map(d => d.category))).map(cat => {
   const designsInCategory = designsData.filter(d => d.category === cat);
   return {
     name: cat,
     count: designsInCategory.length,
     coverImage: designsInCategory[0]?.coverImage || "", 
-    slug: cat.toLowerCase().replace(/\s+/g, '-'), 
+    slug: designsInCategory[0]?.slug || cat.toLowerCase().replace(/\s+/g, '-'), // Pull slug straight from data
   };
 });
 
