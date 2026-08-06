@@ -105,8 +105,8 @@ export default function ContactPage() {
                     <a href="tel:+918978222980" aria-label="Call us at +91-8978222980" className="hover:text-[#ff7043] transition-colors duration-300">
                       +91 8978 222 980
                     </a>
-                    <a href="mailto:info@brightarena.com" aria-label="Email us at info@brightarena.com" className="hover:text-[#ff7043] transition-colors duration-300">
-                      info@brightarena.com
+                    <a href="mailto:info@brightarenainteriors.com" aria-label="Email us at info@brightarenainteriors.com" className="hover:text-[#ff7043] transition-colors duration-300">
+                      info@brightarenainteriors.com
                     </a>
                   </div>
                 </div>

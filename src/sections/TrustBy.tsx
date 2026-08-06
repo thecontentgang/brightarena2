@@ -27,9 +27,9 @@ const duplicatedRow2 = [...row2, ...row2];
 const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const stats = [
-  { value: "150+", label: "Luxury Homes" },
+  { value: "350+", label: "Luxury Homes" },
   { value: "25+", label: "Premium Communities" },
-  { value: "8+", label: "Years Experience" },
+  { value: "14+", label: "Years Experience" },
   { value: "100%", label: "Client Satisfaction" },
 ];
 

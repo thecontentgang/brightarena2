@@ -46,29 +46,30 @@ const HorizontalServices: React.FC = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const track = trackRef.current;
-      if (!track) return;
+      const section = sectionRef.current;
+      if (!track || !section) return;
 
-      // Total horizontal distance the track needs to travel:
-      // track scrollWidth - viewport width = how far left it must shift
-      // so the last card ends flush with the right edge.
-      const getScrollAmount = () => {
-        const trackWidth = track.scrollWidth;
-        return -(trackWidth - window.innerWidth);
-      };
+      // Calculate how far to move mathematically (e.g., for 4 items, we shift by -75% of the total track width)
+      // This is foolproof and immune to image-loading delays or scrollbar quirks.
+      const percentToMove = -100 * ((services.length - 1) / services.length);
 
       const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: "none",
+        xPercent: percentToMove,
+        ease: "none", // Linear movement is crucial for smooth scroll-tied animations
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: section,
           start: "top top",
-          end: () => `+=${Math.abs(getScrollAmount())}`, // pin lasts exactly as long as the horizontal travel needs
-          scrub: 1,
+          // The pin lasts exactly for the width of the remaining items
+          end: () => `+=${section.offsetWidth * (services.length - 1)}`, 
           pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true, // recalculates getScrollAmount() on resize
-          // markers: true, // uncomment while tuning
+          scrub: 1, // Smooth scrub
+          snap: {
+            snapTo: 1 / (services.length - 1), // Snaps to the nearest card so it never "sticks in the middle"
+            duration: { min: 0.2, max: 0.5 },
+            delay: 0.1,
+            ease: "power1.inOut",
+          },
+          invalidateOnRefresh: true, 
         },
       });
 
@@ -101,13 +102,17 @@ const HorizontalServices: React.FC = () => {
         <div className="relative w-full flex-1 min-h-0 max-h-[460px] md:max-h-[640px] overflow-hidden">
           <div
             ref={trackRef}
-            className="flex h-full items-start will-change-transform"
-            style={{ width: `${services.length * 100}vw` }}
+            // transform-gpu pushes rendering to the graphics card, preventing lag
+            className="flex h-full items-start will-change-transform transform-gpu"
+            // Set the container width dynamically (e.g., 400% for 4 items)
+            style={{ width: `${services.length * 100}%` }}
           >
             {services.map((service) => (
               <div
                 key={service.id}
-                className="w-screen h-full flex justify-center px-4 md:px-8"
+                className="h-full flex justify-center px-4 md:px-8"
+                // Each item takes up its exact fraction of the track (e.g., 25% for 4 items)
+                style={{ width: `${100 / services.length}%` }}
               >
                 <div
                   className="
@@ -136,7 +141,6 @@ const HorizontalServices: React.FC = () => {
                   {/* Content Overlay */}
                   <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12">
                     <div className="flex-1 max-w-2xl">
-                      
                       <h3 className="text-white text-4xl md:text-5xl font-medium font-primary tracking-tight mt-2 mb-4 md:mb-6 drop-shadow-lg">
                         {service.title}
                       </h3>

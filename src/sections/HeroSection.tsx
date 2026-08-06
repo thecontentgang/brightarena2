@@ -9,7 +9,7 @@ import ProjectModal from "../components/ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// FIX 1: Prevents GSAP pins from violently jumping on iOS/Android when the address bar hides/shows
+// Prevents GSAP pins from violently jumping on iOS/Android when the address bar hides/shows
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 const MinimalHero: React.FC = () => {
@@ -19,10 +19,12 @@ const MinimalHero: React.FC = () => {
   const videoWrapRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  
+  // Reference to control the video directly
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // ---------------------------------------------------------------
-  // 1. LENIS — smooth scroll, synced to GSAP's ticker so ScrollTrigger
-  //    and Lenis agree on scroll position every single frame.
+  // 1. LENIS — smooth scroll
   // ---------------------------------------------------------------
   useEffect(() => {
     const lenis = new Lenis({
@@ -46,9 +48,7 @@ const MinimalHero: React.FC = () => {
   }, []);
 
   // ---------------------------------------------------------------
-  // 2. GSAP SCROLLTRIGGER — pins the section and holds it pinned
-  //    for the FULL scrub duration. The section will not release
-  //    until the timeline (shrink + reveal) completes.
+  // 2. GSAP SCROLLTRIGGER — animations
   // ---------------------------------------------------------------
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,15 +59,14 @@ const MinimalHero: React.FC = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=150%", // <-- scroll distance the pin lasts for.
-          scrub: 1, // smoothed scrub, tied to scroll position
+          end: "+=150%",
+          scrub: 1,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
         },
       });
 
-      // Heading fades/slides in first
       tl.fromTo(
         headingRef.current,
         { opacity: 0, y: 40 },
@@ -75,12 +74,11 @@ const MinimalHero: React.FC = () => {
         0.15
       );
 
-      // Video shrinks from full-bleed to framed card
       tl.fromTo(
         videoWrapRef.current,
         {
           width: "100%",
-          height: "100dvh", // Using dvh is fine, GSAP handles it well with ignoreMobileResize
+          height: "100dvh",
           borderRadius: "0px",
           bottom: "0px",
         },
@@ -95,7 +93,6 @@ const MinimalHero: React.FC = () => {
         0.05
       );
 
-      // Stats/buttons bar fades in slightly after the video settles
       tl.fromTo(
         statsRef.current,
         { opacity: 0, y: 40 },
@@ -106,6 +103,49 @@ const MinimalHero: React.FC = () => {
 
     return () => ctx.revert();
   }, []);
+
+  // ---------------------------------------------------------------
+  // 3. PERFORMANCE OPTIMIZATION: Pause video when out of viewport
+  // ---------------------------------------------------------------
+  useEffect(() => {
+    const video = videoRef.current;
+    const section = sectionRef.current;
+
+    if (!video || !section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch((err) => console.log("Video auto-play prevented:", err));
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.unobserve(section);
+    };
+  }, []);
+
+  // ---------------------------------------------------------------
+  // 4. CUSTOM VIDEO LOOP LOGIC (Loops at 60s back to 1s)
+  // ---------------------------------------------------------------
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // If video reaches or passes 60 seconds (1 minute)...
+    if (video.currentTime >= 60) {
+      // ...instantly jump back to 1 second
+      video.currentTime = 1;
+      // Ensure it keeps playing
+      video.play().catch(console.error);
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -121,10 +161,12 @@ const MinimalHero: React.FC = () => {
           ref={headingRef}
           className="absolute top-0 left-0 w-full h-[40dvh] flex items-center justify-center pt-18 px-4 md:px-8 z-0 opacity-0 transform-gpu"
         >
-          <div className="flex flex-wrap md:flex-nowrap items-start justify-center gap-3 md:gap-16 text-center">
+          <h1 className="sr-only">
+            Dream Big. Experience Exceptional Design. Live in Comfort.
+          </h1>
 
-            {/* Dream */}
-            <div className="flex flex-col items-center">
+          <div className="grid grid-cols-2 gap-y-6 w-full md:w-auto md:flex md:flex-nowrap items-start justify-center md:gap-16 text-center">
+            <div className="flex flex-col items-center order-1 md:order-none col-span-1" aria-hidden="true">
               <h2 className="font-primary text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
                 Dream
               </h2>
@@ -133,12 +175,11 @@ const MinimalHero: React.FC = () => {
               </p>
             </div>
 
-            <span className=" md:flex items-center text-5xl font-light text-[#4a1c13]/30">
+            <span aria-hidden="true" className="hidden md:flex items-center text-5xl font-light text-[#4a1c13]/30 order-none">
               |
             </span>
 
-            {/* Experience */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center order-3 md:order-none col-span-2 md:col-span-1 mt-2 md:mt-0" aria-hidden="true">
               <h2 className="font-primary text-[#ff7043] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
                 Experience
               </h2>
@@ -147,12 +188,11 @@ const MinimalHero: React.FC = () => {
               </p>
             </div>
 
-            <span className=" md:flex items-center text-5xl font-light text-[#4a1c13]/30">
+            <span aria-hidden="true" className="hidden md:flex items-center text-5xl font-light text-[#4a1c13]/30 order-none">
               |
             </span>
 
-            {/* Live */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center order-2 md:order-none col-span-1" aria-hidden="true">
               <h2 className="font-primary text-[#4a1c13] text-[clamp(40px,9vw,56px)] md:text-[clamp(52px,6vw,80px)] lg:text-[clamp(64px,5vw,96px)] leading-none">
                 Live
               </h2>
@@ -160,27 +200,26 @@ const MinimalHero: React.FC = () => {
                 in Comfort
               </p>
             </div>
-
           </div>
         </div>
 
         {/* Video Area */}
         <div
           ref={videoWrapRef}
-          // FIX 3: Added transform-gpu to prevent layout thrashing and repaints on mobile when animating width/height/borderRadius
           className="absolute left-1/2 -translate-x-1/2 bg-[#4a1c13] overflow-hidden flex justify-center z-10 shadow-2xl will-change-[width,height,border-radius,bottom] transform-gpu"
           style={{ width: "100%", height: "100dvh", bottom: 0 }}
         >
           <video
+            ref={videoRef}
+            onTimeUpdate={handleTimeUpdate} /* <-- Trigger the loop check every frame */
             autoPlay
             muted
-            loop
+            // REMOVED 'loop' attribute so it doesn't conflict with our custom loop
             playsInline
             preload="auto"
             poster="/video-fallback-poster.jpg"
             aria-hidden="true"
-            // FIX 4: Added pointer-events-none. If a user taps the video on iOS, it can force-open the native fullscreen Apple video player. This prevents touch interactions on the video itself.
-            className="absolute inset-0 h-full w-full object-cover opacity-90 pointer-events-none"
+            className="absolute inset-0 h-full w-full object-cover pointer-events-none"
           >
             <source src="/bright-hero-video.mp4" type="video/mp4" />
           </video>
@@ -190,8 +229,7 @@ const MinimalHero: React.FC = () => {
           {/* Stats & Buttons Container */}
           <div
             ref={statsRef}
-            // FIX 5: transform-gpu added for smooth fade-in without artifacts on Android
-            className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl opacity-0 transform-gpu"
+            className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-12 bg-white/10 backdrop-blur-xl border border-white/20 py-5 px-5 md:py-5 md:px-10 rounded-[1.5rem] md:rounded-2xl z-20 w-[92%] md:w-auto shadow-2xl opacity-0 transform-gpu"
             style={{
               paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
             }}

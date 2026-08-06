@@ -48,7 +48,7 @@ const HomePage = () => {
           <Panoroma
             src="/Panorama.jpeg"
             title="Walk Through the Home Theatre"
-            description="A full 360° look at the space — every finish, every angle."
+            description="A full 360° look at the space every finish, every angle."
           />
           <ProjectShowcase />
           <TestimonialsSection />

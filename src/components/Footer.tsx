@@ -75,7 +75,7 @@ export default function CardFooter() {
 
                             <div className="mt-6 flex items-center justify-center lg:justify-start gap-2 text-white/40 text-[10px] md:text-xs">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                                Available Mon – Sat · 10 AM – 7 PM
+                                Available Mon – Sat · 10:30 AM – 6 PM
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ export default function CardFooter() {
                         <h4 className="text-[#4a1c13]/40 text-xs font-bold tracking-widest uppercase mb-6">Our Address</h4>
                         <address className="not-italic text-sm text-[#4a1c13] space-y-2 font-medium max-w-[250px]">
                             <p className="leading-relaxed">
-                                4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500081
+                                4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500032
                             </p>
 
                             <div className="pt-4">

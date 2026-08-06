@@ -46,8 +46,8 @@ const AboutSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16 md:mb-20">
           {/* Left - Big Title */}
           <h2 className="text-[#4a1c13] text-[clamp(42px,6vw,68px)] leading-[1.05] tracking-tight font-primary">
-            Your Partner in Every Detail,
-            <span className="text-[#ff7043] italic"> always</span>
+            Your Partner in
+            <span className="text-[#ff7043] italic"> Every Detail</span>
           </h2>
 
           {/* Right - Description + Button */}

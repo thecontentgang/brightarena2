@@ -28,14 +28,17 @@ const IMAGES = {
 const founders = [
   {
     name: "Srilatha Ravuri",
-    role: "Co-Founder",
+    role: "Co-Founder & Principal Lead Designer",
     description: "Srilatha Ravuri is the Founder and Principal Interior Designer of Bright Arena, specializing in luxury residential and commercial interior design. With expertise in space planning, modern interiors, and bespoke design solutions, she creates elegant, functional spaces tailored to each client's lifestyle.Known for her attention to detail and client-focused approach, Srilatha oversees every project from concept to completion, delivering timeless interiors that combine aesthetics, comfort, and quality. Her vision has established Bright Arena as a trusted name in innovative interior design and customized living spaces.",
+    stats: ["500K+ Sq Ft Designed", "200+ Homes Completed", "Lead Architect"], 
   },
   {
-    name: "Bhawani Shankar",
-    role: "Co-Founder",
-    description: "Bhawani Shankar Guruvelli is the driving force behind the operational excellence and strategic growth of Bright Arena. With extensive experience in business management, global operations, and project execution, he has been instrumental in building a strong foundation for the company's long-term success.His vision goes beyond managing day-to-day operations. He is committed to creating sustainable business growth while transforming the interior design industry through innovation, quality, and customer-centric solutions. By combining strategic planning with operational precision, Bhawani ensures every project reflects Bright Arena's commitment to excellence, functionality, and timeless design.His expertise in business strategy, client relationship management, project coordination, and operational leadership enables Bright Arena to deliver exceptional interior solutions while fostering lasting partnerships with clients. Under his leadership, the company continues to expand its presence, embrace innovation, and set new benchmarks in interior design and business excellence.",
-  },
+  name: "Bhawani Shankar Guruvelli",
+  role: "Co-Founder & Director of Operations & Growth",
+  description:
+    "Bhawani Shankar Guruvelli is the Co-Founder of Bright Arena, leading business operations, strategic planning, and project execution. With expertise in business management, client relationships, and operational excellence, he ensures every project is delivered with efficiency and quality. His vision for innovation, sustainable growth, and customer satisfaction continues to strengthen Bright Arena's reputation as a trusted interior design company.",
+    stats: ["15+ Years Experience", "150+ Commercial Spaces", "Creative Lead"],
+}
 ];
 
 export default function AboutPage() {
@@ -82,8 +85,8 @@ export default function AboutPage() {
           </motion.h2>
           
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/75 max-w-xl mx-auto leading-relaxed">
-            Bright Arena Interiors is Hyderabad's premier luxury design studio —
-            14 years, 500+ transformations, one obsession: spaces that feel
+            Bright Arena Interiors is Hyderabad's premier luxury design studio
+            14 years, 350+ transformations, one obsession: spaces that feel
             unmistakably yours.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
@@ -184,108 +187,128 @@ export default function AboutPage() {
 
       {/* ─── 3. FOUNDERS ─── */}
       <section id="founders" aria-labelledby="founders-heading" className="w-full bg-[#FFF8F2] px-6 md:px-12 lg:px-24 py-24 md:py-32">
-        <div className="max-w-7xl mx-auto">
+  <div className="max-w-7xl mx-auto">
+    
+    {/* Header */}
+    <motion.div 
+      initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}
+      className="mb-16 md:mb-24"
+    >
+      <motion.p variants={fadeUp} className="uppercase tracking-[0.35em] text-[#ff7043] text-xs font-semibold mb-4">
+        Our Leadership
+      </motion.p>
+      <motion.h2 id="founders-heading" variants={fadeUp} className="text-[#4a1c13] text-4xl md:text-5xl font-serif leading-tight mb-8">
+        Meet The Founders
+      </motion.h2>
+      <motion.div variants={fadeUp} className="w-full h-[1px] bg-[#4a1c13]/10" aria-hidden="true" />
+    </motion.div>
+
+    {/* Founders Grid -> Now Horizontal Cards */}
+    <div className="space-y-16 lg:space-y-24">
+      {founders.map((founder, index) => (
+        <motion.div
+          key={founder.name}
+          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}
+          // The magic layout classes: Stack on mobile, side-by-side on desktop. Alternate left/right on desktop.
+          className={`flex flex-col ${
+            index % 2 !== 0 ? "lg:flex-row-reverse" : "lg:flex-row"
+          } items-stretch w-full max-w-6xl mx-auto bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#4a1c13]/5 overflow-hidden`}
+        >
           
-          {/* Header */}
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}
-            className="mb-20"
-          >
-            <motion.p variants={fadeUp} className="uppercase tracking-[0.35em] text-[#ff7043] text-xs font-semibold mb-4">
-              Our Leadership
-            </motion.p>
-            <motion.h2 id="founders-heading" variants={fadeUp} className="text-[#4a1c13] text-4xl md:text-5xl font-serif leading-tight mb-8">
-              Meet The Founders
-            </motion.h2>
-            <motion.div variants={fadeUp} className="w-full h-[1px] bg-[#4a1c13]/10" aria-hidden="true" />
+          {/* Image Section */}
+          <motion.div variants={fadeUp} className="relative w-full lg:w-2/5 min-h-[350px] lg:min-h-full shrink-0 overflow-hidden bg-gray-100">
+            <img
+              src={index === 0 ? IMAGES.founderA : IMAGES.founderB}
+              alt={`Portrait of ${founder.name}, ${founder.role} at Bright Arena`}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            />
+            {/* Subtle gradient overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-t from-black/20 to-transparent lg:bg-gradient-to-r lg:from-transparent ${index % 2 !== 0 ? 'lg:to-white/10' : 'lg:to-white/10'}`} />
           </motion.div>
 
-          {/* Founders Grid */}
-          <div className="space-y-28">
-            {founders.map((founder, index) => (
-              <motion.div
-                key={founder.name}
-                initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center ${
-                  index % 2 !== 0 ? "lg:[&>*:first-child]:order-2" : ""
-                }`}
-              >
-                {/* Image */}
-                <motion.div variants={fadeUp} className="lg:col-span-5">
-                  <div className="overflow-hidden shadow-xl aspect-[4/5] bg-white flex items-center justify-center border border-[#4a1c13]/10 rounded-[2rem]">
-                    <img
-                      src={index === 0 ? IMAGES.founderA : IMAGES.founderB}
-                      alt={`Portrait of ${founder.name}, ${founder.role} at Bright Arena`}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Content */}
-                <motion.div variants={fadeUp} className="lg:col-span-7">
-                  <p className="text-[#ff7043] uppercase tracking-[0.25em] text-xs md:text-sm mb-4 font-semibold">
-                    Founder
-                  </p>
-                  <h3 className="text-[#4a1c13] text-3xl md:text-5xl font-serif tracking-tight mb-4">
-                    {founder.name}
-                  </h3>
-                  <p className="text-[#4a1c13]/60 uppercase tracking-[0.2em] text-sm mb-8 font-medium">
-                    {founder.role}
-                  </p>
-                  <p className="text-[#4a1c13]/80 text-sm md:text-base leading-relaxed font-light max-w-2xl">
-                    {founder.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-3 mt-8" aria-label={`Specialties of ${founder.name}`}>
-                    <span className="px-5 py-2.5 border border-[#4a1c13]/10 rounded-full text-[10px] uppercase tracking-widest text-[#4a1c13]/80">
-                      Interior Design
-                    </span>
-                    <span className="px-5 py-2.5 border border-[#4a1c13]/10 rounded-full text-[10px] uppercase tracking-widest text-[#4a1c13]/80">
-                      Luxury Spaces
-                    </span>
-                    <span className="px-5 py-2.5 border border-[#4a1c13]/10 rounded-full text-[10px] uppercase tracking-widest text-[#4a1c13]/80">
-                      Client Experience
-                    </span>
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+          {/* Content Section */}
+          <motion.div variants={fadeUp} className="flex flex-col justify-center w-full lg:w-3/5 p-8 md:p-12 lg:p-16">
+           
+            
+            <h3 className="text-[#4a1c13] text-3xl md:text-5xl font-serif tracking-tight mb-2 md:mb-4">
+              {founder.name}
+            </h3>
+            
+            <p className="text-[#4a1c13]/60 uppercase tracking-[0.2em] text-sm mb-6 md:mb-8 font-medium">
+              {founder.role}
+            </p>
+            
+            <p className="text-[#4a1c13]/80 text-sm md:text-base leading-relaxed font-light max-w-2xl">
+              {founder.description}
+            </p>
+            
+           <div className="flex flex-wrap gap-3 mt-8 md:mt-10" aria-label={`Key metrics for ${founder.name}`}>
+  {founder.stats?.map((stat, i) => (
+    <span 
+      key={i} 
+      className="px-5 py-2.5 border border-[#4a1c13]/10 rounded-full text-[10px] uppercase tracking-widest text-[#4a1c13]/80 hover:bg-[#4a1c13]/5 transition-colors cursor-default"
+    >
+      {stat}
+    </span>
+  ))}
+</div>
+          </motion.div>
+          
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* ─── 4. SERVICE PILLARS ─── */}
       <section aria-labelledby="commitments-heading" className="py-24 px-6 max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="text-center mb-14">
-          <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
-            What We Stand For
-          </motion.span>
-          <motion.h2 id="commitments-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4">
-            Our Six Commitments
-          </motion.h2>
-        </motion.div>
+  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={stagger} className="text-center mb-14">
+    <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
+      What We Stand For
+    </motion.span>
+    <motion.h2 id="commitments-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4">
+      Our Six Commitments
+    </motion.h2>
+  </motion.div>
 
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { title: "Customised Designs", desc: "Tailored to your unique lifestyle and aesthetic not drawn from a catalogue.", icon: "✦" },
-            { title: "Reflects Your Style", desc: "We listen deeply before we draw. Every corner is a reflection of you.", icon: "◈" },
-            { title: "Expert Consultation", desc: "Guidance from India's finest minds, available throughout your project.", icon: "◇" },
-            { title: "Transparent Pricing", desc: "Detailed, itemised quotes with zero hidden charges ever.", icon: "◉" },
-            { title: "Qualified Staff", desc: "200+ trained professionals, each vetted for craft, punctuality, and care.", icon: "⬡" },
-            { title: "Timely Handover", desc: "We have never missed a handover date. We don't intend to start.", icon: "◎" },
-          ].map((item) => (
-            <motion.div key={item.title} variants={fadeUp} whileHover={{ y: -6 }} className="bg-white p-8 rounded-3xl border border-[#4a1c13]/8 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="w-11 h-11 bg-[#ff7043]/10 text-[#ff7043] rounded-2xl flex items-center justify-center mb-5 text-lg" aria-hidden="true">
-                {item.icon}
-              </div>
-              <h3 className="text-lg font-bold mb-3">{item.title}</h3>
-              <p className="text-[#4a1c13]/55 leading-relaxed text-sm">{item.desc}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {[
+      { title: "Expert Consultation", desc: "Guidance from India's finest minds, available throughout your project.", icon: "◇" },
+      { title: "Reflects Your Style", desc: "We listen deeply before we draw. Every corner is a reflection of you.", icon: "◈" },
+      { title: "Customised Designs", desc: "Tailored to your unique lifestyle and aesthetic not drawn from a catalogue.", icon: "✦" },
+      { title: "Transparent Pricing", desc: "Detailed, itemised quotes with zero hidden charges ever.", icon: "◉" },
+      { title: "Qualified Staff", desc: "200+ trained professionals, each vetted for craft, punctuality, and care.", icon: "⬡" },
+      { title: "Timely Handover", desc: "We have never missed a handover date. We don't intend to start.", icon: "◎" },
+    ].map((item, i) => (
+      <motion.div 
+        key={item.title} 
+        variants={fadeUp} 
+        whileHover={{ y: -6 }} 
+        // Added relative, overflow-hidden, and group
+        className="relative bg-white p-8 rounded-3xl border border-[#4a1c13]/8 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
+      >
+        {/* The Vertical, Half-Visible Number */}
+        <div 
+          className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-[20%] -rotate-90 text-[140px] font-serif font-bold leading-none text-[#4a1c13]/[0.03] group-hover:text-[#ff7043]/[0.05] group-hover:scale-110 transition-all duration-500 pointer-events-none select-none z-0" 
+          aria-hidden="true"
+        >
+          0{i + 1}
+        </div>
+
+        {/* Existing Content wrapped in relative z-10 so it sits above the number */}
+        <div className="relative z-10">
+          <div className="w-11 h-11 bg-[#ff7043]/10 text-[#ff7043] rounded-2xl flex items-center justify-center mb-5 text-lg" aria-hidden="true">
+            {item.icon}
+          </div>
+          <h3 className="text-lg font-bold mb-3 text-[#4a1c13]">{item.title}</h3>
+          <p className="text-[#4a1c13]/55 leading-relaxed text-sm">{item.desc}</p>
+        </div>
+      </motion.div>
+    ))}
+  </motion.div>
+</section>
 
       {/* ─── 5. PHILOSOPHY ─── */}
       <section id="philosophy" aria-labelledby="philosophy-heading" className="relative py-28 px-6 overflow-hidden">
@@ -346,38 +369,72 @@ export default function AboutPage() {
       </section>
 
       {/* ─── 6. PROCESS TIMELINE ─── */}
-      <section aria-labelledby="process-heading" className="py-24 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger} className="text-center mb-14">
-            <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
-              How We Work
-            </motion.span>
-            <motion.h2 id="process-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4 text-[#4a1c13]">
-              The Bright Arena Process
-            </motion.h2>
-          </motion.div>
+      <section aria-labelledby="process-heading" className="py-24 px-6 bg-white overflow-hidden">
+  <div className="max-w-6xl mx-auto">
+    
+    {/* Header */}
+    <motion.div 
+      initial="hidden" 
+      whileInView="visible" 
+      viewport={{ once: true, amount: 0.3 }} 
+      variants={stagger} 
+      className="text-center mb-16 lg:mb-20"
+    >
+      <motion.span variants={fadeUp} className="text-[#ff7043] tracking-[0.3em] uppercase font-bold text-xs">
+        How We Work
+      </motion.span>
+      <motion.h2 id="process-heading" variants={fadeUp} className="text-[clamp(28px,5vw,52px)] font-serif mt-4 text-[#4a1c13]">
+        The Bright Arena Process
+      </motion.h2>
+    </motion.div>
 
-          <div className="space-y-0">
-            {[
-              { step: "01", title: "Discovery Call", desc: "We listen. Tell us your dreams, your budget, your lifestyle. We ask the questions other studios forget to ask." },
-              { step: "02", title: "Concept & Moodboard", desc: "Within 7 days we present a full concept palette, material library, spatial flow, and reference imagery." },
-              { step: "03", title: "Design Development", desc: "3D renders, elevation drawings, custom furniture selections. You see every detail before we build." },
-              { step: "04", title: "Execution", desc: "Our in-house teams handle everything. You get a single point of contact. No juggling vendors." },
-              { step: "05", title: "Handover & Beyond", desc: "We walk you through the finished space and remain on-call for 12 months post-handover." },
-            ].map((item, i, arr) => (
-              <motion.div key={item.step} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeUp} className={`flex gap-8 items-start py-10 ${i < arr.length - 1 ? "border-b border-[#4a1c13]/10" : ""}`}>
-                <div className="text-[clamp(32px,4vw,52px)] font-serif text-[#ff7043]/30 leading-none shrink-0 w-14 text-right" aria-hidden="true">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-[#4a1c13]">{item.title}</h3>
-                  <p className="text-[#4a1c13]/55 leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+    {/* 
+      Vertical stack of Horizontal Cards 
+    */}
+    <div className="flex flex-col gap-6">
+      {[
+        { step: "01", title: "Project Kick-off call", desc: "We listen. Tell us your dreams, your budget, your lifestyle." },
+        { step: "02", title: "Concept & Moodboard", desc: "Within 7 days we present a full concept palette, material library, spatial flow, and reference imagery." },
+        { step: "03", title: "Design Development", desc: "3D renders, elevation drawings, custom furniture selections. You see every detail before we build." },
+        { step: "04", title: "Execution", desc: "Our in-house teams handle everything. You get a single point of contact. No juggling vendors." },
+        { step: "05", title: "Final Chapter with New Beginning", desc: "We walk you through the finished space and remain on-call for 12 months post-handover." },
+      ].map((item) => (
+        <motion.div 
+          key={item.step} 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, amount: 0.4 }} 
+          variants={fadeUp} 
+          // Changed to flex-col on mobile, md:flex-row on desktop
+          className="group flex flex-col md:flex-row items-start md:items-center p-8 md:p-10 rounded-[2rem] bg-[#FFF8F2] border border-[#4a1c13]/5 hover:shadow-xl hover:border-[#ff7043]/20 transition-all duration-300"
+        >
+          {/* Step Number (Left) */}
+          <div 
+            className="w-full md:w-1/5 text-6xl md:text-7xl font-serif text-[#ff7043]/20 leading-none mb-6 md:mb-0 group-hover:text-[#ff7043]/40 transition-colors shrink-0" 
+            aria-hidden="true"
+          >
+            {item.step}
           </div>
-        </div>
-      </section>
+          
+          {/* Title (Middle) */}
+          <div className="w-full md:w-2/5 pr-0 md:pr-8 mb-4 md:mb-0 shrink-0">
+            <h3 className="text-2xl md:text-3xl font-bold font-primary text-[#4a1c13] leading-snug">
+              {item.title}
+            </h3>
+          </div>
+
+          {/* Text Content (Right) */}
+          <div className="w-full md:w-2/5 flex-grow">
+            <p className="text-[#4a1c13]/70 text-base leading-relaxed border-l-0 md:border-l border-[#4a1c13]/10 pl-0 md:pl-8">
+              {item.desc}
+            </p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+    
+  </div>
+</section>
 
     </main>
     </>

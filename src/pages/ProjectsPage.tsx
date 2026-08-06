@@ -9,13 +9,6 @@ const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ─── PROJECT CARD ─── */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  // Masonry-style layout logic
-  const spanClasses = index % 5 === 0 
-    ? "md:row-span-2 md:col-span-1 aspect-[3/4]" 
-    : index % 3 === 0 
-    ? "md:col-span-2 md:row-span-1 aspect-video" 
-    : "md:col-span-1 md:row-span-1 aspect-square";
-
   const isPriority = index < 2;
 
   return (
@@ -25,8 +18,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.7, ease: smoothEase, delay: (index % 4) * 0.1 }}
-      className={`group relative overflow-hidden rounded-3xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-2xl transition-all duration-700 ${spanClasses}`}
+      // Updated stagger delay for a 2-column layout
+      transition={{ duration: 0.7, ease: smoothEase, delay: (index % 2) * 0.15 }}
+      // Applied a uniform rectangular aspect ratio (4/3) to all cards
+      className="group relative overflow-hidden rounded-3xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-2xl transition-all duration-700 aspect-[4/3]"
     >
       <Link 
         to={`/portfolio/${project.slug}`} 
@@ -41,10 +36,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
         />
 
-        {/* Updated Elegant Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8" aria-hidden="true">
-          <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-            <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-2">
+        {/* Elegant Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-10" aria-hidden="true">
+          <div className="transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+            <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-3">
               {project.title}
             </h3>
             <p className="text-[#ff7043] text-xs tracking-[0.2em] uppercase font-bold">
@@ -69,9 +64,8 @@ export default function PortfolioPage() {
       <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
       
       {/* ── HERO ── */}
-      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-20">
+      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16 md:mb-24">
         
-        {/* SEO H1 Tag - Visually Hidden */}
         <h1 className="sr-only">
           Interior Design Portfolio & Completed Projects in Hyderabad
         </h1>
@@ -85,7 +79,6 @@ export default function PortfolioPage() {
           Selected Works
         </motion.p>
         
-        {/* Converted visual text to H2 to respect semantic HTML since the H1 is above */}
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,13 +90,14 @@ export default function PortfolioPage() {
         </motion.h2>
       </header>
 
-      {/* ── MASONRY GRID ── */}
+      {/* ── 2x2 GRID ── */}
       <section 
-        className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto" 
+        className="px-4 md:px-12 lg:px-20 max-w-[1600px] mx-auto" 
       >
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 grid-flow-dense"
+          // Changed to strictly 1 column on mobile, 2 columns on tablet/desktop
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
         >
           <AnimatePresence mode="popLayout">
             {projectsData.map((project, i) => (
