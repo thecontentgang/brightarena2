@@ -1,21 +1,21 @@
 "use client";
 
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { projectsData } from "./ProjectsData"; // Ensure path is correct
+import { projectsData } from "./ProjectsData";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import SEO from "../components/SEO";
 
-// Gentle, premium easing curve
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
 interface RevealHeadingProps {
   children: string;
   className?: string;
   delay?: number;
+  animateOnLoad?: boolean; // <-- Added to fix the rendering issue at the top of the page
 }
 
-function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
+function RevealHeading({ children, className, delay = 0, animateOnLoad = false }: RevealHeadingProps) {
   if (!children) return null;
   const lines = children.split("\n");
   let wordIndex = 0;
@@ -31,9 +31,11 @@ function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
                 <motion.span
                   className="block"
                   initial={{ y: "120%", opacity: 0 }}
-                  whileInView={{ y: "0%", opacity: 1 }}
+                  // Force animation immediately if animateOnLoad is true
+                  animate={animateOnLoad ? { y: "0%", opacity: 1 } : undefined}
+                  whileInView={!animateOnLoad ? { y: "0%", opacity: 1 } : undefined}
                   transition={{ duration: 1.2, delay: delay + wi * 0.04, ease: EASE }}
-                  viewport={{ once: true, margin: "-40px" }}
+                  viewport={{ once: true }}
                 >
                   {word}
                 </motion.span>
@@ -58,7 +60,6 @@ export default function ProjectDetailsPage() {
     offset: ["start end", "end start"],
   });
   
-  // Subtle parallax for the primary image
   const imgY = useTransform(imgScroll, [0, 1], ["-8%", "8%"]);
 
   useEffect(() => { 
@@ -87,7 +88,6 @@ export default function ProjectDetailsPage() {
         {/* ── 1. COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
           
-          {/* SEO H1 Tag - Visually Hidden - Unique per project */}
           <h1 className="sr-only">{project.seo?.h1 || project.title}</h1>
 
           {/* Internal Breadcrumb */}
@@ -102,11 +102,12 @@ export default function ProjectDetailsPage() {
             <span className="text-[#4a1c13]">{project.title}</span>
           </motion.nav>
 
-          {/* RevealHeading naturally renders an H2 for semantic structure */}
+          {/* Render the Hero Title here instead of just the project name */}
           <RevealHeading
+            animateOnLoad={true}
             className="font-primary text-[clamp(40px,5vw,72px)] leading-[1.05] tracking-tight text-[#4a1c13] max-w-4xl"
           >
-            {project.title}
+            {project.heroTitle || project.title}
           </RevealHeading>
 
           {project.shortDescription && (
@@ -221,27 +222,41 @@ export default function ProjectDetailsPage() {
           </div>
         </section>
 
-        {/* ── 4. MINIMAL SUPPLEMENTARY IMAGES ── */}
-        {/* Strictly slices the massive array to a maximum of 2 minimal images */}
-        {project.gallery && project.gallery.length > 0 && (
-          <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {project.gallery.slice(0, 2).map((img, i) => (
+        {/* ── 4. FULL PROJECT GALLERY ── */}
+        {project.gallery && project.gallery.length > 1 && (
+          <section className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 mb-20">
+            
+            <RevealHeading
+              delay={0.1}
+              className="font-primary text-[clamp(28px,3.5vw,48px)] leading-[1.2] tracking-tight text-[#4a1c13] mb-10 text-center"
+            >
+              {"Project\nGallery."}
+            </RevealHeading>
+
+            {/* Responsive 1 col on mobile, 2 on tablet, 3 on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              
+              {/* .slice(1) skips the very first image because it is already used as the big Hero image */}
+              {project.gallery.slice(1).map((img, i) => (
                 <motion.div
                   key={i}
                   className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm bg-[#e8e5de]"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: i * 0.2, ease: EASE }}
-                  viewport={{ once: true, margin: "-40px" }}
+                  // Staggers the animation nicely based on the column it is in
+                  transition={{ duration: 0.8, delay: (i % 3) * 0.15, ease: EASE }}
+                  // Removed negative margin so it triggers reliably on all devices
+                  viewport={{ once: true }}
                 >
                   <img
                     src={img}
-                    alt={`${project.title} Detail ${i + 1}`}
+                    alt={`${project.title} space ${i + 1}`}
+                    loading="lazy" // <-- IMPORTANT: Prevents the page from lagging when loading 15 images
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
                   />
                 </motion.div>
               ))}
+              
             </div>
           </section>
         )}

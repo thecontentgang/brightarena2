@@ -1,10 +1,13 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { designsData } from "./designsData"; // Ensure path is correct
+import { designsData } from "./designsData"; 
 import SEO from "../components/SEO";
+
+// Gentle, premium easing curve
+const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
 export default function DesignDetailsPage() {
   const { slug } = useParams();
@@ -15,10 +18,13 @@ export default function DesignDetailsPage() {
     (d) => d.slug === slug || d.oldSlug === slug
   );
 
-  // 2. Find all designs in the same category for the masonry gallery
+  // 2. Find all designs in the same category for the gallery
   const categoryDesigns = targetDesign 
     ? designsData.filter((d) => d.category === targetDesign.category)
     : [];
+
+  // Check if we are actually on the old slug and need to redirect
+  const isOldSlug = targetDesign?.oldSlug === slug && targetDesign?.slug !== slug;
 
   // ALL HOOKS MUST BE CALLED BEFORE ANY EARLY RETURNS
   useEffect(() => {
@@ -27,23 +33,14 @@ export default function DesignDetailsPage() {
     if (!targetDesign) {
       // If no design matches at all, send to gallery
       navigate("/designs", { replace: true });
-    } else if (targetDesign.oldSlug === slug) {
-      // If the URL matches the old slug, REDIRECT to the new slug seamlessly
+    } else if (isOldSlug) {
+      // If the URL matches the old slug (and isn't the new one), REDIRECT
       navigate(`/designs/${targetDesign.slug}`, { replace: true });
     }
-  }, [slug, targetDesign, navigate]);
-
-  const heroImgRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroImgRef,
-    offset: ["start end", "end start"],
-  });
-  
-  const heroImgY = useTransform(heroScroll, [0, 1], ["-10%", "10%"]);
+  }, [slug, targetDesign, navigate, isOldSlug]);
 
   // SAFE EARLY RETURN AFTER HOOKS
-  if (!targetDesign || targetDesign.oldSlug === slug) return null;
+  if (!targetDesign || isOldSlug) return null;
 
   // Extract base data from the matched item safely
   const categoryName = targetDesign.category || "Gallery";
@@ -55,12 +52,8 @@ export default function DesignDetailsPage() {
   
   // Extract the unique H1 tag for this specific category design
   const pageH1 = targetDesign.seo?.h1 || `${categoryName} Interior Design in Hyderabad`;
-  
-  // Use a reliable default Unsplash image if heroImage is missing
-  const heroImage = targetDesign.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop";
 
   // Extract ALL images from the matched designs 
-  // so the masonry grid shows the full gallery, not just the single cover object!
   const galleryItems = categoryDesigns.flatMap(design => 
     design.images.map((imgSrc, imgIndex) => ({
       id: `${design.id}-${imgIndex}`,
@@ -85,14 +78,12 @@ export default function DesignDetailsPage() {
            {/* Breadcrumb handled globally */}
         </div>
 
-        {/* ── DYNAMIC HERO ── */}
+        {/* ── CATEGORY NAME (TITLE) ── */}
         <section className="pt-4 md:pt-8 pb-12 md:pb-16 relative">
           <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 text-center">
             
-            {/* SEO H1 Tag - Visually Hidden - Unique per design category */}
             <h1 className="sr-only">{pageH1}</h1>
 
-            {/* Converted visual text to H2 to respect semantic HTML */}
             <h2 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary capitalize">
               {categoryName} <br />
               <span className="italic text-[#ff7043]">Concepts.</span>
@@ -100,33 +91,21 @@ export default function DesignDetailsPage() {
           </div>
         </section>
 
-        {/* ── PARALLAX IMAGE ── */}
-        <section className="px-4 md:px-6 lg:px-12 max-w-[1600px] mx-auto mb-16 md:mb-24">
-          <div ref={heroImgRef} className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-[#e8e5de] h-[40vh] md:h-[60vh] shadow-sm">
-            <motion.div className="w-full h-full" style={{ y: heroImgY }}>
-              <img 
-                  src={heroImage} 
-                  alt={categoryName} 
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              />
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── MASONRY GRID ── */}
-        <section className="px-4 md:px-12 lg:px-16 max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[300px] md:auto-rows-[450px] gap-4 md:gap-6 grid-flow-dense">
+        {/* ── 2x2 GRID (IMAGES) ── */}
+        <section className="px-4 md:px-12 lg:px-20 max-w-[1600px] mx-auto">
+          {/* Changed to exactly 1 column on mobile, 2 columns on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {galleryItems.map((item, index) => {
-              const spanClasses = index % 4 === 0 ? "md:col-span-2" : "md:col-span-1";
-              
               return (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  className={`group relative w-full h-full overflow-hidden rounded-[2rem] bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 ${spanClasses}`}
+                  // Added animation delay logic so the two columns stagger nicely
+                  transition={{ duration: 0.7, delay: (index % 2) * 0.15, ease: EASE }}
+                  // Added aspect-[4/3] so every card is a perfect uniform rectangle
+                  className="group relative w-full h-full overflow-hidden rounded-[2rem] bg-[#e8e5de] shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3]"
                 >
                   {item.src ? (
                     <img 
@@ -141,9 +120,9 @@ export default function DesignDetailsPage() {
                     </div>
                   )}
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                    <h3 className="text-white font-primary text-2xl mb-2">{item.title}</h3>
-                    <p className="text-white/70 text-sm line-clamp-2">{item.description}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-10">
+                    <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-3">{item.title}</h3>
+                    <p className="text-white/80 text-sm md:text-base line-clamp-2 leading-relaxed">{item.description}</p>
                   </div>
                 </motion.div>
               );

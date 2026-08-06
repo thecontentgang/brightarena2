@@ -1,7 +1,6 @@
 "use client";
 
 import { Link, useParams } from "react-router-dom";
-// Updated import path to match your folder structure
 import { servicesData, type ServiceItem } from "./data/servicesData"; 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
@@ -14,9 +13,10 @@ interface RevealHeadingProps {
   children: string;
   className?: string;
   delay?: number;
+  animateOnLoad?: boolean; // Added prop to bypass whileInView bug at the top of the page
 }
 
-function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
+function RevealHeading({ children, className, delay = 0, animateOnLoad = false }: RevealHeadingProps) {
   if (!children) return null;
   const lines = children.split("\n");
   let wordIndex = 0;
@@ -32,9 +32,11 @@ function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
                 <motion.span
                   className="block"
                   initial={{ y: "120%", opacity: 0 }}
-                  whileInView={{ y: "0%", opacity: 1 }}
+                  // Force animation immediately if animateOnLoad is true, otherwise wait for scroll
+                  animate={animateOnLoad ? { y: "0%", opacity: 1 } : undefined}
+                  whileInView={!animateOnLoad ? { y: "0%", opacity: 1 } : undefined}
                   transition={{ duration: 1.2, delay: delay + wi * 0.04, ease: EASE }}
-                  viewport={{ once: true, margin: "-40px" }}
+                  viewport={{ once: true }} // Removed negative margin to prevent intersection observer failures
                 >
                   {word}
                 </motion.span>
@@ -50,7 +52,6 @@ function RevealHeading({ children, className, delay = 0 }: RevealHeadingProps) {
 export default function ServiceDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   
-  // Applies the imported ServiceItem type
   const service = servicesData.find((item: ServiceItem) => item.slug === slug);
 
   const primaryImgRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,6 @@ export default function ServiceDetailsPage() {
         {/* ── COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
           
-          {/* SEO H1 Tag - Visually Hidden - Unique per service category */}
           <h1 className="sr-only">{service.seo?.h1 || service.title}</h1>
 
           <motion.nav 
@@ -101,8 +101,9 @@ export default function ServiceDetailsPage() {
             <span className="text-[#4a1c13]">{service.title}</span>
           </motion.nav>
 
-          {/* RevealHeading returns an <h2> keeping semantic structure intact */}
+          {/* Applied animateOnLoad={true} so the title guarantees rendering instantly */}
           <RevealHeading
+            animateOnLoad={true}
             className="font-primary text-[clamp(36px,5vw,64px)] leading-[1.1] tracking-tight text-[#4a1c13] max-w-4xl"
           >
             {service.heroTitle || "Crafting Timeless Spaces"}

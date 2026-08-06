@@ -4,13 +4,14 @@ export interface ProjectSEO {
   metaTitle: string;
   description: string;
   keywords: string;
-  h1?: string; // Added H1 property for unique SEO headings
+  h1?: string;
 }
 
 export interface Project {
   id: number;
   slug: string;
   title: string;
+  heroTitle?: string; // <-- Added property
   shortDescription: string;
   description: string;
   heroImage: string;
@@ -23,6 +24,7 @@ export const projectsData: Project[] = [
     id: 1,
     slug: "forest-edge-interior-design-project-hyderabad",
     title: "ForestEdge",
+    heroTitle: "A Resort-Like Residential Haven", // <-- Added
     shortDescription: "Luxury Residential, Interior Design",
     description: "A premium residential space designed with timeless interiors, seamlessly blending indoor and outdoor functional areas for a resort-like feel.",
     heroImage: "/projectsImg/forest-edge/fe-img1.webp",
@@ -38,6 +40,7 @@ export const projectsData: Project[] = [
     id: 2,
     slug: "rajapushpa-interior-design-project-hyderabad",
     title: "Rajapushpa Project",
+    heroTitle: "Modern Elegance Refined", // <-- Added
     shortDescription: "Premium Apartment, Styling",
     description: "Modern elegant residential interiors crafted for luxurious living, featuring seamless layouts and bespoke furniture tailored for maximum comfort.",
     heroImage: "/projectsImg/rajapushpa/rp-img1.webp",
@@ -53,6 +56,7 @@ export const projectsData: Project[] = [
     id: 3,
     slug: "vara-prasad-bachupally-interior-design-project-hyderabad",
     title: "Vara Prasad Bachupally",
+    heroTitle: "Contemporary Family Living", // <-- Added
     shortDescription: "Residential Interiors",
     description: "A beautifully tailored residential space featuring contemporary finishes and a serene, comfortable atmosphere crafted specifically for modern family living.",
     heroImage: "/projectsImg/varaprasad/vp-img1.png",
@@ -68,6 +72,7 @@ export const projectsData: Project[] = [
     id: 4,
     slug: "etna-by-phoenix-interior-design-project-hyderabad",
     title: "Etna By Phoenix",
+    heroTitle: "A Sophisticated Urban Oasis", // <-- Added
     shortDescription: "Premium Apartment, Styling",
     description: "A sophisticated blend of contemporary design and timeless elegance, creating a vibrant and luxurious residential oasis.",
     heroImage: "/projectsImg/etna/sr-img1.webp",
@@ -83,6 +88,7 @@ export const projectsData: Project[] = [
     id: 5,
     slug: "banali-foods-commercial-interior-design-project-hyderabad",
     title: "Banali Foods",
+    heroTitle: "A Premium Retail Experience", // <-- Added
     shortDescription: "Commercial, Sweets Shop",
     description: "A vibrant and welcoming commercial retail space tailored for a premium sweets brand, featuring elegant display counters and warm ambient lighting.",
     heroImage: "/projectsImg/banali/bf-img5.png",
@@ -98,6 +104,7 @@ export const projectsData: Project[] = [
     id: 6,
     slug: "kollur-apartment-interior-design-project-hyderabad",
     title: "Kollur Apartment",
+    heroTitle: "Modernity Meets Space", // <-- Added
     shortDescription: "Residential, Modern Apartment",
     description: "Elegant residential interiors designed with space-saving layouts and contemporary finishes for a modern family lifestyle.",
     heroImage: "/projectsImg/kollur/kl-img1.webp",
