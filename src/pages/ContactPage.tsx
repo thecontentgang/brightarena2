@@ -91,7 +91,7 @@ export default function ContactPage() {
                   4th Floor, 23 Nordwest, <br />
                   P Janardhan Reddy Nagar, <br />
                   Gachibowli, Hyderabad, <br />
-                  Telangana 500081
+                  Telangana 500032
                 </address>
               </motion.div>
 
