@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
-import { servicesData, type ServiceItem } from "./data/servicesData";
+import { servicesData, type ServiceItem } from "../pages/data/servicesData"; // Adjust path if needed
 import SEO from "../components/SEO";
 
 /* ─── SERVICE CARD ─── */
@@ -88,8 +89,8 @@ function ServiceCard({
 
           <div className="flex flex-wrap items-center gap-4">
             {/* Learn More */}
-            <a
-              href={`/services/${service.slug}`}
+            <Link
+              to={`/services/${service.slug}`}
               aria-label={`Learn more details about our ${service.title} services`}
               className="group/btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#C4623A] text-white text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#A84E2C] hover:shadow-lg"
             >
@@ -97,7 +98,7 @@ function ServiceCard({
               <span className="transition-transform duration-300 group-hover/btn:translate-x-1" aria-hidden="true">
                 →
               </span>
-            </a>
+            </Link>
 
             {/* Phone */}
             <a
