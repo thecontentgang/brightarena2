@@ -6,7 +6,6 @@ import PageTransitionLayout from './components/PageTransitionLayout';
 import FloatingSocialBar from './components/SocialMediaBar';
 import Breadcrumb from './components/BreadCrumb';
 
-
 // Lazy Load Pages
 const HomePage = React.lazy(() => import('./sections/HomePage'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage'));
@@ -21,6 +20,13 @@ const BlogDetailsPage = React.lazy(() => import('./pages/BlogDetails'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const TestimonialPage = React.lazy(() => import('./pages/TestimonialPage'));
 
+// Lazy Load Location SEO Pages
+const HitecCityPage = React.lazy(() => import('./pages/HitecCityInteriorDesignerPage'));
+const GachibowliPage = React.lazy(() => import('./pages/GachibowliInteriorDesignerPage'));
+const KondapurPage = React.lazy(() => import('./pages/KondapurInteriorDesignerPage'));
+const MadhapurPage = React.lazy(() => import('./pages/MadhapurInteriorDesignerPage'));
+const WhitefieldsPage = React.lazy(() => import('./pages/WhitefieldsInteriorDesignerPage'));
+
 const Loader = () => (
   <div className="flex justify-center items-center h-screen bg-[#f7f4ee]">
     <div className="w-12 h-12 border-4 border-[#4a1c13] border-t-transparent rounded-full animate-spin"></div>
@@ -30,7 +36,6 @@ const Loader = () => (
 const App = () => {
   return (
     <>
-
       <Navbar />
       <FloatingSocialBar />
       <Breadcrumb />
@@ -39,6 +44,7 @@ const App = () => {
         <PageTransitionLayout>
           <Suspense fallback={<Loader />}>
             <Routes>
+              {/* Core Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
@@ -51,6 +57,13 @@ const App = () => {
               <Route path="/blogs" element={<BlogsPage />} />
               <Route path="/blogs/:slug" element={<BlogDetailsPage />} />
               <Route path="/contact" element={<ContactPage />} />
+
+              {/* Location SEO Routes */}
+              <Route path="/interior-designer-hitec-city" element={<HitecCityPage />} />
+              <Route path="/interior-designer-gachibowli" element={<GachibowliPage />} />
+              <Route path="/interior-designer-kondapur" element={<KondapurPage />} />
+              <Route path="/interior-designer-madhapur" element={<MadhapurPage />} />
+              <Route path="/interior-designer-whitefields" element={<WhitefieldsPage />} />
             </Routes>
           </Suspense>
         </PageTransitionLayout>
