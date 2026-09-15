@@ -78,7 +78,7 @@ export default function ProjectDetailsPage() {
     <>
       <SEO 
         title={project.seo?.metaTitle || `${project.title} | Bright Arena Interiors`}
-        description={project.seo?.description || project.shortDescription || project.description}
+        description={project.seo?.description}
         keywords={project.seo?.keywords}
         url={`https://www.brightarenainteriors.com/portfolio/${project.slug}`}
       />

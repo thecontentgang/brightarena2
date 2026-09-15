@@ -185,12 +185,7 @@ export default function ServiceDetailsPage() {
     <>
       <SEO
         title={service.seo?.metaTitle || `${service.title} | Bright Arena Interiors`}
-        description={
-          service.seo?.description ||
-          service.description ||
-          service.longDescription ||
-          `Explore our ${service.title} interior design services.`
-        }
+        description={service.seo?.description}
         keywords={service.seo?.keywords}
         url={`https://www.brightarenainteriors.com/services/${service.slug}`}
       />

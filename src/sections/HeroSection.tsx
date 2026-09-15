@@ -161,9 +161,9 @@ const MinimalHero: React.FC = () => {
           ref={headingRef}
           className="absolute top-0 left-0 w-full h-[40dvh] flex items-center justify-center pt-18 px-4 md:px-8 z-0 opacity-0 transform-gpu"
         >
-          <h1 className="sr-only">
+          <h2 className="sr-only">
             Dream Big. Experience Exceptional Design. Live in Comfort.
-          </h1>
+          </h2>
 
           <div className="grid grid-cols-2 gap-y-6 w-full md:w-auto md:flex md:flex-nowrap items-start justify-center md:gap-16 text-center">
             <div className="flex flex-col items-center order-1 md:order-none col-span-1" aria-hidden="true">
