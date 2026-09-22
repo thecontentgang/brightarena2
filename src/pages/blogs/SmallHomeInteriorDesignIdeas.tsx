@@ -23,7 +23,7 @@ export default function SmallHomeInteriorDesignIdeas() {
     readTime: "10 Min Read",
     author: "Design Team",
     authorRole: "Bright Arena Interiors",
-    coverImage: "https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=2000&auto=format&fit=crop",
+    coverImage: "/small-house-interior-designs.png",
     excerpt: "Small homes get cramped for a simple reason: circulation, storage and furniture are planned separately. The sofa goes in one place, the wardrobe in another, and suddenly nobody can walk through the room without turning sideways."
   };
 
@@ -595,23 +595,23 @@ export default function SmallHomeInteriorDesignIdeas() {
 
   return (
     <>
-      <SEO 
+      <SEO
         title={seo?.metaTitle || `${post.title} | Bright Arena Interiors Journal`}
         description={seo?.description || post.excerpt}
         keywords={seo?.keywords}
         url={`https://www.brightarenainteriors.com/blogs/${post.slug}`}
       />
       <main className="bg-[#f7f4ee] text-[#4a1c13] w-full min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
-        
+
         <article ref={articleRef}>
           {/* ── HERO HEADER ── */}
-          <BlogHeader 
-            category={post.category} 
-            readTime={post.readTime} 
-            title={post.title} 
-            author={post.author} 
-            date={post.date} 
-            articleRef={articleRef} 
+          <BlogHeader
+            category={post.category}
+            readTime={post.readTime}
+            title={post.title}
+            author={post.author}
+            date={post.date}
+            articleRef={articleRef}
           />
 
           {/* ── HERO IMAGE ── */}
@@ -627,12 +627,12 @@ export default function SmallHomeInteriorDesignIdeas() {
             {/* Dynamic Content Blocks */}
             <div className="article-body">
               {content.map((block, index) => (
-                <BlogContentBlock 
-                  key={index} 
-                  index={index} 
-                  type={block.type} 
-                  value={block.value} 
-                  caption={block.caption} 
+                <BlogContentBlock
+                  key={index}
+                  index={index}
+                  type={block.type}
+                  value={block.value}
+                  caption={block.caption}
                 />
               ))}
             </div>

@@ -48,7 +48,7 @@ export const blogsData: BlogPostMeta[] = [
     "readTime": "10 Min Read",
     "author": "BrightArenaInterior Team",
     "authorRole": "Interior Design Experts",
-    "coverImage": "https://images.unsplash.com/photo-1556910103-1c02745a872f?q=80&w=2000&auto=format&fit=crop",
+    "coverImage": "/modular-kitchen.png",
     "excerpt": "Discover Modular Kitchen Cost in Hyderabad for 2026, including pricing factors, materials, layouts, installation costs, and tips to plan your budget."
   },
   {
