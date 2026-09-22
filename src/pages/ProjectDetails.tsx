@@ -1,10 +1,11 @@
 "use client";
 
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { projectsData } from "./ProjectsData";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import SEO from "../components/SEO";
+import NotFoundPage from "./NotFoundPage";
 
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
@@ -50,7 +51,6 @@ function RevealHeading({ children, className, delay = 0, animateOnLoad = false }
 
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
-  const navigate = useNavigate();
 
   const project = projectsData.find((item) => item.slug === slug);
   const primaryImgRef = useRef<HTMLDivElement>(null);
@@ -66,13 +66,7 @@ export default function ProjectDetailsPage() {
     window.scrollTo(0, 0); 
   }, [slug, project]);
 
-  useEffect(() => {
-    if (!project && slug) {
-      navigate("/portfolio");
-    }
-  }, [project, slug, navigate]);
-
-  if (!project) return null;
+  if (!project) return <NotFoundPage />;
 
   return (
     <>

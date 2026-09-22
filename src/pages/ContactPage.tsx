@@ -116,16 +116,19 @@ export default function ContactPage() {
                     Follow Us
                   </h3>
                   <div className="flex items-center gap-4">
-                    {["Instagram", "Facebook", "LinkedIn"].map((social) => (
+                    {[
+                      { name: "Instagram", url: "https://www.instagram.com/brightarenainteriors" },
+                      { name: "YouTube", url: "https://www.youtube.com/@brightarenainteriors" }
+                    ].map((social) => (
                       <a 
-                        key={social}
-                        href="#" 
+                        key={social.name}
+                        href={social.url} 
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Follow Bright Arena on ${social}`}
+                        aria-label={`Follow Bright Arena on ${social.name}`}
                         className="text-sm font-medium hover:text-[#ff7043] transition-colors duration-300"
                       >
-                        {social}
+                        {social.name}
                       </a>
                     ))}
                   </div>

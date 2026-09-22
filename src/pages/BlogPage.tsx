@@ -56,11 +56,12 @@ export default function BlogPage() {
         <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto mb-16 md:mb-24">
           <MotionLink
             to={`/blogs/${featuredPost.slug}`}
+            aria-label={`Read featured article: ${featuredPost.title}`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: smoothEase }}
-            className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-white rounded-[3rem] p-6 shadow-sm border border-[#4a1c13]/5"
+            className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-white rounded-[3rem] p-6 shadow-sm border border-[#4a1c13]/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff7043]"
           >
             {/* Featured Image */}
             <div className="lg:col-span-8 overflow-hidden rounded-[2rem] h-full min-h-[500px]">
@@ -108,11 +109,12 @@ export default function BlogPage() {
             <MotionLink
               to={`/blogs/${post.slug}`}
               key={post.id}
+              aria-label={`Read article: ${post.title}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.7, ease: smoothEase, delay: (index % 3) * 0.15 }}
-              className="group cursor-pointer flex flex-col"
+              className="group cursor-pointer flex flex-col focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#ff7043] rounded-2xl"
             >
               {/* Card Image */}
               <div className="w-full aspect-[4/3] overflow-hidden rounded-2xl md:rounded-3xl mb-6 bg-[#e8e5de]">

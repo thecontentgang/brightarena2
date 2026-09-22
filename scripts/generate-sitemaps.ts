@@ -21,7 +21,13 @@ const staticRoutes = [
   '/designs',
   '/testimonials',
   '/blogs',
-  '/contact'
+  '/contact',
+  '/privacy-policy',
+  '/interior-designer-hitech-city',
+  '/interior-designer-gachibowli',
+  '/interior-designer-kondapur',
+  '/interior-designer-madhapur',
+  '/interior-designer-whitefields'
 ];
 
 function generateDate() {

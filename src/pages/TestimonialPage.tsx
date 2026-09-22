@@ -267,14 +267,7 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
           </div>
-          <a href="YOUR_GMB_REVIEW_LINK" target="_blank" rel="noreferrer">
-            <motion.button
-              whileHover={{ backgroundColor: "#f3f4f6" }}
-              className="px-6 py-2.5 rounded-full border border-gray-200 text-[14px] font-bold text-[#4a1c13] transition-colors"
-            >
-              Write a review
-            </motion.button>
-          </a>
+          {/* Write a review button removed as GMB link is not available */}
         </motion.div>
 
         <motion.div

@@ -357,11 +357,11 @@ export default function AboutPage() {
                 Start Your Project
               </a>
               <a 
-                href="/projects" 
-                aria-label="Explore the Bright Arena interior design portfolio"
-                className="border border-white/30 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all duration-300"
+                href="/portfolio" 
+                aria-label="View our project portfolio"
+                className="group relative inline-flex items-center justify-center gap-3 bg-transparent border border-white/40 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:border-white transition-all duration-300 overflow-hidden"
               >
-                Explore Portfolio
+                View Projects Portfolio
               </a>
             </motion.div>
           </motion.div>

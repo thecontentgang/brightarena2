@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { designsData } from "./designsData"; 
 import SEO from "../components/SEO";
+import NotFoundPage from "./NotFoundPage";
 
 // Gentle, premium easing curve
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -30,17 +31,15 @@ export default function DesignDetailsPage() {
   useEffect(() => {
     if (!slug) return;
 
-    if (!targetDesign) {
-      // If no design matches at all, send to gallery
-      navigate("/designs", { replace: true });
-    } else if (isOldSlug) {
+    if (targetDesign && isOldSlug) {
       // If the URL matches the old slug (and isn't the new one), REDIRECT
       navigate(`/designs/${targetDesign.slug}`, { replace: true });
     }
   }, [slug, targetDesign, navigate, isOldSlug]);
 
   // SAFE EARLY RETURN AFTER HOOKS
-  if (!targetDesign || isOldSlug) return null;
+  if (!targetDesign) return <NotFoundPage />;
+  if (isOldSlug) return null;
 
   // Extract base data from the matched item safely
   const categoryName = targetDesign.category || "Gallery";

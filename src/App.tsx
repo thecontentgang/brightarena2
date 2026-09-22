@@ -16,9 +16,16 @@ const ProjectDetailsPage = React.lazy(() => import('./pages/ProjectDetails'));
 const DesignPage = React.lazy(() => import('./pages/DesignsPage'));
 const DesignDetailsPage = React.lazy(() => import('./pages/DesignDetails'));
 const BlogsPage = React.lazy(() => import('./pages/BlogPage'));
-const BlogDetailsPage = React.lazy(() => import('./pages/BlogDetails'));
+const MasteringLightingInvisibleArchitecture = React.lazy(() => import('./pages/blogs/MasteringLightingInvisibleArchitecture'));
+const HowToChooseTheBestInteriorDesignerInHyderabad = React.lazy(() => import('./pages/blogs/HowToChooseTheBestInteriorDesignerInHyderabad'));
+const ModularKitchenCostInHyderabadCompleteGuide2026 = React.lazy(() => import('./pages/blogs/ModularKitchenCostInHyderabadCompleteGuide2026'));
+const SmallHomeInteriorDesignIdeas = React.lazy(() => import('./pages/blogs/SmallHomeInteriorDesignIdeas'));
+const BedroomInteriorDesignIdeas = React.lazy(() => import('./pages/blogs/BedroomInteriorDesignIdeas'));
+const LivingRoomInteriorDesignIdeas = React.lazy(() => import('./pages/blogs/LivingRoomInteriorDesignIdeas'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const TestimonialPage = React.lazy(() => import('./pages/TestimonialPage'));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy Load Location SEO Pages
 const HitecCityPage = React.lazy(() => import('./pages/HitecCityInteriorDesignerPage'));
@@ -55,15 +62,24 @@ const App = () => {
               <Route path="/designs/:slug" element={<DesignDetailsPage />} />
               <Route path="/testimonials" element={<TestimonialPage />} />
               <Route path="/blogs" element={<BlogsPage />} />
-              <Route path="/blogs/:slug" element={<BlogDetailsPage />} />
+              <Route path="/blogs/mastering-lighting-invisible-architecture" element={<MasteringLightingInvisibleArchitecture />} />
+              <Route path="/blogs/how-to-choose-the-best-interior-designer-in-hyderabad" element={<HowToChooseTheBestInteriorDesignerInHyderabad />} />
+              <Route path="/blogs/modular-kitchen-cost-in-hyderabad-complete-guide-2026" element={<ModularKitchenCostInHyderabadCompleteGuide2026 />} />
+              <Route path="/blogs/small-home-interior-design-ideas" element={<SmallHomeInteriorDesignIdeas />} />
+              <Route path="/blogs/bedroom-interior-design-ideas" element={<BedroomInteriorDesignIdeas />} />
+              <Route path="/blogs/living-room-interior-design-ideas" element={<LivingRoomInteriorDesignIdeas />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
               {/* Location SEO Routes */}
-              <Route path="/interior-designer-hitec-city" element={<HitecCityPage />} />
+              <Route path="/interior-designer-hitech-city" element={<HitecCityPage />} />
               <Route path="/interior-designer-gachibowli" element={<GachibowliPage />} />
               <Route path="/interior-designer-kondapur" element={<KondapurPage />} />
               <Route path="/interior-designer-madhapur" element={<MadhapurPage />} />
               <Route path="/interior-designer-whitefields" element={<WhitefieldsPage />} />
+
+              {/* 404 Catch-All */}
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </PageTransitionLayout>

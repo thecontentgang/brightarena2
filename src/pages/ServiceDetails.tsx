@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { servicesData, type ServiceItem } from "../pages/data/servicesData";
 import SEO from "../components/SEO";
+import NotFoundPage from "./NotFoundPage";
 
 // Gentle, premium easing curve
 const EASE: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -71,11 +72,7 @@ export default function ServiceDetailsPage() {
   const imgY = useTransform(imgScroll, [0, 1], ["-8%", "8%"]);
 
   if (!service) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee] text-[#4a1c13] font-primary text-2xl px-6 text-center">
-        Service not found
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   const cleanImgSrc = (src: string) => (src.endsWith(".") ? `${src}png` : src);
