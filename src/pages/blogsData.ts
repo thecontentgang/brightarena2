@@ -60,7 +60,7 @@ export const blogsData: BlogPostMeta[] = [
     "readTime": "10 Min Read",
     "author": "Design Team",
     "authorRole": "Bright Arena Interiors",
-    "coverImage": "https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=2000&auto=format&fit=crop",
+    "coverImage": "/small-house-interior-designs.png",
     "excerpt": "Small homes get cramped for a simple reason: circulation, storage and furniture are planned separately. The sofa goes in one place, the wardrobe in another, and suddenly nobody can walk through the room without turning sideways."
   },
   {
