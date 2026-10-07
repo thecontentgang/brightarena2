@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsx scripts/generate-sitemaps.ts && tsc -b && vite build && node scripts/prerender.js",
+    "build": "tsx scripts/generate-sitemaps.ts && tsc -b && vite build && puppeteer browsers install chrome && node scripts/prerender.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
