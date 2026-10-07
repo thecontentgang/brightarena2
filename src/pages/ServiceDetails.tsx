@@ -193,7 +193,7 @@ export default function ServiceDetailsPage() {
           <RegisterMark className="hidden sm:block absolute top-2 left-4 md:left-8 text-[#4a1c13]/15" />
           <RegisterMark className="hidden sm:block absolute top-2 right-4 md:right-8 text-[#4a1c13]/15" />
 
-          <h1 className="sr-only">{service.seo?.h1 || service.title}</h1>
+          
 
           <motion.nav
             className="flex items-center gap-2 text-[9px] sm:text-[10px] uppercase tracking-widest text-[#4a1c13]/50 font-bold mb-6 sm:mb-8"

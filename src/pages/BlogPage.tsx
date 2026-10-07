@@ -28,7 +28,7 @@ export default function BlogPage() {
       <section className="pt-32 pb-16 md:pt-48 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
         
         {/* SEO H1 Tag - Visually Hidden */}
-        <h1 className="sr-only">Interior Design Ideas & Tips</h1>
+        
 
         <motion.span 
           initial={{ opacity: 0, y: 20 }}

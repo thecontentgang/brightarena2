@@ -72,7 +72,7 @@ export default function AboutPage() {
         <motion.div initial="hidden" animate="visible" variants={stagger} className="relative z-10 px-6 max-w-4xl mx-auto">
           
           {/* SEO H1 Tag - Visually Hidden */}
-          <h1 className="sr-only">About Bright Arena Interiors</h1>
+          
 
           <motion.span variants={fadeUp} className="inline-block text-[#ff7043] tracking-[0.35em] uppercase font-bold text-xs mb-6">
             Est. 2012 · Hyderabad, India

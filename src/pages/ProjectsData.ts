@@ -115,5 +115,86 @@ export const projectsData: Project[] = [
       keywords: "Kollur apartment interiors, space-saving interior design, modern apartment styling",
       h1: "Kollur Apartment Interior Design Project in Hyderabad"
     }
+  },
+  // Restored Old Portfolio Projects
+  {
+    id: 7,
+    slug: "mr-nageswara-rao",
+    title: "Mr Nageswara Rao Interior Project",
+    heroTitle: "Mr Nageswara Rao Interior Project",
+    shortDescription: "Residential Interior Design",
+    description: "A premium interior design project tailored for Mr Nageswara Rao.",
+    heroImage: "/projectsImg/varaprasad/vp-img1.png",
+    gallery: ["/projectsImg/varaprasad/vp-img1.png", "/projectsImg/varaprasad/vp-img2.png"],
+    seo: {
+      metaTitle: "Mr Nageswara Rao Interior Project | Bright Arena",
+      description: "Explore the Mr Nageswara Rao interior design project in Hyderabad by Bright Arena Interiors.",
+      keywords: "Mr Nageswara Rao, interior design",
+      h1: "Mr Nageswara Rao Interior Project"
+    }
+  },
+  {
+    id: 8,
+    slug: "haseeb-my-home-bhooja",
+    title: "Haseeb My Home Bhooja",
+    heroTitle: "Haseeb My Home Bhooja",
+    shortDescription: "Premium Apartment Design",
+    description: "Premium interior design for Haseeb at My Home Bhooja.",
+    heroImage: "/projectsImg/varaprasad/vp-img1.png",
+    gallery: ["/projectsImg/varaprasad/vp-img1.png", "/projectsImg/varaprasad/vp-img2.png"],
+    seo: {
+      metaTitle: "Haseeb My Home Bhooja Interior Project | Bright Arena",
+      description: "Explore the Haseeb My Home Bhooja interior design project by Bright Arena Interiors.",
+      keywords: "Haseeb My Home Bhooja, interior design",
+      h1: "Haseeb My Home Bhooja Interior Project"
+    }
+  },
+  {
+    id: 9,
+    slug: "rakesh-bhupathi-nagole",
+    title: "Rakesh Bhupathi Nagole",
+    heroTitle: "Rakesh Bhupathi Nagole",
+    shortDescription: "Residential Project",
+    description: "A beautiful residential design project for Rakesh Bhupathi in Nagole.",
+    heroImage: "/projectsImg/varaprasad/vp-img1.png",
+    gallery: ["/projectsImg/varaprasad/vp-img1.png", "/projectsImg/varaprasad/vp-img2.png"],
+    seo: {
+      metaTitle: "Rakesh Bhupathi Nagole Interior Project | Bright Arena",
+      description: "Explore the Rakesh Bhupathi Nagole interior design project by Bright Arena Interiors.",
+      keywords: "Rakesh Bhupathi Nagole, interior design",
+      h1: "Rakesh Bhupathi Nagole Interior Project"
+    }
+  },
+  {
+    id: 10,
+    slug: "sammys-villa-bangalore",
+    title: "Sammy's Villa Bangalore",
+    heroTitle: "Sammy's Villa Bangalore",
+    shortDescription: "Villa Interior Design",
+    description: "Luxury villa interior design project for Sammy's Villa in Bangalore.",
+    heroImage: "/projectsImg/varaprasad/vp-img1.png",
+    gallery: ["/projectsImg/varaprasad/vp-img1.png", "/projectsImg/varaprasad/vp-img2.png"],
+    seo: {
+      metaTitle: "Sammy's Villa Bangalore Interior Project | Bright Arena",
+      description: "Explore Sammy's Villa Bangalore interior design project by Bright Arena Interiors.",
+      keywords: "Sammy's Villa Bangalore, villa interior design",
+      h1: "Sammy's Villa Bangalore Interior Project"
+    }
+  },
+  {
+    id: 11,
+    slug: "praveen-aparna-zenith",
+    title: "Praveen Aparna Zenith",
+    heroTitle: "Praveen Aparna Zenith",
+    shortDescription: "Apartment Interiors",
+    description: "Modern apartment interior design project for Praveen at Aparna Zenith.",
+    heroImage: "/projectsImg/varaprasad/vp-img1.png",
+    gallery: ["/projectsImg/varaprasad/vp-img1.png", "/projectsImg/varaprasad/vp-img2.png"],
+    seo: {
+      metaTitle: "Praveen Aparna Zenith Interior Project | Bright Arena",
+      description: "Explore the Praveen Aparna Zenith interior design project by Bright Arena Interiors.",
+      keywords: "Praveen Aparna Zenith, interior design",
+      h1: "Praveen Aparna Zenith Interior Project"
+    }
   }
 ];

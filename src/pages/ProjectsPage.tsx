@@ -66,9 +66,7 @@ export default function PortfolioPage() {
       {/* ── HERO ── */}
       <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16 md:mb-24">
         
-        <h1 className="sr-only">
-          Interior Design Portfolio & Completed Projects in Hyderabad
-        </h1>
+        
 
         <motion.p 
           initial={{ opacity: 0, y: 10 }}

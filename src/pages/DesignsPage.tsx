@@ -103,9 +103,7 @@ export default function DesignPage() {
       <header aria-labelledby="design-hero-heading" className="pt-8 md:pt-12 pb-16 md:pb-20 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
         
         {/* SEO H1 Tag - Visually Hidden */}
-        <h1 id="design-hero-heading" className="sr-only">
-          Interior Design Ideas in Hyderabad
-        </h1>
+        
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

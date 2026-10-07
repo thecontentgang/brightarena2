@@ -27,6 +27,8 @@ const MinimalHero: React.FC = () => {
   // 1. LENIS — smooth scroll
   // ---------------------------------------------------------------
   useEffect(() => {
+    // @ts-ignore
+    if (window.__IS_PRERENDERING__) return;
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

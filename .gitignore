@@ -28,3 +28,10 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+.vite-react-ssg-temp
+
+
+# Puppeteer / browser cache
+.cache/
+.cache/puppeteer/
