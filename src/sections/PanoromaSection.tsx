@@ -179,7 +179,10 @@ export default function InteractivePanorama360({
 
     // --- Render loop -----------------------------------------------------
     const animate = () => {
-      state.frameId = requestAnimationFrame(animate);
+      // @ts-ignore
+      if (!window.__IS_PRERENDERING__) {
+        state.frameId = requestAnimationFrame(animate);
+      }
 
       // Gentle auto-rotate only after a period of no interaction.
       const idleFor = performance.now() - state.lastInteraction;

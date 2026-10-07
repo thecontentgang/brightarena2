@@ -82,7 +82,7 @@ export default function ProjectDetailsPage() {
         {/* ── 1. COMPACT EDITORIAL HEADER ── */}
         <section className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 mb-16 md:mb-20 text-center flex flex-col items-center">
           
-          <h1 className="sr-only">{project.seo?.h1 || project.title}</h1>
+          
 
           {/* Internal Breadcrumb */}
           <motion.nav 

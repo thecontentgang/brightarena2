@@ -50,8 +50,7 @@ export default function DesignDetailsPage() {
   const pageKeywords = targetDesign.seo?.keywords;
   
   // Extract the unique H1 tag for this specific category design
-  const pageH1 = targetDesign.seo?.h1 || `${categoryName} Interior Design in Hyderabad`;
-
+  
   // Extract ALL images from the matched designs 
   const galleryItems = categoryDesigns.flatMap(design => 
     design.images.map((imgSrc, imgIndex) => ({
@@ -81,7 +80,7 @@ export default function DesignDetailsPage() {
         <section className="pt-4 md:pt-8 pb-12 md:pb-16 relative">
           <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 text-center">
             
-            <h1 className="sr-only">{pageH1}</h1>
+            
 
             <h2 className="text-[clamp(40px,7vw,96px)] leading-[1.05] tracking-tight font-primary capitalize">
               {categoryName} <br />

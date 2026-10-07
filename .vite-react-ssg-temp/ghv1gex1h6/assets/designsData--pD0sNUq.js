@@ -1,0 +1,94 @@
+//#region src/pages/designsData.ts
+globalThis.__VITE_REACT_SSG_TRACK_SSR_MODULE__?.("src/pages/designsData.ts");
+var designsData = [
+	{
+		id: 1,
+		slug: "living-room-interior-design-hyderabad",
+		oldSlug: "living-room-interior-design-hyderabad",
+		title: "Modern Luxury Living Room",
+		category: "Living Room",
+		coverImage: "/projectsImg/forest-edge/fe-img2.webp",
+		description: "A luxurious living room concept combining warm textures, elegant lighting, premium materials, and timeless architectural styling.",
+		longDescription: "This design focuses on creating a calm and sophisticated atmosphere using layered textures, soft neutral tones, and modern furniture compositions. Large windows and ambient lighting enhance openness and visual comfort.",
+		features: [
+			"Premium marble finishes",
+			"Warm ambient lighting",
+			"Minimal luxury styling",
+			"Custom furniture concepts",
+			"Natural textures and tones"
+		],
+		images: [
+			"/projectsImg/forest-edge/fe-img2.webp",
+			"/projectsImg/etna/sr-img4.webp",
+			"/projectsImg/varaprasad/vp-img1.png",
+			"/projectsImg/kollur/kl-img1.webp"
+		],
+		seo: {
+			metaTitle: "Living Room Interior Design in Hyderabad | Bright Arena Interiors",
+			description: "Discover stylish living room interior design in Hyderabad with Bright Arena Interiors. Explore modern layouts, premium finishes, and customized designs for every home",
+			keywords: "luxury living room design, modern living room interiors, premium living room styling, custom living room furniture",
+			h1: " Living Room Interior Design in Hyderabad"
+		}
+	},
+	{
+		id: 2,
+		slug: "bedroom-interior-design-hyderabad",
+		oldSlug: "bedroom-interior-design-hyderabad",
+		title: "Minimal Bedroom Design",
+		category: "Bedroom",
+		coverImage: "/projectsImg/kollur/kl-img10.webp",
+		description: "Minimal bedroom interiors crafted for comfort, elegance, and modern simplicity.",
+		longDescription: "A calming bedroom design concept using soft materials, subtle lighting, and clean geometry to create a peaceful and luxurious retreat.",
+		features: [
+			"Soft layered lighting",
+			"Wood texture detailing",
+			"Minimal decor styling",
+			"Luxury bed composition",
+			"Neutral calming palette"
+		],
+		images: [
+			"/projectsImg/kollur/kl-img8.webp",
+			"/projectsImg/kollur/kl-img9.webp",
+			"/projectsImg/etna/sr-img3.webp",
+			"/projectsImg/etna/sr-img12.webp"
+		],
+		seo: {
+			metaTitle: "Bedroom Interior Design in Hyderabad | Bright Arena Interiors",
+			description: "Create your dream bedroom with Bright Arena Interiors. Explore modern bedroom interior design in Hyderabad featuring customized layouts, premium finishes, and elegant designs.",
+			keywords: "minimal bedroom design, modern bedroom interiors, luxury bedroom styling, relaxing bedroom decor",
+			h1: "Bedroom Interior Design in Hyderabad"
+		}
+	},
+	{
+		id: 3,
+		slug: "kitchen-interior-design-hyderabad",
+		oldSlug: "kitchen-interior-design-hyderabad",
+		title: "Contemporary Kitchen Design",
+		category: "Kitchen",
+		coverImage: "/projectsImg/etna/sr-img16.webp",
+		description: "A clean and functional kitchen concept designed with premium modern aesthetics.",
+		longDescription: "This contemporary kitchen combines intelligent space planning with elegant materials, creating a sophisticated culinary environment. Featuring hidden storage and sleek, handleless cabinetry.",
+		features: [
+			"Matte finish cabinetry",
+			"Premium countertop styling",
+			"Integrated lighting",
+			"Functional luxury layout",
+			"Modern storage concepts"
+		],
+		images: [
+			"/projectsImg/forest-edge/fe-img6.webp",
+			"/projectsImg/kollur/kl-img3.webp",
+			"/projectsImg/kollur/kl-img5.webp",
+			"/projectsImg/kollur/kl-img6.webp",
+			"/projectsImg/kollur/kl-img7.webp"
+		],
+		seo: {
+			metaTitle: "Modern Kitchen Interior Design in Hyderabad | Bright Arena Interiors",
+			description: "Discover modern kitchen interior design in Hyderabad with Bright Arena Interiors. Get customized layouts, smart storage solutions, and premium finishes for your dream kitchen.",
+			keywords: "contemporary kitchen design, luxury modular kitchens, modern kitchen interiors, premium kitchen layouts",
+			h1: "Modern Kitchen Interior Design in Hyderabad"
+		}
+	}
+];
+//#endregion
+export { designsData as t };

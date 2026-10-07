@@ -34,7 +34,7 @@ const HomePage = () => {
       <main id="main-content" className="bg-[#f7f4ee] overflow-x-hidden antialiased">
         
       
-        <h1 className="sr-only">Best Interior Designers in Hyderabad</h1>
+        
 
         {/* ── PRIORITY SECTIONS ── */}
         <Hero />

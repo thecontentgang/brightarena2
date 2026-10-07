@@ -1,10 +1,5 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -18,6 +13,11 @@
   ],
   "trailingSlash": true,
   "redirects": [
+    {
+      "source": "/interior-designer-hitech-city/",
+      "destination": "/interior-designer-hitec-city/",
+      "permanent": true
+    },
     {
       "source": "/best-interior-design-services-in-hyderabad/2d-and-3d-virtual-design/",
       "destination": "/services/2d-3d-interior-design-services-in-hyderabad/",
@@ -251,6 +251,76 @@
     {
       "source": "/about-us/",
       "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/top-10-features-that-define-a-luxury-villa-in-2025/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-plan-your-budget-for-3bhk-4bhk-villas-best-planing/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/beyond-the-fifth-wall-trending-interior-ceiling-designs-in-2025/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-bright-arena-interiors-turnkey-projects-simplify-your-interior-design-journey/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/10-core-factors-to-consider-before-choosing-the-best-home-automation-services-in-hyderabad/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/why-3d-visualisation-is-important-for-clients-before-choosing-any-interior-designing/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-choose-the-best-colors-for-bedroom-living-room-and-kitchen/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/top-trending-3bhk-4bhk-villa-interior-designs-in-2026-complete-guide/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/a-complete-guide-to-planning-interiors-during-house-construction/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/10-classic-interior-design-trends-that-never-go-out-of-style/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/feel-the-touch-of-luxury-in-your-home-with-interior-design-services/",
+      "destination": "/blogs/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/glow-up-your-bedroom-15-must-try-lighting-design-concepts/",
+      "destination": "/blogs/mastering-lighting-invisible-architecture/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-choose-the-best-bedroom-interior-designs-in-2025/",
+      "destination": "/designs/bedroom-interior-design-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/luxury-living-elevating-your-home-with-high-end-interior-design-services/",
+      "destination": "/blogs/",
       "permanent": true
     }
   ]

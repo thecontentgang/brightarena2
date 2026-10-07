@@ -147,7 +147,7 @@ const Testimonials: React.FC = () => {
         transition={{ duration: 0.8, ease: smoothEase }}
       >
         {/* SEO H1 Tag - Visually Hidden */}
-        <h1 className="sr-only">Client Testimonials</h1>
+        
 
         {/* Converted visual text to H2 to respect semantic HTML */}
         <h2 className="text-[clamp(36px,5vw,64px)] leading-[1.1] mb-6 pt-6 text-[#4a1c13] font-primary font-light">

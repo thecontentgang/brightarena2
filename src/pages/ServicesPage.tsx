@@ -139,7 +139,7 @@ export default function ServicesPage() {
       />
       
       <main style={{ background: "#F9F7F3" }} className="overflow-x-hidden pt-16">
-        <h1 className="sr-only">Home &amp; Office Interior Design Services in Hyderabad</h1>
+        
 
         {/* HERO */}
         <section aria-labelledby="services-hero-heading" className="relative min-h-[70vh] flex items-center justify-center px-6 sm:px-8 md:px-16 lg:px-24">

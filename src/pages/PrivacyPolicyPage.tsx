@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
       />
       <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased pt-32 pb-24 px-6 md:px-12 lg:px-24">
         <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] md:rounded-[3rem] shadow-sm border border-[#4a1c13]/5">
-          <h1 className="text-4xl md:text-5xl font-primary mb-8 text-[#ff7043]">Privacy Policy</h1>
+          <h2 className="text-4xl md:text-5xl font-primary mb-8 text-[#ff7043]">Privacy Policy</h2>
           
           <div className="space-y-8 text-[#4a1c13]/80 leading-relaxed text-sm md:text-base">
             <section>
