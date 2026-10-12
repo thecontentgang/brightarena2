@@ -77,17 +77,20 @@ async function prerender() {
       const scriptMatches = appHtml.match(/<script type="application\/ld\+json">.*?<\/script>/gi);
 
       // Strip hardcoded title and description from template
-      html = html.replace(/<title>.*?<\/title>/gi, '');
+      html = html.replace(/<title[^>]*>.*?<\/title>/gi, '');
       html = html.replace(/<meta[^>]*name="description"[^>]*>/gi, '');
 
       // Remove the inline tags from the body so they don't appear in the middle of the document
       html = html.replace(/<title>.*?<\/title>/gi, ''); // Rematch to clear body ones too
       
+      // Mark injected tags so the client can drop them before React mounts its own Helmet copies (see src/main.tsx)
+      const markSSG = (tag) => tag.replace(/^<(\w+)/, '<$1 data-ssg=""');
+
       let newHeadTags = '';
-      if (titleMatch) newHeadTags += titleMatch.join('\n') + '\n';
-      
+      if (titleMatch) newHeadTags += titleMatch.map(markSSG).join('\n') + '\n';
+
       if (metaMatches) {
-        newHeadTags += metaMatches.join('\n') + '\n';
+        newHeadTags += metaMatches.map(markSSG).join('\n') + '\n';
         // Remove them from the body
         for (const m of metaMatches) {
           html = html.replace(m, '');
@@ -95,14 +98,14 @@ async function prerender() {
       }
       
       if (linkMatches) {
-        newHeadTags += linkMatches.join('\n') + '\n';
+        newHeadTags += linkMatches.map(markSSG).join('\n') + '\n';
         for (const m of linkMatches) {
           html = html.replace(m, '');
         }
       }
 
       if (scriptMatches) {
-        newHeadTags += scriptMatches.join('\n') + '\n';
+        newHeadTags += scriptMatches.map(markSSG).join('\n') + '\n';
         for (const m of scriptMatches) {
           html = html.replace(m, '');
         }

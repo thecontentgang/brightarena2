@@ -7,6 +7,10 @@ import "./index.css";
 
 const rootElement = document.getElementById("root")!;
 
+// Prerendered <head> metadata (scripts/prerender.js) is not owned by React. Remove it so Helmet's
+// tags are the only copy and the previous page's metadata doesn't linger after client-side navigation.
+document.head.querySelectorAll("[data-ssg]").forEach((el) => el.remove());
+
 if (rootElement.hasChildNodes()) {
   ReactDOM.hydrateRoot(
     rootElement,

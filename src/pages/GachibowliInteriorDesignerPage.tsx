@@ -147,12 +147,7 @@ export default function GachibowliInteriorDesignerPage() {
 
   return (
     <>
-      <SEO
-        title="Interior Designer in Gachibowli, Hyderabad | Bright Arena Interiors"
-        description="Looking for an interior designer in Gachibowli? Bright Arena Interiors plans personalised residential and office spaces around your layout and practical priorities."
-        keywords="interior designer in Gachibowli, home interior design in Gachibowli, apartment interior designer Gachibowli, turnkey home interiors Gachibowli"
-        url="https://www.brightarenainteriors.com/interior-designer-gachibowli"
-      />
+      <SEO />
 
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-24 sm:pt-28 md:pt-32">
         {/* ── COMPACT EDITORIAL HEADER ── */}

@@ -139,12 +139,7 @@ export default function HitecCityInteriorDesignerPage() {
 
   return (
     <>
-      <SEO
-  title="Interior Designer in HITEC City, Hyderabad | Bright Arena Interiors"
-  description="Finding the right interior designer in Hitech City is about making your property work better. Discover personalised residential and office spaces with Bright Arena."
-  keywords="interior designer in Hitech City, 2 BHK interior design in Hitech City, 3 BHK interior design, apartment interior designer Hitech City, turnkey home interiors"
-  url="https://www.brightarenainteriors.com/interior-designer-hitec-city"
-/>
+      <SEO />
 
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-24 sm:pt-28 md:pt-32">
         {/* ── COMPACT EDITORIAL HEADER ── */}

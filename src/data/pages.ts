@@ -3,6 +3,7 @@ export interface PageSEO {
   title: string;
   h1: string;
   description?: string;
+  keywords?: string;
   canonical: string;
   ogImage?: string;
   type: "website" | "article";
@@ -61,38 +62,49 @@ export const pagesData: PageSEO[] = [
     canonical: "https://www.brightarenainteriors.com/services/2d-3d-interior-design-services-in-hyderabad/",
     type: "website"
   },
+  // Location pages: title, description and keywords come verbatim from "LOcal Page Seo.pdf"
   {
     route: "/interior-designer-gachibowli/",
-    title: "Interior Designers in Gachibowli, Hyderabad | Bright Arena",
+    title: "Interior Designers in Gachibowli, Hyderabad | Home & Office Interiors",
     h1: "Interior Designers in Gachibowli",
+    description: "Explore customised home and office interiors in Gachibowli, Hyderabad with Bright Arena Interiors, including modular kitchens, wardrobes and turnkey interior solutions.",
+    keywords: "interior designers in gachibowli, interior designer gachibowli, interior designers gachibowli hyderabad, interior design gachibowli, interior design company gachibowli, home interior designers gachibowli, home interiors gachibowli, residential interior designer gachibowli, luxury interior designers gachibowli, modular kitchen designer gachibowli, office interior designers gachibowli, commercial interior design gachibowli, turnkey interior design gachibowli, interior designers in hyderabad",
     canonical: "https://www.brightarenainteriors.com/interior-designer-gachibowli/",
     type: "website"
   },
   {
     route: "/interior-designer-madhapur/",
-    title: "Interior Designers in Madhapur, Hyderabad | Bright Arena",
+    title: "Luxury Interior Designer in Madhapur, Hyderabad | Bright Arena",
     h1: "Interior Designers in Madhapur",
+    description: "Looking for an interior designer in Madhapur, Hyderabad? Bright Arena Interiors offers customised home interiors, modular kitchens, office spaces and turnkey interior design solutions.",
+    keywords: "interior designer in madhapur, interior designers in madhapur, interior designer madhapur hyderabad, interior design madhapur, interior design company madhapur, home interior designer madhapur, home interiors madhapur, residential interior designer madhapur, luxury interior designer madhapur, modular kitchen designer madhapur, office interior designer madhapur, commercial interior design madhapur, turnkey interior design madhapur, interior designers in hyderabad",
     canonical: "https://www.brightarenainteriors.com/interior-designer-madhapur/",
     type: "website"
   },
   {
-    route: "/interior-designer-hitech-city/",
-    title: "Interior Designers in HITEC City, Hyderabad | Bright Arena",
+    route: "/interior-designer-hitec-city/",
+    title: "Best Interior Designer in HITEC City, Hyderabad | Home & Office - Bright Arena",
     h1: "Interior Designers in HITEC City",
-    canonical: "https://www.brightarenainteriors.com/interior-designer-hitech-city/",
+    description: "Looking for an interior designer in HITEC City, Hyderabad? Bright Arena Interiors offers luxury home, office and turnkey interior design tailored to your space.",
+    keywords: "interior designer hitec city, interior designers in hitec city, interior designer in hitech city, interior design hitec city, home interior designers hitec city, luxury interior designers hitec city, interior designers Hyderabad, home interiors hitec city, office interior design hitec city, turnkey interior design hitec city",
+    canonical: "https://www.brightarenainteriors.com/interior-designer-hitec-city/",
     type: "website"
   },
   {
     route: "/interior-designer-kondapur/",
-    title: "Interior Designers in Kondapur, Hyderabad | Bright Arena",
+    title: "Top Interior Designer in Kondapur, Hyderabad | Bright Arena",
     h1: "Interior Designers in Kondapur",
+    description: "Transform your space with Bright Arena Interiors, offering luxury home interiors, modular kitchens, office design and turnkey interior solutions in Kondapur, Hyderabad.",
+    keywords: "interior designer in kondapur, interior designers in kondapur, interior designer kondapur hyderabad, interior design kondapur, interior design company kondapur, home interior designer kondapur, home interiors kondapur, residential interior designer kondapur, luxury interior designer kondapur, modular kitchen designer kondapur, office interior designer kondapur, commercial interior design kondapur, turnkey interior design kondapur, interior designers in hyderabad",
     canonical: "https://www.brightarenainteriors.com/interior-designer-kondapur/",
     type: "website"
   },
   {
     route: "/interior-designer-whitefields/",
-    title: "Interior Designers in Whitefield, Hyderabad | Bright Arena",
+    title: "Home Interior Designer in Whitefields, Hyderabad | Bright Arena",
     h1: "Interior Designers in Whitefield",
+    description: "Bright Arena Interiors provides customised interior design in Whitefields, Hyderabad, including home interiors, office spaces, modular kitchens and turnkey solutions.",
+    keywords: "interior designer in whitefield, interior designers in whitefield, interior designer hitech city, interior design whitefield, home interior designer whitefield, home interior designers in whitefield, luxury interior designer whitefield, interior design company whitefield, interior designers in hyderabad, home interiors whitefield, office interior designer whitefield, turnkey interior design whitefield",
     canonical: "https://www.brightarenainteriors.com/interior-designer-whitefields/",
     type: "website"
   },

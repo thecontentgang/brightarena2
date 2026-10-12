@@ -23,7 +23,7 @@ export default function SEO({
   type,
   url,
   image,
-  keywords = 'luxury interior design, interior designers Hyderabad, residential interiors, commercial interiors, Bright Arena',
+  keywords,
   schema,
   injectH1 = true
 }: SEOProps) {
@@ -32,6 +32,7 @@ export default function SEO({
 
   const finalTitle = title || pageData?.title || 'Bright Arena | Luxury Interior Designers in Hyderabad';
   const finalDescription = description || pageData?.description || "Bright Arena Interiors is Hyderabad's premier luxury design studio. We transform residential and commercial spaces into timeless, functional, and breathtaking environments.";
+  const finalKeywords = keywords || pageData?.keywords || 'luxury interior design, interior designers Hyderabad, residential interiors, commercial interiors, Bright Arena';
   const finalH1 = h1 || pageData?.h1 || finalTitle;
   const finalUrl = url || pageData?.canonical || `https://www.brightarenainteriors.com${location.pathname.endsWith('/') ? location.pathname : location.pathname + '/'}`;
   const finalType = type || pageData?.type || 'website';
@@ -74,7 +75,7 @@ export default function SEO({
         <title>{finalTitle}</title>
         <meta name='description' content={finalDescription} />
         <meta name='author' content={name} />
-        <meta name='keywords' content={keywords} />
+        <meta name='keywords' content={finalKeywords} />
         <link rel="canonical" href={finalUrl} />
 
         {/* Facebook tags */}

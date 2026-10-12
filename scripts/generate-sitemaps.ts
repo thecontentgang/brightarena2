@@ -12,6 +12,9 @@ const __dirname = path.dirname(__filename);
 const BASE_URL = 'https://www.brightarenainteriors.com';
 const PUBLIC_DIR = path.resolve(__dirname, '../public');
 
+// Vercel serves every route with a trailing slash (vercel.json: trailingSlash), so sitemap URLs must match canonicals
+const loc = (route: string) => `${BASE_URL}${route.endsWith('/') ? route : route + '/'}`;
+
 // Static Routes
 const staticRoutes = [
   '/',
@@ -23,7 +26,7 @@ const staticRoutes = [
   '/blogs',
   '/contact',
   '/privacy-policy',
-  '/interior-designer-hitech-city',
+  '/interior-designer-hitec-city',
   '/interior-designer-gachibowli',
   '/interior-designer-kondapur',
   '/interior-designer-madhapur',
@@ -39,20 +42,20 @@ function generateSitemap() {
 
   // Static routes
   staticRoutes.forEach(route => {
-    xml += `  <url>\n    <loc>${BASE_URL}${route}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>${route === '/' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(route)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>${route === '/' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
   });
 
   // Dynamic routes
   servicesData.forEach(service => {
-    xml += `  <url>\n    <loc>${BASE_URL}/services/${service.slug}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/services/${service.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   projectsData.forEach(project => {
-    xml += `  <url>\n    <loc>${BASE_URL}/portfolio/${project.slug}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/portfolio/${project.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   designsData.forEach(design => {
-    xml += `  <url>\n    <loc>${BASE_URL}/designs/${design.slug}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/designs/${design.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   xml += `</urlset>`;
@@ -62,7 +65,7 @@ function generateSitemap() {
 function generateBlogSitemap() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   blogsData.forEach(blog => {
-    xml += `  <url>\n    <loc>${BASE_URL}/blogs/${blog.slug}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/blogs/${blog.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
   xml += `</urlset>`;
   fs.writeFileSync(path.join(PUBLIC_DIR, 'blog-sitemap.xml'), xml);
@@ -72,7 +75,7 @@ function generateImageSitemap() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n`;
   
   projectsData.forEach(project => {
-    xml += `  <url>\n    <loc>${BASE_URL}/portfolio/${project.slug}</loc>\n`;
+    xml += `  <url>\n    <loc>${loc(`/portfolio/${project.slug}`)}</loc>\n`;
     if (project.heroImage) xml += `    <image:image>\n      <image:loc>${BASE_URL}${project.heroImage}</image:loc>\n      <image:title>${project.title.replace(/&/g, '&amp;')}</image:title>\n    </image:image>\n`;
     project.gallery?.forEach(img => {
       xml += `    <image:image>\n      <image:loc>${BASE_URL}${img}</image:loc>\n    </image:image>\n`;
@@ -81,7 +84,7 @@ function generateImageSitemap() {
   });
 
   designsData.forEach(design => {
-    xml += `  <url>\n    <loc>${BASE_URL}/designs/${design.slug}</loc>\n`;
+    xml += `  <url>\n    <loc>${loc(`/designs/${design.slug}`)}</loc>\n`;
     design.images?.forEach(img => {
       xml += `    <image:image>\n      <image:loc>${BASE_URL}${img}</image:loc>\n    </image:image>\n`;
     });

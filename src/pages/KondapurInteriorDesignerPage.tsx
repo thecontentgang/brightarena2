@@ -147,12 +147,7 @@ export default function KondapurInteriorDesignerPage() {
 
   return (
     <>
-      <SEO
-        title="Interior Designer in Kondapur, Hyderabad | Bright Arena Interiors"
-        description="Looking for an interior designer in Kondapur? Bright Arena Interiors creates functional, personalised residential and office spaces based on your actual floor plan."
-        keywords="interior designer in Kondapur, home interior design in Kondapur, apartment interior designer Kondapur, turnkey home interiors Kondapur"
-        url="https://www.brightarenainteriors.com/interior-designer-kondapur"
-      />
+      <SEO />
 
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-24 sm:pt-28 md:pt-32">
         {/* ── COMPACT EDITORIAL HEADER ── */}

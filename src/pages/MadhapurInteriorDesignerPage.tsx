@@ -134,12 +134,7 @@ export default function MadhapurInteriorDesignerPage() {
 
   return (
     <>
-      <SEO
-        title="Interior Designer in Madhapur, Hyderabad | Bright Arena Interiors"
-        description="Looking for an interior designer in Madhapur? Bright Arena Interiors plans personalised home and office spaces around your routines, storage needs, and layout."
-        keywords="interior designer in Madhapur, home interior design in Madhapur, apartment interior designer Madhapur, turnkey home interiors Madhapur"
-        url="https://www.brightarenainteriors.com/interior-designer-madhapur"
-      />
+      <SEO />
 
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-24 sm:pt-28 md:pt-32">
         {/* ── COMPACT EDITORIAL HEADER ── */}

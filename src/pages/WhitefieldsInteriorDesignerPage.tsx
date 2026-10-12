@@ -136,12 +136,7 @@ export default function WhitefieldsInteriorDesignerPage() {
 
   return (
     <>
-      <SEO
-        title="Interior Designer in Whitefields, Hyderabad | Bright Arena Interiors"
-        description="Looking for an interior designer in Whitefields? Bright Arena Interiors creates personalized home and office designs that balance practical layouts with visual character."
-        keywords="interior designer in Whitefields, home interior design in Whitefields, apartment interior designer Whitefields, turnkey home interiors Whitefields"
-        url="https://www.brightarenainteriors.com/interior-designer-whitefields"
-      />
+      <SEO />
 
       <main className="bg-[#f7f4ee] text-[#4a1c13] overflow-hidden font-sans selection:bg-[#ff7043] selection:text-white pt-24 sm:pt-28 md:pt-32">
         {/* ── COMPACT EDITORIAL HEADER ── */}
