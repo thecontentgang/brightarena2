@@ -181,7 +181,7 @@ export default function WhitefieldsInteriorDesignerPage() {
             className="relative aspect-[4/5] xs:aspect-[3/4] sm:aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden sm:rounded-[1.5rem] md:rounded-[2rem] shadow-sm"
           >
             <motion.img
-              src="/images/whitefields-interior-hero.jpg"
+              src="/Luxurious Hyderabad Open-Plan Living Space.webp"
               alt="Luxury Interior Design in Whitefields Hyderabad"
               className="w-full h-full object-cover bg-[#e0dbd1]"
               style={{ y: imgY, scale: 1.1 }}

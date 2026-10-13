@@ -11,25 +11,12 @@ const rootElement = document.getElementById("root")!;
 // tags are the only copy and the previous page's metadata doesn't linger after client-side navigation.
 document.head.querySelectorAll("[data-ssg]").forEach((el) => el.remove());
 
-if (rootElement.hasChildNodes()) {
-  ReactDOM.hydrateRoot(
-    rootElement,
-    <React.StrictMode>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </HelmetProvider>
-    </React.StrictMode>
-  );
-} else {
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </HelmetProvider>
-    </React.StrictMode>
-  );
-}
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </React.StrictMode>
+);
