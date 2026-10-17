@@ -38,31 +38,27 @@ export default function SEO({
   const finalType = type || pageData?.type || 'website';
   const finalImage = image || pageData?.ogImage || 'https://www.brightarenainteriors.com/og-image.jpg';
 
+  const SITE_URL = 'https://www.brightarenainteriors.com/';
+  // Pages with their own schemaType (e.g. BlogPosting) keep their page-level identity;
+  // every other page describes the one business entity with a single stable @id.
+  const isBusiness = !pageData?.schemaType;
+
   const defaultSchema = {
     '@context': 'https://schema.org',
-    '@type': pageData?.schemaType || 'InteriorDesign',
+    '@type': pageData?.schemaType || 'LocalBusiness',
     name: name,
-    image: `${finalUrl}bright-logo.webp`,
-    '@id': finalUrl,
-    url: finalUrl,
+    image: 'https://www.brightarenainteriors.com/bright-logo.webp',
+    '@id': isBusiness ? `${SITE_URL}#business` : finalUrl,
+    url: isBusiness ? SITE_URL : finalUrl,
     telephone: '+918978222980',
+    // Address matches Footer.tsx and ContactPage.tsx. Opening hours and geo coordinates are omitted until verified.
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Hyderabad',
+      streetAddress: '4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli',
       addressLocality: 'Hyderabad',
-      addressRegion: 'TG',
+      addressRegion: 'Telangana',
+      postalCode: '500032',
       addressCountry: 'IN',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 17.385044,
-      longitude: 78.486671,
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '09:00',
-      closes: '21:00',
     },
   };
 

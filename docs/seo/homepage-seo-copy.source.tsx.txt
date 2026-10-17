@@ -1,0 +1,405 @@
+"use client";
+
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import ProjectModal from "../components/ProjectModal";
+
+// Copy source: docs/seo/source-pdfs/HOmepage copy.pdf (sections 1-13). Wording is kept as written, except where
+// a claim could not be verified against the site (see implementation notes).
+
+const linkClass = "underline underline-offset-4 decoration-[#4a1c13]/40 hover:text-[#ff7043] hover:decoration-[#ff7043] transition-colors";
+const h2Class = "text-[#4a1c13] font-primary text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-tight";
+const h3Class = "text-[#4a1c13] font-primary text-2xl md:text-3xl leading-tight mt-8 mb-3";
+const leadClass = "text-[#4a1c13] text-lg md:text-xl leading-relaxed font-medium";
+const pClass = "text-[#4a1c13]/80 text-[16px] md:text-lg leading-relaxed";
+const cardClass = "bg-white rounded-[2rem] border border-[#4a1c13]/5 shadow-sm p-6 md:p-8";
+const block = "max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-12 md:py-16";
+const copy = "max-w-3xl flex flex-col gap-5 mt-6";
+
+const services = [
+  {
+    title: "Home interiors",
+    text: "Complete interiors for apartments, flats and villas, planned around the way your household lives, with storage, lighting and finishes that suit each room.",
+    to: "/services/home-interior-designs-hyderabad",
+    link: "Home interior design in Hyderabad",
+  },
+  {
+    title: "Luxury interiors",
+    text: "Refined detailing, bespoke furniture and carefully chosen materials for homes that call for a higher level of finish.",
+    to: "/luxury-interior-designers-in-hyderabad",
+    link: "View luxury interiors",
+  },
+  {
+    title: "Office interiors",
+    text: "Workplaces planned around team flow, meeting needs and the first impression your brand makes on visitors.",
+    to: "/services/office-interior-designers-in-hyderabad",
+    link: "Office interior design",
+  },
+  {
+    title: "Commercial interiors",
+    text: "Customer-facing spaces such as showrooms and retail floors, designed around how visitors move and what your brand wants them to notice.",
+    to: "/services/commercial-interior-designers-in-hyderabad",
+    link: "Commercial interior design",
+  },
+  {
+    title: "2D and 3D design",
+    text: "Layouts and visualisations that let you review the plan, proportions and materials before work begins.",
+    to: "/services/2d-3d-interior-design-services-in-hyderabad",
+    link: "2D and 3D virtual design",
+  },
+];
+
+const chooseList = [
+  ["Portfolio relevance.", "Look for completed work close to your property type and scale. A showcase of penthouses says little about a 2 BHK flat, and the reverse is also true."],
+  ["Written scope and drawings.", "Ask what is included, what is excluded and which drawings you will receive. Vague scope is the most common source of disputes later."],
+  ["Material specification.", "Brand, finish and thickness should be named in the proposal, not left to be decided on site."],
+  ["Budget clarity.", "You should see how the estimate is built and what could change it, such as extra civil work or custom pieces."],
+  ["Site coordination.", "Find out who supervises carpentry, electrical work, painting and finishing, and how progress is reported to you."],
+  ["After-project support.", "Ask how snagging, repairs and questions after handover are handled."],
+];
+
+const processList = [
+  ["Consultation.", "We discuss your brief, property type, timeline and priorities, and review any floor plan you can share. This first interior design consultation in Hyderabad shapes everything that follows."],
+  ["Site understanding.", "We measure and study the space, noting structure, services and constraints that will shape the plan."],
+  ["Design direction.", "We agree a style, colour and material direction that reflects your taste and the way you use the space."],
+  ["2D layout.", "Furniture, storage, circulation and services are drawn and refined with your feedback."],
+  ["3D visualisation.", "Where included in your scope, we show how the space will look so you can approve with confidence."],
+  ["Materials and scope.", "Finishes, fittings and inclusions are specified and written into the proposal."],
+  ["Execution.", "Our team coordinates carpentry, electrical work, painting and finishing against the approved drawings."],
+  ["Handover.", "We review the finished work with you and note any snagging for correction."],
+];
+
+const costList = [
+  ["Property size and layout:", "more area and more rooms mean more material and labour."],
+  ["Civil work:", "changes to walls, flooring, bathrooms or services add to scope."],
+  ["Materials and finishes:", "laminates, veneers, stone, fittings and hardware vary widely in price."],
+  ["Custom work:", "bespoke furniture and detailed joinery need more design and production time."],
+  ["Kitchen and wardrobe scope:", "these are often the most material-intensive parts of a home."],
+  ["Site conditions:", "access, floor level, lift availability and building rules affect execution."],
+];
+
+const whyList = [
+  ["Local coordination.", "We are an interior design company in Hyderabad working on projects across the city, so site visits, material sourcing and trade coordination stay practical."],
+  ["Defined scope.", "Inclusions, exclusions and responsibilities are written down before work starts."],
+  ["Design visualisation.", "Layouts and, where included, 3D views let you review decisions early."],
+  ["Material specification.", "Finishes and fittings are named in the proposal so you know exactly what is being installed."],
+  ["Project communication.", "You know who to ask and you receive updates at each stage."],
+];
+
+const faqs = [
+  ["How do I choose an interior designer in Hyderabad?", "Compare portfolios for projects similar to yours, then ask for a written scope, drawings, material specifications and a clear explanation of site coordination. When you review top interior designers in Hyderabad, prefer the team that shows evidence and answers plainly. Communication at proposal stage often reflects how the project will run."],
+  ["What services do interior designers provide?", "Interior designers typically provide design consultation, space planning, 2D layouts, 3D visualisation where applicable, material and finish selection, and coordination of execution on site. The exact scope depends on the company, so we confirm services in a written proposal that lists what is and is not included."],
+  ["What is included in a full home interior design package?", "Inclusions vary among residential interior designers in Hyderabad, so we define ours in writing before work begins. A full home package generally covers design planning, drawings, material specification and execution of agreed items such as kitchen, wardrobes and finishes. Ask for a written list of inclusions and exclusions."],
+  ["How much does interior design cost in Hyderabad?", "Cost depends on property size, civil work, materials, custom furniture, kitchen and wardrobe scope, site conditions and design detail. Because these differ for every home, we provide a project-specific estimate after reviewing your floor plan, scope and finish level. Be cautious of any price quoted without seeing your drawings."],
+  ["How much does 3 BHK interior design cost in Hyderabad?", "The same factors apply, with added weight on the number of rooms, storage needs, kitchen and bathroom scope, any civil work and the amount of custom furniture. Two 3 BHK flats can differ widely in cost. Share your floor plan and finish preferences, and we will prepare an estimate based on them."],
+  ["Do interior designers provide 3D designs?", "Many do, but it depends on the company and the scope. We offer 3D visualisation where it is part of the agreed scope, typically after the 2D layout is approved, so you can review proportions, materials and lighting before execution. Confirm this in writing when comparing proposals."],
+  ["How long does home interior design take?", "Timelines depend on design approvals, material lead times, site readiness and scope. A compact apartment and a large villa will not follow the same schedule. After reviewing your property and scope, we share a confirmed timeline in the proposal rather than a general estimate that may not apply."],
+  ["What is the difference between an interior designer and an interior decorator?", "An interior designer plans how a space works, including layout, storage, lighting, materials and coordination with trades. An interior decorator focuses on the look of a finished room, such as furnishings, colours and accessories. Most homes benefit from design planning first, with decorative choices following."],
+  ["How do I choose an office interior designer in Hyderabad?", "Begin with your needs: team size, meetings, brand identity, services and deadlines. Then compare how each designer handles layout planning, services coordination and site delivery. Ask to see completed workplaces and a written scope. The best interior designers in Hyderabad explain trade-offs openly instead of offering a one-size answer."],
+];
+
+const NumberedList = ({ items }: { items: string[][] }) => (
+  <ol className="flex flex-col gap-4 list-decimal pl-6 marker:text-[#ff7043] marker:font-bold max-w-3xl">
+    {items.map(([lead, rest]) => (
+      <li key={lead} className={pClass}>
+        <strong className="text-[#4a1c13]">{lead}</strong> {rest}
+      </li>
+    ))}
+  </ol>
+);
+
+const BulletList = ({ items }: { items: string[][] }) => (
+  <ul className="flex flex-col gap-3 list-disc pl-6 marker:text-[#ff7043] max-w-3xl">
+    {items.map(([lead, rest]) => (
+      <li key={lead} className={pClass}>
+        <strong className="text-[#4a1c13]">{lead}</strong> {rest}
+      </li>
+    ))}
+  </ul>
+);
+
+const HomeSeoContent: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <div className="bg-[#f7f4ee] text-[#4a1c13]">
+      {/* 1. Hero copy */}
+      <section aria-labelledby="home-seo-h1" className={block}>
+        <h1 id="home-seo-h1" className={h2Class + " max-w-4xl"}>
+          Interior Designers in Hyderabad for Homes Offices and Luxury Spaces
+        </h1>
+        <p className="mt-5 text-[#ff7043] italic text-xl md:text-2xl font-primary">
+          Thoughtful interior design for apartments, villas, offices and commercial spaces across Hyderabad.
+        </p>
+        <div className={copy}>
+          <p className={leadClass}>
+            Bright Arena Interiors provides home, office and commercial interior design in Hyderabad, from the first layout discussion to final handover. If you are shortlisting interior designers in Hyderabad for an apartment, villa, workplace or showroom, this page shows what we design, how we work and what to have ready before you call.
+          </p>
+          <p className={pClass}>
+            Every project starts with how you actually live or work. Our interior designers in Hyderabad study your floor plan, your daily routine and your priorities for storage, light and budget, then turn them into drawings, material choices and a site plan you can follow with confidence.
+          </p>
+          <p className={pClass}>
+            Looking for a top interior designer in Hyderabad usually comes down to one question: can this team deliver what I need? Our completed projects, written scope and clear process are laid out below so you can answer that yourself, without relying on rankings or slogans.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#ff7043] text-white px-7 py-4 rounded-2xl text-xs font-bold tracking-widest uppercase shadow-lg shadow-[#ff7043]/20 text-center transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95 touch-manipulation"
+          >
+            Book an Interior Design Consultation
+          </button>
+          <Link
+            to="/portfolio"
+            className="border border-[#4a1c13]/30 text-[#4a1c13] px-7 py-4 rounded-2xl text-xs font-bold tracking-widest uppercase text-center transition-colors hover:bg-[#4a1c13]/5 active:scale-95 touch-manipulation"
+          >
+            Explore Our Hyderabad Projects
+          </Link>
+        </div>
+      </section>
+
+      {/* 2. Services at a glance */}
+      <section aria-labelledby="home-seo-services" className={block}>
+        <h2 id="home-seo-services" className={h2Class}>Interior Design Services in Hyderabad for Every Kind of Space</h2>
+        <p className={pClass + " max-w-3xl mt-6"}>
+          Bright Arena Interiors offers home, luxury, office and commercial interior design alongside 2D and 3D planning. If you are comparing top interior designers in Hyderabad, start by picking the service that matches your project, or tell us about your space and we will point you to the right starting point.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8">
+          {services.map((s) => (
+            <div key={s.title} className={cardClass}>
+              <h3 className="text-[#4a1c13] font-primary text-2xl">{s.title}</h3>
+              <p className={pClass + " mt-3"}>{s.text}</p>
+              <p className="mt-4 font-semibold text-[#4a1c13]">
+                <Link to={s.to} className={linkClass}>{s.link}</Link>
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className={pClass + " max-w-3xl mt-8"}>
+          Not sure which category fits? Many projects overlap. Describe the space and we will suggest how to approach it.
+        </p>
+      </section>
+
+      {/* 3. How to choose */}
+      <section aria-labelledby="home-seo-choose" className={block}>
+        <h2 id="home-seo-choose" className={h2Class}>How to Choose a Top Interior Designer in Hyderabad</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            The most reliable way to choose among top interior designers in Hyderabad is to compare evidence rather than slogans. Check that their completed projects resemble yours, that the scope is written down, and that drawings, materials, budget and site coordination are explained before you commit.
+          </p>
+          <p className={pClass}>
+            Rankings and lists can help you build a shortlist, but they cannot tell you whether a team suits your home or office. A good interior design company in Hyderabad will welcome these six checks.
+          </p>
+        </div>
+        <div className="mt-6"><NumberedList items={chooseList} /></div>
+        <p className={pClass + " max-w-3xl mt-6"}>
+          Bright Arena Interiors is glad to be measured against this list. Ask us for project examples close to your brief, a written scope and a walkthrough of how we manage the site. If you are comparing the best interior designers in Hyderabad, those answers will tell you more than any ranking can.
+        </p>
+      </section>
+
+      {/* 4. Home and residential */}
+      <section aria-labelledby="home-seo-home" className={block}>
+        <h2 id="home-seo-home" className={h2Class}>Home Interior Designers in Hyderabad for Apartments, Villas and Independent Homes</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Our home interior designers in Hyderabad plan complete interiors for apartments, flats, villas and independent houses. We begin with your layout and daily routine, then design storage, kitchen, wardrobes, lighting and furniture so that every room suits the people who use it.
+          </p>
+          <p className={pClass}>
+            Choosing an interior designer in Hyderabad for your home is a personal decision. A family in a 2 BHK flat needs different decisions from a household in a four-bedroom villa, even when both want a calm, well-finished home. As residential interior designers in Hyderabad, we begin with questions rather than a catalogue: who lives here, what do mornings and evenings look like, where does clutter gather, and what should a guest notice first?
+          </p>
+        </div>
+        <h3 className={h3Class}>Apartments and flats</h3>
+        <p className={pClass + " max-w-3xl"}>
+          In 2 BHK, 3 BHK and 4 BHK apartments, space is the main constraint. For 3 BHK interior design in Hyderabad, we usually balance an open living and dining area with bedrooms that carry enough storage, a kitchen that is easy to work in and, where the plan allows, a study corner or utility space. Careful planning of circulation and built-in storage often matters more than any single decorative choice, and it is where good design pays back every day.
+        </p>
+        <h3 className={h3Class}>Villas and independent homes</h3>
+        <p className={pClass + " max-w-3xl"}>
+          Larger homes bring more rooms to coordinate. For villa interior design in Hyderabad, we plan the house as a whole, covering staircases, double-height spaces, outdoor connections and the way public and private zones relate, so that each floor feels like part of one design rather than a series of separate rooms.
+        </p>
+        <h3 className={h3Class}>What we plan inside the home</h3>
+        <div className="flex flex-col gap-5 max-w-3xl">
+          <p className={pClass}>
+            Depending on your brief, your scope can include a modular kitchen, wardrobes, TV units, bedroom layouts, false ceilings with lighting plans, bathroom finishes and loose furniture. Each element is drawn and specified so that carpenters, electricians and painters work from the same information.
+          </p>
+          <p className={pClass}>
+            Whether you are furnishing a new handover flat or renewing a home you have lived in for years, our{" "}
+            <Link to="/services/home-interior-designs-hyderabad" className={linkClass}>home interior design in Hyderabad</Link>{" "}
+            service keeps design, material selection and site coordination within one plan.
+          </p>
+        </div>
+      </section>
+
+      {/* 5. Luxury */}
+      <section aria-labelledby="home-seo-luxury" className={block}>
+        <h2 id="home-seo-luxury" className={h2Class}>Luxury Interiors Designed With Restraint and Detail</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Luxury interior design is about decisions rather than decoration. It means choosing materials with care, detailing joinery precisely, designing furniture and lighting as one composition and keeping every room consistent with the rest of the home.
+          </p>
+          <p className={pClass}>
+            For clients who want this level of finish, our{" "}
+            <Link to="/luxury-interior-designers-in-hyderabad" className={linkClass}>luxury interior designers in Hyderabad</Link>{" "}
+            work on bespoke furniture, layered lighting and considered palettes of stone, veneer, metal and fabric. Early planning of the small junctions where materials meet is what separates a composed home from an assembled one.
+          </p>
+          <p className={pClass}>
+            Luxury work also demands tighter coordination. Custom pieces have longer lead times, finishes need approval before ordering, and the site team must follow the drawings exactly. We build these steps into the schedule from the start instead of discovering them midway.
+          </p>
+          <p className={pClass}>
+            This approach suits homeowners who value craftsmanship and consistency over trend-led decoration, and who are prepared to spend time on decisions at the design stage.
+          </p>
+        </div>
+      </section>
+
+      {/* 6. Office and commercial */}
+      <section aria-labelledby="home-seo-office" className={block}>
+        <h2 id="home-seo-office" className={h2Class}>Office and Commercial Interior Design in Hyderabad</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Our interior designers in Hyderabad plan workplaces and customer-facing spaces that support daily operations and reflect your brand. We plan layouts, meeting areas, reception, finishes and services coordination around your team's workflow and your opening or move-in date.
+          </p>
+        </div>
+        <h3 className={h3Class}>Office interiors</h3>
+        <p className={pClass + " max-w-3xl"}>
+          As office interior designers in Hyderabad, we start with how your team works: who sits together, which teams need quiet, how often meetings happen and how visitors arrive. The layout follows those answers. Reception, cabins, meeting rooms, collaboration areas and pantry are then planned together, with lighting, acoustics and finishes chosen to support the way the office is used day to day.
+        </p>
+        <h3 className={h3Class}>Commercial interiors</h3>
+        <div className="flex flex-col gap-5 max-w-3xl">
+          <p className={pClass}>
+            Commercial interior designers in Hyderabad must balance brand, customer flow and practicality. For showrooms, retail floors and other customer-facing spaces, we plan display, circulation, lighting and service areas so that visitors find their way easily and staff can work without obstruction.
+          </p>
+          <p className={pClass}>
+            Both kinds of project follow the same path: discovery, site measurement, space planning, design development and execution coordination. Deliverables and timelines depend on scope, and we confirm them in writing before work starts. If you need commercial interior designers in Hyderabad for a new floor or a refresh, the first step is the same: a conversation about how the space needs to perform. We also settle power, data and lighting positions early so they support the plan instead of working against it.
+          </p>
+          <p className={pClass}>
+            Explore our{" "}
+            <Link to="/services/office-interior-designers-in-hyderabad" className={linkClass}>office interior design</Link>{" "}
+            and{" "}
+            <Link to="/services/commercial-interior-designers-in-hyderabad" className={linkClass}>commercial interior design</Link>{" "}
+            services.
+          </p>
+        </div>
+      </section>
+
+      {/* 7. 2D 3D planning and process */}
+      <section aria-labelledby="home-seo-process" className={block}>
+        <h2 id="home-seo-process" className={h2Class}>2D and 3D Planning and Our Interior Design Process</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Our interior designers in Hyderabad move from consultation and site understanding to design direction, 2D layouts, 3D visualisation where included, materials and scope, execution and handover. Deliverables and timelines vary by project, and we confirm them in writing before work begins.
+          </p>
+          <p className={pClass}>
+            As a 2D 3D interior designer in Hyderabad, we use layouts and visualisations to help you decide before anything is built. A 2D plan fixes furniture positions, circulation, storage and services. Where 3D visualisation is part of your scope, it shows proportion, materials and lighting, so changes are discussed on screen rather than on site, where they cost more. See our{" "}
+            <Link to="/services/2d-3d-interior-design-services-in-hyderabad" className={linkClass}>2D and 3D virtual design</Link>{" "}
+            service.
+          </p>
+        </div>
+        <div className="mt-6"><NumberedList items={processList} /></div>
+        <p className={pClass + " max-w-3xl mt-6"}>
+          Every one of our interior design services follows this sequence, scaled to the size of the job. The interior designer in Hyderabad you choose should show you 2D layouts early, and so will we. Share your floor plan and we can tell you which stages apply to your project.
+        </p>
+      </section>
+
+      {/* 8. Featured projects */}
+      <section aria-labelledby="home-seo-projects" className={block}>
+        <h2 id="home-seo-projects" className={h2Class}>Featured Interior Design Projects in Hyderabad</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Our portfolio shows completed projects so you can judge fit before you call.
+          </p>
+          <p className={pClass}>
+            When you review top interior designers in Hyderabad, look past the photography and ask what problem each project solved. A compact flat that gained storage, an office that now seats more people comfortably, a showroom where customers move naturally towards the product: these are the outcomes worth comparing. Ask for projects at a similar scale to yours and request a walkthrough of what was delivered against the original scope.
+          </p>
+          <p className={pClass}>
+            Open any project in our{" "}
+            <Link to="/portfolio" className={linkClass}>portfolio</Link>{" "}
+            to see its scope and design notes. If you cannot find a project close to yours, ask our interior designers in Hyderabad and we will share relevant examples.
+          </p>
+        </div>
+      </section>
+
+      {/* 9. Cost and scope */}
+      <section aria-labelledby="home-seo-cost" className={block}>
+        <h2 id="home-seo-cost" className={h2Class}>Cost and Scope Clarity: What Shapes Your Estimate</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Your interior design budget in Hyderabad depends on property size, the amount of civil work, materials, custom furniture, kitchen and wardrobe scope, site conditions and the level of design detail. We prepare a scoped estimate after reviewing your floor plan or visiting the site, instead of quoting a generic rate.
+          </p>
+        </div>
+        <div className="mt-6"><BulletList items={costList} /></div>
+        <p className={pClass + " max-w-3xl mt-6"}>
+          This is why two homes of the same size can have very different budgets. For home interior design in Hyderabad, the most useful figure is the one built from your own drawings and a written scope with inclusions and exclusions listed clearly. Because every project differs, our interior designers in Hyderabad prepare estimates from your plans rather than publishing package prices. A fair interior designer in Hyderabad should be able to explain every line of that estimate.
+        </p>
+      </section>
+
+      {/* 10. Why clients choose */}
+      <section aria-labelledby="home-seo-why" className={block}>
+        <h2 id="home-seo-why" className={h2Class}>Why Clients Choose Bright Arena Interiors</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Clients who shortlist top interior designers in Hyderabad choose Bright Arena Interiors for clear scope, visible design thinking and steady communication from first drawing to handover. We explain what is included, show how spaces will look before work starts and keep you informed as the project moves through each stage.
+          </p>
+        </div>
+        <div className="mt-6"><BulletList items={whyList} /></div>
+        <p className={pClass + " max-w-3xl mt-6"}>
+          Families who want dependable home interior designers in Hyderabad, and businesses looking for office interior designers in Hyderabad, tend to ask the same thing: will the plan hold once work begins? A defined scope and consistent communication are how we answer it.
+        </p>
+      </section>
+
+      {/* 11. Areas served */}
+      <section aria-labelledby="home-seo-areas" className={block}>
+        <h2 id="home-seo-areas" className={h2Class}>Areas We Serve Across Hyderabad</h2>
+        <div className={copy}>
+          <p className={leadClass}>
+            Bright Arena Interiors takes on home, office and commercial projects across Hyderabad, including{" "}
+            <Link to="/interior-designer-gachibowli" className={linkClass}>Gachibowli</Link>,{" "}
+            <Link to="/interior-designer-hitec-city" className={linkClass}>HITEC City</Link>,{" "}
+            <Link to="/interior-designer-madhapur" className={linkClass}>Madhapur</Link> and{" "}
+            <Link to="/interior-designer-kondapur" className={linkClass}>Kondapur</Link>.
+            Tell us your locality and property type, and we will confirm availability.
+          </p>
+          <p className={pClass}>
+            Each part of the city brings its own conditions. Gated communities and high-rise apartments in the western corridor often come with society rules on working hours, lift use and material movement. Villas and independent homes allow more freedom in layout but need closer coordination across larger scopes. Offices around HITEC City bring their own demands on timelines and approvals. Wherever your project is, our interior designers in Hyderabad plan around the real conditions of the site before the design is finalised.
+          </p>
+        </div>
+      </section>
+
+      {/* 12. FAQs */}
+      <section aria-labelledby="home-seo-faq" className={block}>
+        <h2 id="home-seo-faq" className={h2Class}>Frequently Asked Questions About Interior Design in Hyderabad</h2>
+        <div className="max-w-3xl mt-4">
+          {faqs.map(([q, a]) => (
+            <div key={q}>
+              <h3 className={h3Class}>{q}</h3>
+              <p className={pClass}>{a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 13. Final conversion */}
+      <section aria-labelledby="home-seo-contact" className={block + " pb-20 md:pb-28"}>
+        <h2 id="home-seo-contact" className={h2Class}>Book Your Interior Design Consultation with Bright Arena Interiors</h2>
+        <div className={copy}>
+          <p className={pClass}>
+            Tell us about your project and we will help you take the next step. Whether you are planning a new apartment, renewing a villa, fitting out an office or shortlisting top interior designers in Hyderabad for a commercial space, a short conversation is enough to begin. We will review what you share, suggest the right starting point and explain how our process applies to your space. You do not need finished designs, budgets or timelines before you reach out.
+          </p>
+          <p className={pClass}>
+            To make the first conversation useful, share your property type and locality, BHK or area, project stage, preferred scope and approximate timeline. A floor plan helps if you have one. Budget is optional.
+          </p>
+        </div>
+        <div className="mt-8">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#ff7043] text-white px-7 py-4 rounded-2xl text-xs font-bold tracking-widest uppercase shadow-lg shadow-[#ff7043]/20 text-center transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95 touch-manipulation"
+          >
+            Book an Interior Design Consultation
+          </button>
+        </div>
+      </section>
+
+      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </div>
+  );
+};
+
+export default HomeSeoContent;

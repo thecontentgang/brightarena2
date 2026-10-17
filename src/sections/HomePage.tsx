@@ -26,8 +26,8 @@ const HomePage = () => {
   return (
     <>
       <SEO
-        title="Best Interior Designers in Hyderabad for Luxury Home Interiors"
-        description="Looking for Interior Designers in Hyderabad? Bright Arena Interiors delivers luxury home and office interiors with 14+ years of expertise and craftsmanship."
+        title="Interior Designers in Hyderabad for Homes and Offices | Bright Arena"
+        description="Bright Arena Interiors designs personalised home, luxury, office and commercial interiors in Hyderabad. Explore our work and book a consultation."
         keywords="Interior Designers Hyderabad, Luxury Interior Designers, Home Interior Design, Office Interiors, Commercial Interior Designers, Residential Interior Designers, Modular Kitchen Designers"
         url="https://www.brightarenainteriors.com/"
       />

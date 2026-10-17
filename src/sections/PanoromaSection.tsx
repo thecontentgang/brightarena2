@@ -179,7 +179,6 @@ export default function InteractivePanorama360({
 
     // --- Render loop -----------------------------------------------------
     const animate = () => {
-      // @ts-ignore
       if (!window.__IS_PRERENDERING__) {
         state.frameId = requestAnimationFrame(animate);
       }

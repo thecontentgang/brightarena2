@@ -131,7 +131,7 @@ const HorizontalServices: React.FC = () => {
                   {/* Background Image */}
                   <img
                     src={service.image}
-                    alt={service.title}
+                    alt={`${service.title} interior design by Bright Arena Interiors in Hyderabad`}
                     className="absolute inset-0 w-full h-full object-cover opacity-70 transition-transform duration-[1.5s] ease-out group-hover:scale-110"
                   />
 

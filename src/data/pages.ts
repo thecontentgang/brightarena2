@@ -14,9 +14,9 @@ export interface PageSEO {
 export const pagesData: PageSEO[] = [
   {
     route: "/",
-    title: "Interior Designers in Hyderabad | Bright Arena Interiors",
+    title: "Interior Designers in Hyderabad for Homes and Offices | Bright Arena",
     h1: "Interior Designers in Hyderabad for Homes and Offices",
-    description: "Looking for Interior Designers in Hyderabad? Bright Arena Interiors delivers luxury home and office interiors with 14+ years of expertise and craftsmanship.",
+    description: "Bright Arena Interiors designs personalised home, luxury, office and commercial interiors in Hyderabad. Explore our work and book a consultation.",
     canonical: "https://www.brightarenainteriors.com/",
     type: "website"
   },
@@ -62,7 +62,7 @@ export const pagesData: PageSEO[] = [
     canonical: "https://www.brightarenainteriors.com/services/2d-3d-interior-design-services-in-hyderabad/",
     type: "website"
   },
-  // Location pages: title, description and keywords come verbatim from "LOcal Page Seo.pdf"
+  // Location pages: title, description and keywords come verbatim from "docs/seo/source-pdfs/LOcal Page Seo.pdf"
   {
     route: "/interior-designer-gachibowli/",
     title: "Interior Designers in Gachibowli, Hyderabad | Home & Office Interiors",

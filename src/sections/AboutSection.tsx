@@ -97,7 +97,7 @@ const AboutSection: React.FC = () => {
           >
             <img
               src="/projectsImg/rajapushpa/rp-img12.webp"
-              alt="Our design philosophy in action"
+              alt="Premium apartment interior design by Bright Arena Interiors"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
             />
             {/* Subtle overlay */}
@@ -113,7 +113,7 @@ const AboutSection: React.FC = () => {
           >
             <img
               src="/projectsImg/rajapushpa/rp-img11.webp"
-              alt="Material details"
+              alt="Material and finish detailing in a Bright Arena Interiors project"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />

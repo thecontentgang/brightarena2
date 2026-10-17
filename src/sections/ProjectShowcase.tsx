@@ -42,7 +42,6 @@ export const ProjectShowcase: React.FC = () => {
 
   useEffect(() => {
     // 1. Smooth Scrolling Setup
-    // @ts-ignore
     if (window.__IS_PRERENDERING__) return;
     const lenis = new Lenis({
       duration: 1.2,
@@ -157,7 +156,7 @@ export const ProjectShowcase: React.FC = () => {
           <div className="relative w-[85vw] md:w-[60vw] max-w-[900px] h-[50vh] md:h-[60vh] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl bg-[#e8e5de] pointer-events-auto">
             <img
               src={project.image}
-              alt={project.title}
+              alt={`${project.title} interior design project by Bright Arena Interiors`}
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(74,28,19,0.05)] pointer-events-none rounded-[2rem] md:rounded-[3rem]" />
