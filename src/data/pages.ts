@@ -252,6 +252,22 @@ export const pagesData: PageSEO[] = [
     canonical: "https://www.brightarenainteriors.com/top-luxury-interior-designers-in-hyderabad/",
     type: "website"
   },
+  {
+    route: "/top-interior-designer-in-hyderabad/",
+    title: "Interior Designers in Hyderabad for Homes and Offices | Bright Arena",
+    h1: "Interior Designers in Hyderabad for Homes Offices and Luxury Spaces",
+    description: "Bright Arena Interiors designs personalised home, luxury, office and commercial interiors in Hyderabad. Explore our work and book a consultation.",
+    canonical: "https://www.brightarenainteriors.com/top-interior-designer-in-hyderabad/",
+    type: "website"
+  },
+  {
+    route: "/top-interior-designers-in-hyderabad/",
+    title: "Interior Designers in Hyderabad for Homes and Offices | Bright Arena",
+    h1: "Interior Designers in Hyderabad for Homes Offices and Luxury Spaces",
+    description: "Bright Arena Interiors designs personalised home, luxury, office and commercial interiors in Hyderabad. Explore our work and book a consultation.",
+    canonical: "https://www.brightarenainteriors.com/top-interior-designer-in-hyderabad/",
+    type: "website"
+  },
   // Old Portfolio Restored
   {
     route: "/portfolio/mr-nageswara-rao/",

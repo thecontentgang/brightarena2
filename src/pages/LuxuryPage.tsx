@@ -37,7 +37,7 @@ const featuredSlugs = [
   "forest-edge-interior-design-project-hyderabad",
   "rajapushpa-interior-design-project-hyderabad",
   "etna-by-phoenix-interior-design-project-hyderabad",
-  "vara-prasad-bachupally-interior-design-project-hyderabad",
+  "kollur-apartment-interior-design-project-hyderabad", // WebP hero; the Vara Prasad PNG hero is 12 MB and fails to load reliably
 ];
 const featured = featuredSlugs.map((s) => projectsData.find((p) => p.slug === s)).filter((p): p is NonNullable<typeof p> => Boolean(p));
 const heroProject = featured[0];
@@ -213,6 +213,7 @@ export default function LuxuryPage() {
             <p className={pClass}>Luxury also means restraint, and it must respect local conditions. Luxury interior design in Hyderabad has to account for summer heat, monsoon humidity, apartment society rules and the way families here host and gather. A refined room often has fewer elements, each placed with intent.</p>
             <p className={pClass}>Finally, luxury is personal. A multigenerational family home, a collector’s apartment and a young couple’s penthouse need different answers. Our role as your luxury interior designer in Hyderabad is to translate how you live into a plan that can be built well.</p>
           </div></ReadMore></div>
+          <img src="/Luxurious%20Hyderabad%20Open-Plan%20Living%20Space.webp" alt="Luxury open-plan living space interior by Bright Arena Interiors in Hyderabad" loading="lazy" width={1200} height={800} className="w-full h-[240px] md:h-[400px] object-cover rounded-[2rem] shadow-md bg-[#e8e5de] mt-8" />
         </section>
 
         <section aria-labelledby="lux-homes" className={sectionClass}>

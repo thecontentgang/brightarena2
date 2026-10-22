@@ -27,6 +27,7 @@ const staticRoutes = [
   '/contact',
   '/privacy-policy',
   '/luxury-interior-designers-in-hyderabad',
+  '/top-interior-designer-in-hyderabad',
   '/interior-designer-hitec-city',
   '/interior-designer-gachibowli',
   '/interior-designer-kondapur',

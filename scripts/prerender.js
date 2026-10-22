@@ -42,6 +42,8 @@ const routes = [
   '/privacy-policy/',
   '/luxury-interior-designers-in-hyderabad/',
   '/top-luxury-interior-designers-in-hyderabad/',
+  '/top-interior-designer-in-hyderabad/',
+  '/top-interior-designers-in-hyderabad/',
   '/portfolio/mr-nageswara-rao/',
   '/portfolio/haseeb-my-home-bhooja/',
   '/portfolio/rakesh-bhupathi-nagole/',

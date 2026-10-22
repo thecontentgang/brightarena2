@@ -35,6 +35,7 @@ const KondapurPage = React.lazy(() => import('./pages/KondapurInteriorDesignerPa
 const MadhapurPage = React.lazy(() => import('./pages/MadhapurInteriorDesignerPage'));
 const WhitefieldsPage = React.lazy(() => import('./pages/WhitefieldsInteriorDesignerPage'));
 const LuxuryPage = React.lazy(() => import('./pages/LuxuryPage'));
+const TopInteriorDesignerPage = React.lazy(() => import('./pages/TopInteriorDesignerPage'));
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen bg-[#f7f4ee]">
@@ -84,6 +85,8 @@ const App = () => {
               {/* Restored Old Routes */}
               <Route path="/luxury-interior-designers-in-hyderabad" element={<LuxuryPage />} />
               <Route path="/top-luxury-interior-designers-in-hyderabad" element={<LuxuryPage />} />
+              <Route path="/top-interior-designer-in-hyderabad" element={<TopInteriorDesignerPage />} />
+              <Route path="/top-interior-designers-in-hyderabad" element={<TopInteriorDesignerPage />} />
 
               {/* 404 Catch-All */}
               <Route path="*" element={<NotFoundPage />} />
