@@ -12,13 +12,13 @@ import ProjectModal from "./ProjectModal";
 
 // Array of objects for exact routing paths
 const navItems = [
-  { name: "Services", path: "/services" },
-  { name: "Portfolio", path: "/portfolio" },
-  { name: "Designs", path: "/designs" },
-  { name: "About", path: "/about" },
-  { name: "Testimonials", path: "/testimonials"},
-  { name: "Blogs", path: "/blogs" },
-  { name: "Contact", path: "/contact" },
+  { name: "Services", path: "/services/" },
+  { name: "Portfolio", path: "/portfolio/" },
+  { name: "Designs", path: "/designs/" },
+  { name: "About", path: "/about/" },
+  { name: "Testimonials", path: "/testimonials/"},
+  { name: "Blogs", path: "/blogs/" },
+  { name: "Contact", path: "/contact/" },
 ];
 
 // Premium Apple-like easing curve

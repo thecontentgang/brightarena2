@@ -14,6 +14,51 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/services/home-interior-design/",
+      "destination": "/services/home-interior-designs-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/services/home-interior-designers-in-hyderabad/",
+      "destination": "/services/home-interior-designs-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/services/commercial-interior-design/",
+      "destination": "/services/commercial-interior-designers-in-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/services/office-interior-design/",
+      "destination": "/services/office-interior-designers-in-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/services/2d-and-3d-virtual-design/",
+      "destination": "/services/2d-3d-interior-design-services-in-hyderabad/",
+      "permanent": true
+    },
+    {
+      "source": "/our_portfolio/mr-nageswara-rao/",
+      "destination": "/portfolio/mr-nageswara-rao/",
+      "permanent": true
+    },
+    {
+      "source": "/our_portfolio/sammys-villa/",
+      "destination": "/portfolio/sammys-villa-bangalore/",
+      "permanent": true
+    },
+    {
+      "source": "/our_portfolio/rakesh-bhupathi/",
+      "destination": "/portfolio/rakesh-bhupathi-nagole/",
+      "permanent": true
+    },
+    {
+      "source": "/our_portfolio/praveen-aparna-zenith-nallagandla/",
+      "destination": "/portfolio/praveen-aparna-zenith/",
+      "permanent": true
+    },
+    {
       "source": "/interior-designer-hitech-city/",
       "destination": "/interior-designer-hitec-city/",
       "permanent": true

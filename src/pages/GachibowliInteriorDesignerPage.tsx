@@ -320,7 +320,7 @@ export default function GachibowliInteriorDesignerPage() {
               viewport={{ once: true }}
             >
               <Link
-                to="/contact"
+                to="/contact/"
                 className="inline-flex items-center justify-center bg-[#ff7043] text-white px-10 py-5 rounded-xl uppercase tracking-widest text-[13px] font-bold hover:bg-[#f7f4ee] hover:text-[#4a1c13] transition-colors duration-500 whitespace-nowrap shadow-xl"
               >
                 Discuss Your Floor Plan

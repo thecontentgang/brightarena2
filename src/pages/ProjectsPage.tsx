@@ -24,7 +24,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       className="group relative overflow-hidden rounded-3xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-2xl transition-all duration-700 aspect-[4/3]"
     >
       <Link 
-        to={`/portfolio/${project.slug}`} 
+        to={`/portfolio/${project.slug}/`} 
         className="block w-full h-full" 
         aria-label={`View details for ${project.title}`}
       >

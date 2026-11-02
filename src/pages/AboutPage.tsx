@@ -350,14 +350,14 @@ export default function AboutPage() {
             </motion.div>
             <motion.div variants={fadeUp} className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="/contact" 
+                href="/contact/" 
                 aria-label="Start your interior design project with Bright Arena"
                 className="bg-[#ff7043] text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#4a1c13] transition-all duration-300"
               >
                 Start Your Project
               </a>
               <a 
-                href="/portfolio" 
+                href="/portfolio/" 
                 aria-label="View our project portfolio"
                 className="group relative inline-flex items-center justify-center gap-3 bg-transparent border border-white/40 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs hover:border-white transition-all duration-300 overflow-hidden"
               >

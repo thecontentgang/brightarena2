@@ -563,7 +563,7 @@ export default function ProjectsShowcase() {
 
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-6">
               <Link 
-                to={`/portfolio/${activeProject.slug}`}
+                to={`/portfolio/${activeProject.slug}/`}
                 className="group relative inline-flex items-center gap-6 px-9 py-4 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-white/50 w-fit"
               >
                 <div className="absolute inset-0 bg-[#ff7043] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0" />

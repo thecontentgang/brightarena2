@@ -100,7 +100,7 @@ const Breadcrumb = () => {
                   {last ? (
                     <span className="capitalize">{label}</span>
                   ) : (
-                    <Link to={to} className="capitalize">
+                    <Link to={`${to}/`} className="capitalize">
                       {label}
                     </Link>
                   )}

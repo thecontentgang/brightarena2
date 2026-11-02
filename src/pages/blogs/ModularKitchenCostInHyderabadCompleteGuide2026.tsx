@@ -270,7 +270,7 @@ export default function ModularKitchenCostInHyderabadCompleteGuide2026() {
         </article>
 
         {/* ── NEXT POST CTA ── */}
-        <NextPostCTA title={"The Art of Biophilic Design: Bringing Nature Indoors"} slug={"art-of-biophilic-design"} />
+        <NextPostCTA title={"25+ Small Home Interior Design Ideas to Maximize Space"} slug={"small-home-interior-design-ideas"} />
       </main>
     </>
   );

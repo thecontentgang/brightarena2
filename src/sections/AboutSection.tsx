@@ -70,7 +70,7 @@ const AboutSection: React.FC = () => {
                   backgroundColor: "#ffc107",
                   color: "#4a1c13",
                 }}
-                onClick={() => navigate("/about")}
+                onClick={() => navigate("/about/")}
                 whileTap={{ scale: 0.95 }}
                 className="w-full md:w-auto bg-[#ff7043] text-white px-8 py-4 rounded-2xl text-[13px] font-bold tracking-widest uppercase shadow-lg shadow-[#ff7043]/20 transition-colors"
               >

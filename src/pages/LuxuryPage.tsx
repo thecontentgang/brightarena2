@@ -186,7 +186,7 @@ export default function LuxuryPage() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <button onClick={openForm} className={primaryBtn}>Book a Luxury Design Consultation</button>
-            <Link to="/portfolio" className={secondaryBtn}>Explore Luxury Projects</Link>
+            <Link to="/portfolio/" className={secondaryBtn}>Explore Luxury Projects</Link>
           </div>
           {heroProject && (
             <figure className="mt-10">
@@ -246,7 +246,7 @@ export default function LuxuryPage() {
                   <p className={pClass}>Renovating an existing home lets you keep what works and rethink what does not. That often means revisiting layouts, electrical and plumbing routes, ceilings and storage before finishes are chosen. Luxury full home interior design in Hyderabad works best when the whole scope is planned together, so that every element is considered in relation to the rest.</p>
                   <p className={pClass}>
                     Our focus is residential luxury. If you are planning a more budget-led home, our{" "}
-                    <Link to="/services/home-interior-designs-hyderabad" className={linkClass}>home interior design in Hyderabad</Link>{" "}
+                    <Link to="/services/home-interior-designs-hyderabad/" className={linkClass}>home interior design in Hyderabad</Link>{" "}
                     page may be a better starting point.
                   </p>
                 </div>
@@ -291,7 +291,7 @@ export default function LuxuryPage() {
             <li className={card + " !p-6 " + pClass + " text-base md:text-base"}><Lead>Layouts.</Lead> Furniture, storage, circulation and lighting are planned in detail and refined with you until approved.</li>
             <li className={card + " !p-6 " + pClass + " text-base md:text-base"}>
               <Lead>3D visualisation, where included.</Lead> Luxury{" "}
-              <Link to="/services/2d-3d-interior-design-services-in-hyderabad" className={linkClass}>3D interior design in Hyderabad</Link>{" "}
+              <Link to="/services/2d-3d-interior-design-services-in-hyderabad/" className={linkClass}>3D interior design in Hyderabad</Link>{" "}
               lets you see proportions, finishes and lighting before anything is built.
             </li>
             <li className={card + " !p-6 " + pClass + " text-base md:text-base"}><Lead>Specifications.</Lead> Materials, finishes, fittings and joinery details are documented so that what you approve is what is built.</li>
@@ -311,7 +311,7 @@ export default function LuxuryPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mt-8">
             {featured.map((proj) => (
-              <Link key={proj.slug} to={`/portfolio/${proj.slug}`} className="group block bg-white rounded-[2rem] border border-[#4a1c13]/5 shadow-sm overflow-hidden">
+              <Link key={proj.slug} to={`/portfolio/${proj.slug}/`} className="group block bg-white rounded-[2rem] border border-[#4a1c13]/5 shadow-sm overflow-hidden">
                 <img
                   src={proj.heroImage}
                   alt={`${proj.shortDescription.split(",")[0]} luxury interior by Bright Arena Interiors`}
@@ -328,7 +328,7 @@ export default function LuxuryPage() {
               </Link>
             ))}
           </div>
-          <div className="mt-8"><Link to="/portfolio" className={secondaryBtn + " inline-block"}>View the Full Luxury Portfolio</Link></div>
+          <div className="mt-8"><Link to="/portfolio/" className={secondaryBtn + " inline-block"}>View the Full Luxury Portfolio</Link></div>
         </section>
 
         <section aria-labelledby="lux-materials" className={sectionClass}>
@@ -373,7 +373,7 @@ export default function LuxuryPage() {
               <p className={pClass + " mt-3 text-base md:text-base"}>
                 Srilatha Ravuri is the Founder and Principal Interior Designer of Bright Arena, specializing in luxury residential and commercial interior design. With expertise in space planning, modern interiors, and bespoke design solutions, she creates elegant, functional spaces tailored to each client's lifestyle.
               </p>
-              <p className="mt-3 font-semibold"><Link to="/about" className={linkClass}>About Bright Arena Interiors</Link></p>
+              <p className="mt-3 font-semibold"><Link to="/about/" className={linkClass}>About Bright Arena Interiors</Link></p>
             </div>
           </div>
         </section>

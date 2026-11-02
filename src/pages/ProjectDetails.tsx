@@ -91,7 +91,7 @@ export default function ProjectDetailsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE }}
           >
-            <Link to="/portfolio" className="hover:text-[#ff7043] transition-colors">Portfolio</Link>
+            <Link to="/portfolio/" className="hover:text-[#ff7043] transition-colors">Portfolio</Link>
             <span className="w-1 h-1 rounded-full bg-[#4a1c13]/30 mx-1" />
             <span className="text-[#4a1c13]">{project.title}</span>
           </motion.nav>
@@ -184,7 +184,7 @@ export default function ProjectDetailsPage() {
                   className="pt-4"
                 >
                   <Link
-                    to="/contact"
+                    to="/contact/"
                     className="inline-block w-full text-center bg-[#4a1c13] text-[#f7f4ee] px-8 py-4 rounded-xl uppercase tracking-widest text-[11px] font-bold hover:bg-[#ff7043] transition-colors duration-500"
                   >
                     Start Your Project

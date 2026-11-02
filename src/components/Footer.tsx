@@ -7,11 +7,11 @@ const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "Services", href: "/services" },
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Blog", href: "/blogs" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "About Us", href: "/about/" },
+    { name: "Services", href: "/services/" },
+    { name: "Portfolio", href: "/portfolio/" },
+    { name: "Blog", href: "/blogs/" },
+    { name: "Contact Us", href: "/contact/" },
 ];
 
 export default function CardFooter() {
@@ -159,7 +159,7 @@ export default function CardFooter() {
                     
                     <span className="hidden md:block w-px h-3 bg-[#4a1c13]/20"></span>
                     
-                    <a href="/privacy-policy" className="hover:text-[#ff7043] transition-colors duration-300">
+                    <a href="/privacy-policy/" className="hover:text-[#ff7043] transition-colors duration-300">
                         Privacy Policy
                     </a>
                     

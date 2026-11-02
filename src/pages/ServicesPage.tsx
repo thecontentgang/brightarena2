@@ -90,7 +90,7 @@ function ServiceCard({
           <div className="flex flex-wrap items-center gap-4">
             {/* Learn More */}
             <Link
-              to={`/services/${service.slug}`}
+              to={`/services/${service.slug}/`}
               aria-label={`Learn more details about our ${service.title} services`}
               className="group/btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#C4623A] text-white text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#A84E2C] hover:shadow-lg"
             >

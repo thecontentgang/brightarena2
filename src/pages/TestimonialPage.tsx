@@ -342,7 +342,7 @@ const Testimonials: React.FC = () => {
         <h2 className="text-[clamp(28px,4vw,40px)] text-[#4a1c13] font-primary mb-6">
           Ready to create your own story?
         </h2>
-        <Link to="/contact">
+        <Link to="/contact/">
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: "#e65a2d" }}
             whileTap={{ scale: 0.95 }}

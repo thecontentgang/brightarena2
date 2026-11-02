@@ -33,7 +33,7 @@ export default function DesignDetailsPage() {
 
     if (targetDesign && isOldSlug) {
       // If the URL matches the old slug (and isn't the new one), REDIRECT
-      navigate(`/designs/${targetDesign.slug}`, { replace: true });
+      navigate(`/designs/${targetDesign.slug}/`, { replace: true });
     }
   }, [slug, targetDesign, navigate, isOldSlug]);
 

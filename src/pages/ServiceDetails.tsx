@@ -201,7 +201,7 @@ export default function ServiceDetailsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE }}
           >
-            <Link to="/services" className="hover:text-[#ff7043] transition-colors">
+            <Link to="/services/" className="hover:text-[#ff7043] transition-colors">
               Services
             </Link>
             <span className="w-1 h-1 rounded-full bg-[#4a1c13]/30 mx-1" />
@@ -361,7 +361,7 @@ export default function ServiceDetailsPage() {
               viewport={{ once: true }}
             >
               <Link
-                to="/contact"
+                to="/contact/"
                 className="inline-flex items-center justify-center bg-[#ff7043] text-white px-10 py-5 rounded-xl uppercase tracking-widest text-[13px] font-bold hover:bg-[#f7f4ee] hover:text-[#4a1c13] transition-colors duration-500 whitespace-nowrap shadow-xl"
               >
                 Discuss Your Project

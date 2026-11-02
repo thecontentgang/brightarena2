@@ -167,7 +167,7 @@ export const ProjectShowcase: React.FC = () => {
       {/* Floating CTA Button */}
       <div className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 z-50">
         <Link 
-          to="/portfolio" 
+          to="/portfolio/" 
           className="bg-[#ff7043] text-white px-8 py-3.5 md:px-10 md:py-4 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase shadow-lg shadow-[#ff7043]/30 transition-all hover:scale-105 hover:bg-[#e65a2d] active:scale-95 flex items-center gap-2"
         >
           View Full Portfolio

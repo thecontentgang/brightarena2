@@ -22,13 +22,13 @@ export default function NextPostCTA({ title, slug }: NextPostCTAProps) {
           Read Next
         </p>
         <h3 className="text-[#4a1c13] text-3xl md:text-5xl lg:text-6xl font-primary leading-tight tracking-tight max-w-3xl mb-12 hover:text-[#ff7043] transition-colors duration-500">
-          <Link to={`/blogs/${slug}`}>
+          <Link to={`/blogs/${slug}/`}>
             {title}
           </Link>
         </h3>
 
         <Link
-          to={`/blogs/${slug}`}
+          to={`/blogs/${slug}/`}
           className="group flex items-center gap-4 bg-[#4a1c13] text-white px-8 py-5 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-[#ff7043] transition-colors duration-500"
         >
           Continue Reading

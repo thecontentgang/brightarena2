@@ -76,7 +76,7 @@ export const projectsData: Project[] = [
     shortDescription: "Premium Apartment, Styling",
     description: "A sophisticated blend of contemporary design and timeless elegance, creating a vibrant and luxurious residential oasis.",
     heroImage: "/projectsImg/etna/sr-img1.webp",
-    gallery: Array.from({ length: 16 }, (_, i) => `/projectsImg/etna/sr-img${i + 1}.webp`),
+    gallery: [1, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 16].map((n) => `/projectsImg/etna/sr-img${n}.webp`),
     seo: {
       metaTitle: "Etna by Phoenix Interior Design Project in Hyderabad | Bright Arena Interiors",
       description: "Discover the Etna by Phoenix Interior Design Project by Bright Arena Interiors, featuring elegant interiors, premium finishes, and thoughtfully designed living spaces in Hyderabad",

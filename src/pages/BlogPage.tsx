@@ -55,7 +55,7 @@ export default function BlogPage() {
       {featuredPost && (
         <section className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto mb-16 md:mb-24">
           <MotionLink
-            to={`/blogs/${featuredPost.slug}`}
+            to={`/blogs/${featuredPost.slug}/`}
             aria-label={`Read featured article: ${featuredPost.title}`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export default function BlogPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {standardPosts.map((post, index) => (
             <MotionLink
-              to={`/blogs/${post.slug}`}
+              to={`/blogs/${post.slug}/`}
               key={post.id}
               aria-label={`Read article: ${post.title}`}
               initial={{ opacity: 0, y: 30 }}

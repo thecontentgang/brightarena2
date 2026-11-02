@@ -640,7 +640,7 @@ export default function SmallHomeInteriorDesignIdeas() {
         </article>
 
         {/* ── NEXT POST CTA ── */}
-        <NextPostCTA title={"Creating the Perfect Minimalist Living Room"} slug={"perfect-minimalist-living-room"} />
+        <NextPostCTA title={"25+ Living Room Interior Design Ideas for Modern Homes"} slug={"living-room-interior-design-ideas"} />
       </main>
     </>
   );

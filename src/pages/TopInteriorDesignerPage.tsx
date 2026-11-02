@@ -13,9 +13,10 @@ import { projectsData } from "./ProjectsData";
 // real portfolio data (projectsData).
 
 const PAGE_URL = "https://www.brightarenainteriors.com/top-interior-designer-in-hyderabad/";
-const TITLE = "Interior Designers in Hyderabad for Homes and Offices | Bright Arena";
+const TITLE = "Top Interior Designers in Hyderabad | Bright Arena Interiors";
+// Must differ from the homepage's title and description: this page previously reused both verbatim.
 const DESCRIPTION =
-  "Bright Arena Interiors designs personalised home, luxury, office and commercial interiors in Hyderabad. Explore our work and book a consultation.";
+  "Hyderabad interior design studio for homes, luxury spaces, offices and commercial projects, with 2D and 3D planning before work begins. Explore Bright Arena's work.";
 const H1 = "Interior Designers in Hyderabad for Homes Offices and Luxury Spaces";
 
 const linkClass = "underline underline-offset-4 decoration-[#4a1c13]/40 hover:text-[#ff7043] hover:decoration-[#ff7043] transition-colors";
@@ -45,11 +46,11 @@ const featured = featuredSlugs.map((s) => projectsData.find((p) => p.slug === s)
 const heroProject = featured[0];
 
 const services: { name: string; text: string; to: string; cta: string }[] = [
-  { name: "Home interiors", text: "Complete interiors for apartments, flats and villas, planned around the way your household lives, with storage, lighting and finishes that suit each room.", to: "/services/home-interior-designs-hyderabad", cta: "Home interior design in Hyderabad" },
-  { name: "Luxury interiors", text: "Refined detailing, bespoke furniture and carefully chosen materials for homes that call for a higher level of finish.", to: "/luxury-interior-designers-in-hyderabad", cta: "View luxury interiors" },
-  { name: "Office interiors", text: "Workplaces planned around team flow, meeting needs and the first impression your brand makes on visitors.", to: "/services/office-interior-designers-in-hyderabad", cta: "Office interior design" },
-  { name: "Commercial interiors", text: "Customer-facing spaces such as showrooms and retail floors, designed around how visitors move and what your brand wants them to notice.", to: "/services/commercial-interior-designers-in-hyderabad", cta: "Commercial interior design" },
-  { name: "2D and 3D design", text: "Layouts and visualisations that let you review the plan, proportions and materials before work begins.", to: "/services/2d-3d-interior-design-services-in-hyderabad", cta: "2D and 3D virtual design" },
+  { name: "Home interiors", text: "Complete interiors for apartments, flats and villas, planned around the way your household lives, with storage, lighting and finishes that suit each room.", to: "/services/home-interior-designs-hyderabad/", cta: "Home interior design in Hyderabad" },
+  { name: "Luxury interiors", text: "Refined detailing, bespoke furniture and carefully chosen materials for homes that call for a higher level of finish.", to: "/luxury-interior-designers-in-hyderabad/", cta: "View luxury interiors" },
+  { name: "Office interiors", text: "Workplaces planned around team flow, meeting needs and the first impression your brand makes on visitors.", to: "/services/office-interior-designers-in-hyderabad/", cta: "Office interior design" },
+  { name: "Commercial interiors", text: "Customer-facing spaces such as showrooms and retail floors, designed around how visitors move and what your brand wants them to notice.", to: "/services/commercial-interior-designers-in-hyderabad/", cta: "Commercial interior design" },
+  { name: "2D and 3D design", text: "Layouts and visualisations that let you review the plan, proportions and materials before work begins.", to: "/services/2d-3d-interior-design-services-in-hyderabad/", cta: "2D and 3D virtual design" },
 ];
 
 const checks: Item[] = [
@@ -143,7 +144,7 @@ export default function TopInteriorDesignerPage() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <button onClick={openForm} className={primaryBtn}>Book an Interior Design Consultation</button>
-            <Link to="/portfolio" className={secondaryBtn}>Explore Our Hyderabad Projects</Link>
+            <Link to="/portfolio/" className={secondaryBtn}>Explore Our Hyderabad Projects</Link>
           </div>
           {heroProject && (
             <figure className="mt-10">
@@ -221,7 +222,7 @@ export default function TopInteriorDesignerPage() {
           </div>
           <p className={pClass + " max-w-3xl mt-6"}>
             Whether you are furnishing a new handover flat or renewing a home you have lived in for years, our{" "}
-            <Link to="/services/home-interior-designs-hyderabad" className={linkClass}>home interior design in Hyderabad</Link>{" "}
+            <Link to="/services/home-interior-designs-hyderabad/" className={linkClass}>home interior design in Hyderabad</Link>{" "}
             service keeps design, material selection and site coordination within one plan.
           </p>
           <img src="/home-interiors.webp" alt="Home interior design by Bright Arena Interiors in Hyderabad" loading="lazy" width={1200} height={800} className={sectionImg} />
@@ -235,7 +236,7 @@ export default function TopInteriorDesignerPage() {
             <p className={leadClass}>Luxury interior design is about decisions rather than decoration. It means choosing materials with care, detailing joinery precisely, designing furniture and lighting as one composition and keeping every room consistent with the rest of the home.</p>
             <p className={pClass}>
               For clients who want this level of finish, our{" "}
-              <Link to="/luxury-interior-designers-in-hyderabad" className={linkClass}>luxury interior designers in Hyderabad</Link>{" "}
+              <Link to="/luxury-interior-designers-in-hyderabad/" className={linkClass}>luxury interior designers in Hyderabad</Link>{" "}
               work on bespoke furniture, layered lighting and considered palettes of stone, veneer, metal and fabric. Early planning of the small junctions where materials meet is what separates a composed home from an assembled one.
             </p>
             <p className={pClass}>Luxury work also demands tighter coordination. Custom pieces have longer lead times, finishes need approval before ordering, and the site team must follow the drawings exactly. We build these steps into the schedule from the start instead of discovering them midway.</p>
@@ -294,7 +295,7 @@ export default function TopInteriorDesignerPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mt-8">
             {featured.map((proj) => (
-              <Link key={proj.slug} to={`/portfolio/${proj.slug}`} className="group block bg-white rounded-[2rem] border border-[#4a1c13]/5 shadow-sm overflow-hidden">
+              <Link key={proj.slug} to={`/portfolio/${proj.slug}/`} className="group block bg-white rounded-[2rem] border border-[#4a1c13]/5 shadow-sm overflow-hidden">
                 <img
                   src={proj.heroImage}
                   alt={`${proj.shortDescription.split(",")[0]} interior design by Bright Arena Interiors in Hyderabad`}
@@ -313,7 +314,7 @@ export default function TopInteriorDesignerPage() {
           </div>
           <p className={pClass + " max-w-3xl mt-6"}>Photographs show the finished result, but the useful details sit in the captions: the size of the property, the scope we handled and the decisions that shaped the design. We keep these captions plain and include only facts we can stand behind, so that what you read matches what you would see on a site visit.</p>
           <p className={pClass + " max-w-3xl mt-4"}>Browse our work and open any project to see its scope and design notes. If you cannot find a project close to yours, ask our interior designers in Hyderabad and we will share relevant examples.</p>
-          <div className="mt-6"><Link to="/portfolio" className={secondaryBtn + " inline-block"}>View the Full Portfolio</Link></div>
+          <div className="mt-6"><Link to="/portfolio/" className={secondaryBtn + " inline-block"}>View the Full Portfolio</Link></div>
         </section>
 
         {/* 9. Cost and scope */}

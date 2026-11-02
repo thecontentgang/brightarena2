@@ -44,7 +44,7 @@ export default function ContactPage() {
           Get In Touch
         </motion.span>
         
-        <motion.h1 
+        <motion.h2 
           id="contact-heading"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ export default function ContactPage() {
         >
           Let's build something <br />
           <span className="italic font-serif text-[#ff7043]">beautiful.</span>
-        </motion.h1>
+        </motion.h2>
       </header>
 
       {/* ── SPLIT CONTENT: INFO & FORM ── */}

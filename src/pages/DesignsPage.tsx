@@ -44,7 +44,7 @@ function CategoryCard({
       className={`group relative w-full h-full overflow-hidden rounded-[2rem] cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-xl transition-shadow duration-500 ${spanClasses}`}
     >
       <Link 
-        to={`/designs/${category.slug}`} 
+        to={`/designs/${category.slug}/`} 
         className="block w-full h-full"
         aria-label={`View all ${category.count} concepts in the ${category.name} interior design category`}
       >

@@ -13,6 +13,7 @@ interface SEOProps {
   keywords?: string;
   schema?: Record<string, unknown>;
   injectH1?: boolean;
+  noindex?: boolean;
 }
 
 export default function SEO({
@@ -25,7 +26,8 @@ export default function SEO({
   image,
   keywords,
   schema,
-  injectH1 = true
+  injectH1 = true,
+  noindex = false
 }: SEOProps) {
   const location = useLocation();
   const pageData = getPageSEO(location.pathname);
@@ -34,33 +36,48 @@ export default function SEO({
   const finalDescription = description || pageData?.description || "Bright Arena Interiors is Hyderabad's premier luxury design studio. We transform residential and commercial spaces into timeless, functional, and breathtaking environments.";
   const finalKeywords = keywords || pageData?.keywords || 'luxury interior design, interior designers Hyderabad, residential interiors, commercial interiors, Bright Arena';
   const finalH1 = h1 || pageData?.h1 || finalTitle;
-  const finalUrl = url || pageData?.canonical || `https://www.brightarenainteriors.com${location.pathname.endsWith('/') ? location.pathname : location.pathname + '/'}`;
+  // Vercel 308-redirects slashless URLs (vercel.json: trailingSlash), so every canonical must end in a slash, including `url` props
+  const rawUrl = url || pageData?.canonical || `https://www.brightarenainteriors.com${location.pathname}`;
+  const finalUrl = rawUrl.endsWith('/') ? rawUrl : `${rawUrl}/`;
   const finalType = type || pageData?.type || 'website';
-  const finalImage = image || pageData?.ogImage || 'https://www.brightarenainteriors.com/og-image.jpg';
+  const finalImage = image || pageData?.ogImage || 'https://www.brightarenainteriors.com/bright-logo.jpg';
 
   const SITE_URL = 'https://www.brightarenainteriors.com/';
-  // Pages with their own schemaType (e.g. BlogPosting) keep their page-level identity;
-  // every other page describes the one business entity with a single stable @id.
-  const isBusiness = !pageData?.schemaType;
+  const organization = { '@type': 'Organization', name: name, url: SITE_URL };
+  const isArticle = pageData?.schemaType === 'BlogPosting' || /^\/blogs\/[^/]+\/?$/.test(location.pathname);
 
-  const defaultSchema = {
-    '@context': 'https://schema.org',
-    '@type': pageData?.schemaType || 'LocalBusiness',
-    name: name,
-    image: 'https://www.brightarenainteriors.com/bright-logo.webp',
-    '@id': isBusiness ? `${SITE_URL}#business` : finalUrl,
-    url: isBusiness ? SITE_URL : finalUrl,
-    telephone: '+918978222980',
-    // Address matches Footer.tsx and ContactPage.tsx. Opening hours and geo coordinates are omitted until verified.
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli',
-      addressLocality: 'Hyderabad',
-      addressRegion: 'Telangana',
-      postalCode: '500032',
-      addressCountry: 'IN',
-    },
-  };
+  // Blog posts describe the article; every other page describes the one business entity with a single stable @id.
+  const defaultSchema = isArticle
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': finalUrl,
+        headline: finalTitle,
+        description: finalDescription,
+        image: finalImage,
+        url: finalUrl,
+        mainEntityOfPage: finalUrl,
+        author: organization,
+        publisher: organization,
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': pageData?.schemaType || 'LocalBusiness',
+        name: name,
+        image: 'https://www.brightarenainteriors.com/bright-logo.webp',
+        '@id': `${SITE_URL}#business`,
+        url: SITE_URL,
+        telephone: '+918978222980',
+        // Address matches Footer.tsx and ContactPage.tsx. Opening hours and geo coordinates are omitted until verified.
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '4th Floor, 23 Nordwest, P Janardhan Reddy Nagar, Gachibowli',
+          addressLocality: 'Hyderabad',
+          addressRegion: 'Telangana',
+          postalCode: '500032',
+          addressCountry: 'IN',
+        },
+      };
 
   const finalSchema = schema || defaultSchema;
 
@@ -73,6 +90,7 @@ export default function SEO({
         <meta name='author' content={name} />
         <meta name='keywords' content={finalKeywords} />
         <link rel="canonical" href={finalUrl} />
+        {noindex && <meta name='robots' content='noindex, follow' />}
 
         {/* Facebook tags */}
         <meta property='og:type' content={finalType} />

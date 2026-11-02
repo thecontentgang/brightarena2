@@ -34,6 +34,7 @@ const routes = [
   '/blogs/modular-kitchen-cost-in-hyderabad-complete-guide-2026/',
   '/blogs/art-of-biophilic-design/',
   '/blogs/mastering-lighting-invisible-architecture/',
+  '/blogs/how-to-choose-the-best-interior-designer-in-hyderabad/',
   '/blogs/small-home-interior-design-ideas/',
   '/blogs/bedroom-interior-design-ideas/',
   '/blogs/living-room-interior-design-ideas/',

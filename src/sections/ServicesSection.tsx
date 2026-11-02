@@ -151,7 +151,7 @@ const HorizontalServices: React.FC = () => {
 
                     <button
                       className="shrink-0 w-fit h-fit bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:bg-[#ff7043] hover:border-[#ff7043] hover:shadow-[0_0_30px_rgba(255,112,67,0.4)]"
-                      onClick={() => navigate(`/services/${service.slug}`)}
+                      onClick={() => navigate(`/services/${service.slug}/`)}
                     >
                       Explore Service
                     </button>

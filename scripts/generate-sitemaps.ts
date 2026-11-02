@@ -35,29 +35,26 @@ const staticRoutes = [
   '/interior-designer-whitefields'
 ];
 
-function generateDate() {
-  return new Date().toISOString();
-}
-
+// No <lastmod>: the only date available at build time is the build itself, which would mark every URL as changed on each deploy
 function generateSitemap() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
   // Static routes
   staticRoutes.forEach(route => {
-    xml += `  <url>\n    <loc>${loc(route)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>${route === '/' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(route)}</loc>\n    <changefreq>${route === '/' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
   });
 
   // Dynamic routes
   servicesData.forEach(service => {
-    xml += `  <url>\n    <loc>${loc(`/services/${service.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/services/${service.slug}`)}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   projectsData.forEach(project => {
-    xml += `  <url>\n    <loc>${loc(`/portfolio/${project.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/portfolio/${project.slug}`)}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   designsData.forEach(design => {
-    xml += `  <url>\n    <loc>${loc(`/designs/${design.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/designs/${design.slug}`)}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
 
   xml += `</urlset>`;
@@ -67,7 +64,7 @@ function generateSitemap() {
 function generateBlogSitemap() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   blogsData.forEach(blog => {
-    xml += `  <url>\n    <loc>${loc(`/blogs/${blog.slug}`)}</loc>\n    <lastmod>${generateDate()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${loc(`/blogs/${blog.slug}`)}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   });
   xml += `</urlset>`;
   fs.writeFileSync(path.join(PUBLIC_DIR, 'blog-sitemap.xml'), xml);

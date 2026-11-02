@@ -250,7 +250,7 @@ const MinimalHero: React.FC = () => {
             <div className="flex items-center justify-center gap-3 w-full md:w-auto mt-2 md:mt-0">
               <button
                 aria-label="View our portfolio of projects"
-                onClick={() => navigate("/portfolio")}
+                onClick={() => navigate("/portfolio/")}
                 className="flex-1 md:flex-none w-full md:w-auto bg-[#ff7043] text-white px-3 py-3.5 md:px-7 md:py-4 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-bold tracking-widest uppercase shadow-lg text-center whitespace-nowrap transition-colors hover:bg-[#ffc107] hover:text-[#4a1c13] active:scale-95 touch-manipulation"
               >
                 View Projects
