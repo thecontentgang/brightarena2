@@ -593,8 +593,8 @@ Review relevant residential or commercial portfolios, but also ask about the des
     images: [
       "/projectsImg/varaprasad/vp-img15.png",
       "/projectsImg/varaprasad/vp-img14.png",
-      "/projectsImg/kollur/kl-img10.png",
-      "/projectsImg/kollur/kl-img12.png",
+      "/projectsImg/kollur/kl-img10.webp",
+      "/projectsImg/kollur/kl-img12.webp",
     ],
     benefits: [
       "Immersive 3D walkthroughs",
