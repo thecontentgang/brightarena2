@@ -1,0 +1,107 @@
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { projectsData, type Project } from "./ProjectsData";
+import { responsiveImage } from "@/lib/responsiveImage";
+
+const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+/* ─── PROJECT CARD ─── */
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const isPriority = index < 2;
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      // Updated stagger delay for a 2-column layout
+      transition={{ duration: 0.7, ease: smoothEase, delay: (index % 2) * 0.15 }}
+      // Applied a uniform rectangular aspect ratio (4/3) to all cards
+      className="group relative overflow-hidden rounded-3xl cursor-pointer bg-[#e8e5de] shadow-sm hover:shadow-2xl transition-all duration-700 aspect-[4/3]"
+    >
+      <Link 
+        href={`/portfolio/${project.slug}/`} 
+        className="block w-full h-full" 
+        aria-label={`View details for ${project.title}`}
+      >
+        <img
+          {...responsiveImage(project.heroImage, "(min-width: 768px) min(50vw, 720px), 100vw")}
+          alt={project.title}
+          decoding="async"
+          loading={isPriority ? "eager" : "lazy"}
+          className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+        />
+
+        {/* Elegant Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4a1c13]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-10" aria-hidden="true">
+          <div className="transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+            <h3 className="text-white font-primary text-2xl md:text-3xl leading-snug mb-3">
+              {project.title}
+            </h3>
+            <p className="text-[#ff7043] text-xs tracking-[0.2em] uppercase font-bold">
+              {project.shortDescription}
+            </p>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
+/* ─── PAGE COMPONENT ─── */
+export default function PortfolioPage() {
+  return (
+    <>
+
+      <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24 pt-32">
+      
+      {/* ── HERO ── */}
+      <header className="px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center mb-16 md:mb-24">
+        
+        
+
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: smoothEase }}
+          className="text-[#ff7043] text-xs tracking-[0.3em] uppercase font-bold mb-6 pt-6"
+        >
+          Selected Works
+        </motion.p>
+        
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: smoothEase }}
+          className="text-[clamp(40px,7vw,96px)] font-primary leading-[1] mb-8 tracking-tight"
+        >
+          Designing spaces with <br />
+          <span className="italic font-serif text-[#ff7043]">purpose.</span>
+        </motion.h2>
+      </header>
+
+      {/* ── 2x2 GRID ── */}
+      <section 
+        className="px-4 md:px-12 lg:px-20 max-w-[1600px] mx-auto" 
+      >
+        <motion.div
+          layout
+          // Changed to strictly 1 column on mobile, 2 columns on tablet/desktop
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
+        >
+          <AnimatePresence mode="popLayout">
+            {projectsData.map((project, i) => (
+              <ProjectCard key={project.id} project={project} index={i} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </section>
+      
+    </main>
+    </>
+  );
+}

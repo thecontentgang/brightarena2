@@ -1,0 +1,632 @@
+{
+  "Luxurious Hyderabad Open-Plan Living Space.webp": {
+    "originalBytes": 166814,
+    "optimizedBytes": 166814,
+    "sha1": "888963c02ac54c15971fcf10bfcb045a7772bc25",
+    "skipped": true
+  },
+  "Panorama.jpeg": {
+    "originalBytes": 14033457,
+    "optimizedBytes": 2259476,
+    "sha1": "ffc036bdb48d7ded25007b4879bfe1ab25063562",
+    "skipped": false
+  },
+  "bright-arena-logo.webp": {
+    "originalBytes": 92552,
+    "optimizedBytes": 92552,
+    "sha1": "21a702b8e8550cba4600683369eaa9268420c6fa",
+    "skipped": true
+  },
+  "bright-arena-logo1.png": {
+    "originalBytes": 735567,
+    "optimizedBytes": 244122,
+    "sha1": "8dc3002ce43cf44bc3b1c49ca0613d832cc8d250",
+    "skipped": false
+  },
+  "bright-hero-video-poster.jpg": {
+    "originalBytes": 77139,
+    "optimizedBytes": 63734,
+    "sha1": "93038046ff10b68c917cb40df4ac0f14dc3b0d0f",
+    "skipped": false
+  },
+  "bright-logo.jpg": {
+    "originalBytes": 82768,
+    "optimizedBytes": 55984,
+    "sha1": "93b0a44aa82e5118ae4fdbfe3ce3f93df0d524ab",
+    "skipped": false
+  },
+  "bright-logo.webp": {
+    "originalBytes": 207848,
+    "optimizedBytes": 147086,
+    "sha1": "e898d355b13402f739fe933489958031675ad232",
+    "skipped": false
+  },
+  "bright-logo1.png": {
+    "originalBytes": 451718,
+    "optimizedBytes": 102884,
+    "sha1": "5f5157d5fb91909d8c6440ab42d39862a80244ed",
+    "skipped": false
+  },
+  "home-interiors.webp": {
+    "originalBytes": 262872,
+    "optimizedBytes": 262872,
+    "sha1": "a5a4289ea11b86e76067447961e5aa3d7e0262dd",
+    "skipped": true
+  },
+  "logos/aparna-zenon.png": {
+    "originalBytes": 381247,
+    "optimizedBytes": 92762,
+    "sha1": "ada56acc4ddff723a032fd055f5b2db7b497800a",
+    "skipped": false
+  },
+  "logos/asbl-spire.png": {
+    "originalBytes": 382282,
+    "optimizedBytes": 128538,
+    "sha1": "fb2c56de3a3ad48a81748f8707ac697b0e81dd19",
+    "skipped": false
+  },
+  "logos/auro-regent.svg": {
+    "originalBytes": 40376,
+    "optimizedBytes": 40376,
+    "sha1": "64235da6ecf970ebfa3367c4ccf0f8e6ef876866",
+    "skipped": true
+  },
+  "logos/avani-tulasi-vanam.png": {
+    "originalBytes": 452327,
+    "optimizedBytes": 111053,
+    "sha1": "a1b832db3ea37956590193811558a58656d4f0aa",
+    "skipped": false
+  },
+  "logos/candeur-40.jpg": {
+    "originalBytes": 5591,
+    "optimizedBytes": 5591,
+    "sha1": "1da88ed3690bd804e3d18c7728c1eddcafdd6d77",
+    "skipped": true
+  },
+  "logos/candeur-40.png": {
+    "originalBytes": 268713,
+    "optimizedBytes": 71055,
+    "sha1": "d37273cc68392a0f5ae13c9d5d877ee7bac2579d",
+    "skipped": false
+  },
+  "logos/dsr-park-ridge.jpg": {
+    "originalBytes": 7404,
+    "optimizedBytes": 7404,
+    "sha1": "7824f66050b926d96a4957925e8314ec91a33cfe",
+    "skipped": true
+  },
+  "logos/elegance-emperia.png": {
+    "originalBytes": 258524,
+    "optimizedBytes": 77239,
+    "sha1": "0711a72c40821812608c3f65964c1cffa54fe513",
+    "skipped": false
+  },
+  "logos/epil-carnerstone.jpg": {
+    "originalBytes": 3653,
+    "optimizedBytes": 3653,
+    "sha1": "3bacc50a9453ef5a15e1218a721417f610de832e",
+    "skipped": true
+  },
+  "logos/epil-carnerstone.png": {
+    "originalBytes": 183516,
+    "optimizedBytes": 42540,
+    "sha1": "d9b088bb4da8d12d3b251468a7e92b1480db4489",
+    "skipped": false
+  },
+  "logos/gem-nakshtra.png": {
+    "originalBytes": 235377,
+    "optimizedBytes": 40151,
+    "sha1": "4fbdc766489ea019a5186539cd787a5e3a1b189d",
+    "skipped": false
+  },
+  "logos/hallmark-skyrena.jpg": {
+    "originalBytes": 5874,
+    "optimizedBytes": 5358,
+    "sha1": "290be6739996c357e781acd7f10820cdf45f4565",
+    "skipped": false
+  },
+  "logos/hallmark-skyrena.png": {
+    "originalBytes": 273534,
+    "optimizedBytes": 77876,
+    "sha1": "919d46e981ad4108e3f1339409dc5bf4a30190ea",
+    "skipped": false
+  },
+  "logos/indus-peblcity.png": {
+    "originalBytes": 224439,
+    "optimizedBytes": 62002,
+    "sha1": "bba119130f152ae27a8c1f4e673d7a4858b8103e",
+    "skipped": false
+  },
+  "logos/my-home-sayuk.jpg": {
+    "originalBytes": 54131,
+    "optimizedBytes": 38154,
+    "sha1": "4a5ea43dc7d75de8641b5c413fa571e80908e0fa",
+    "skipped": false
+  },
+  "logos/nyla-tema4.png": {
+    "originalBytes": 94788,
+    "optimizedBytes": 22590,
+    "sha1": "6acacb4c2ec32f2dad645e11140a153b409e7368",
+    "skipped": false
+  },
+  "logos/tripura-lm-3.jpg": {
+    "originalBytes": 45975,
+    "optimizedBytes": 31191,
+    "sha1": "585c3631fe9e6e06f6224041188290a21cfc1d6b",
+    "skipped": false
+  },
+  "logos/vaishnavi-oasis.png": {
+    "originalBytes": 317818,
+    "optimizedBytes": 71256,
+    "sha1": "f143bc36106814048f9c23172d1e7de879b5842d",
+    "skipped": false
+  },
+  "modular-kitchen.png": {
+    "originalBytes": 2034878,
+    "optimizedBytes": 595667,
+    "sha1": "cab6ffbebeae3fe3d9163e8397f95bb45c1e9163",
+    "skipped": false
+  },
+  "office-spaces.webp": {
+    "originalBytes": 352394,
+    "optimizedBytes": 352394,
+    "sha1": "be2a88d351e2e2cbd65b07b0d085c7d89746ad46",
+    "skipped": true
+  },
+  "projectsImg/banali/bf-img1.png": {
+    "originalBytes": 3906862,
+    "optimizedBytes": 1105035,
+    "sha1": "d9403cebeaff9b70d3a579f0a6e222cd8444bc85",
+    "skipped": false
+  },
+  "projectsImg/banali/bf-img2.png": {
+    "originalBytes": 13218110,
+    "optimizedBytes": 3958275,
+    "sha1": "bacfa0b6d4cf4f4c9f65b61cf4a690cdd94d7a7b",
+    "skipped": false
+  },
+  "projectsImg/banali/bf-img3.png": {
+    "originalBytes": 2879898,
+    "optimizedBytes": 892388,
+    "sha1": "8afe1528cebbfb50ebf136abbed7aef236b06b26",
+    "skipped": false
+  },
+  "projectsImg/banali/bf-img4.png": {
+    "originalBytes": 4738643,
+    "optimizedBytes": 1277418,
+    "sha1": "c6f6ed79c3883dfed8858f8d445f6f487f7eb05b",
+    "skipped": false
+  },
+  "projectsImg/banali/bf-img5.png": {
+    "originalBytes": 3468927,
+    "optimizedBytes": 1025877,
+    "sha1": "d42e14eb915259f2e0a6deb07285cbcf426e75fd",
+    "skipped": false
+  },
+  "projectsImg/etna/sr-img1.webp": {
+    "originalBytes": 813838,
+    "optimizedBytes": 813838,
+    "sha1": "437cca8145c9246ea9002e404e2d5ed2e2988b17",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img10.webp": {
+    "originalBytes": 558444,
+    "optimizedBytes": 558444,
+    "sha1": "d680ca6e516ee98fea2bbf55222ecd2b598f0655",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img12.webp": {
+    "originalBytes": 338842,
+    "optimizedBytes": 338842,
+    "sha1": "4069221d3d011fe1f1f65537ae4df6d6796ba2fe",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img13.webp": {
+    "originalBytes": 721784,
+    "optimizedBytes": 721784,
+    "sha1": "20e5987d018ca51f2a2a1cd162e576474f0953d1",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img14.webp": {
+    "originalBytes": 1419076,
+    "optimizedBytes": 1419076,
+    "sha1": "cea088720ac5a18bfc932656d158ee4687deed2f",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img16.webp": {
+    "originalBytes": 927992,
+    "optimizedBytes": 927992,
+    "sha1": "d614b28da4c11c5108983ef3e5b2adb62d7b903b",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img3.webp": {
+    "originalBytes": 677466,
+    "optimizedBytes": 677466,
+    "sha1": "4d22b3d917699a1e4b237e41c401e9859e0a6fac",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img4.webp": {
+    "originalBytes": 874858,
+    "optimizedBytes": 874858,
+    "sha1": "34d0358c74d609b40a9a85a0c5abd361d0a1fd29",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img5.webp": {
+    "originalBytes": 278502,
+    "optimizedBytes": 278502,
+    "sha1": "1c83efc0d6bd7b8f5b025eca4d3a73e58f2176d4",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img6.webp": {
+    "originalBytes": 883644,
+    "optimizedBytes": 883644,
+    "sha1": "bd5b52267fe4f26fbd070873f9b7b42c6e84b266",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img7.webp": {
+    "originalBytes": 261594,
+    "optimizedBytes": 261594,
+    "sha1": "db2c02ea982228a282922b33e00e7f1201e3c730",
+    "skipped": true
+  },
+  "projectsImg/etna/sr-img9.webp": {
+    "originalBytes": 741138,
+    "optimizedBytes": 741138,
+    "sha1": "278d93cef2403351dd4a76520d685ad1bdad7f31",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img1.webp": {
+    "originalBytes": 81084,
+    "optimizedBytes": 81084,
+    "sha1": "87026ffd9a9578e265bb044edcb48736d31059a0",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img10.webp": {
+    "originalBytes": 107706,
+    "optimizedBytes": 107706,
+    "sha1": "75e96049df1ca61d62489b812519dba66125c8de",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img2.webp": {
+    "originalBytes": 78092,
+    "optimizedBytes": 78092,
+    "sha1": "c07c3d30b6ea17fbd0b2eb2876b039dacf2efa28",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img3.webp": {
+    "originalBytes": 103992,
+    "optimizedBytes": 103992,
+    "sha1": "0efdbdd2430ea02da07a8c9b4a4eeb0b24135ea6",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img4.webp": {
+    "originalBytes": 117622,
+    "optimizedBytes": 117622,
+    "sha1": "81794fb31fc17b5dd3b79f679a1914dd49a92c7f",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img5.webp": {
+    "originalBytes": 121008,
+    "optimizedBytes": 121008,
+    "sha1": "b07d15c327b01e6783fbe518cb87395429c71a89",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img6.webp": {
+    "originalBytes": 97444,
+    "optimizedBytes": 97444,
+    "sha1": "4b814f22f3e99797a7b48d6b2fb2300a0dacb088",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img7.webp": {
+    "originalBytes": 80094,
+    "optimizedBytes": 80094,
+    "sha1": "eb961df8b71d48ff5c27c5b66735872e6c238c9b",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img8.webp": {
+    "originalBytes": 86742,
+    "optimizedBytes": 86742,
+    "sha1": "d0e4eb10cac05a3dd44c3284eb0e14bc04c8426e",
+    "skipped": true
+  },
+  "projectsImg/forest-edge/fe-img9.webp": {
+    "originalBytes": 113476,
+    "optimizedBytes": 113476,
+    "sha1": "89b597669bc8595344821753cf5507dcbff2ba83",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img1.webp": {
+    "originalBytes": 288606,
+    "optimizedBytes": 288606,
+    "sha1": "48630ffe4bbd7cebd8e820ff2b6e9eeefae32474",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img10.webp": {
+    "originalBytes": 206456,
+    "optimizedBytes": 206446,
+    "sha1": "2cc330df8a9040e31e2cd60466b6df5966e2a1f3",
+    "skipped": false
+  },
+  "projectsImg/kollur/kl-img11.webp": {
+    "originalBytes": 103902,
+    "optimizedBytes": 103902,
+    "sha1": "1809852b6cf3a2b3357becacf775108bbec11ba5",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img12.webp": {
+    "originalBytes": 101230,
+    "optimizedBytes": 101230,
+    "sha1": "ad00004adfab92d6182a50dcf632e28af2879e66",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img13.webp": {
+    "originalBytes": 308820,
+    "optimizedBytes": 308820,
+    "sha1": "074c90a31d6d0ca1afd0c629dc0e77f54687f7e8",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img14.webp": {
+    "originalBytes": 119622,
+    "optimizedBytes": 119622,
+    "sha1": "c4e941aac0a3e78854cba83e3597c6df6e4be580",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img15.webp": {
+    "originalBytes": 103660,
+    "optimizedBytes": 103660,
+    "sha1": "6ec22fb6f65585ca7e3cd2bc45ec1341af5cb079",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img2.webp": {
+    "originalBytes": 319432,
+    "optimizedBytes": 319432,
+    "sha1": "87a8d50d94ec5eb62ce59e613743a4d5335edde8",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img3.webp": {
+    "originalBytes": 435346,
+    "optimizedBytes": 435346,
+    "sha1": "f5775ad78a5df17de09cefcb3c98d923b34122f1",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img4.webp": {
+    "originalBytes": 255982,
+    "optimizedBytes": 255982,
+    "sha1": "244059316a2b4cdd59cb4960f9fb0339d69893c7",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img5.webp": {
+    "originalBytes": 330742,
+    "optimizedBytes": 330742,
+    "sha1": "817e9dc67e563c5a78b620b9844800c9f59356f4",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img6.webp": {
+    "originalBytes": 489408,
+    "optimizedBytes": 489408,
+    "sha1": "e23892d010c7d3a86f773ee73879e16d8cb77268",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img7.webp": {
+    "originalBytes": 175542,
+    "optimizedBytes": 175542,
+    "sha1": "72f1d2208f5b70d53cc8705d22d66b3b0eb11717",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img8.webp": {
+    "originalBytes": 257918,
+    "optimizedBytes": 257918,
+    "sha1": "afab8bc4639b23f4b7fd66cc192b05db21cd512f",
+    "skipped": true
+  },
+  "projectsImg/kollur/kl-img9.webp": {
+    "originalBytes": 161978,
+    "optimizedBytes": 161114,
+    "sha1": "ca4bbdcd5aa5ca11808d8c50555f8ef810188195",
+    "skipped": false
+  },
+  "projectsImg/rajapushpa/rp-img1.webp": {
+    "originalBytes": 616994,
+    "optimizedBytes": 616994,
+    "sha1": "7aa9f13bb9a37c1f2139fe502af80f33c8457ecd",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img10.webp": {
+    "originalBytes": 513044,
+    "optimizedBytes": 513044,
+    "sha1": "aa0568ae719ef0595bce45f6dc821b0015413282",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img11.webp": {
+    "originalBytes": 695696,
+    "optimizedBytes": 695696,
+    "sha1": "ea50d2155186a38abfd74d11295fd5acaf40b21c",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img12.webp": {
+    "originalBytes": 431576,
+    "optimizedBytes": 431576,
+    "sha1": "69f2224dc721ea3f49e6c9c6cfb5fa820826c260",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img13.webp": {
+    "originalBytes": 328238,
+    "optimizedBytes": 328238,
+    "sha1": "e0e26aa1883d966408854505c22cbd42b724427e",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img14.webp": {
+    "originalBytes": 697164,
+    "optimizedBytes": 697164,
+    "sha1": "0b30760e37eb359203508f314b97f76f9ea2a6ae",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img15.webp": {
+    "originalBytes": 517454,
+    "optimizedBytes": 517454,
+    "sha1": "8af49ea431d6e48b2f50b2ef331375faa03db030",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img2.webp": {
+    "originalBytes": 777740,
+    "optimizedBytes": 777740,
+    "sha1": "6a90c0549984b4b0629d572ee8a4c1171ea27e21",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img3.webp": {
+    "originalBytes": 576762,
+    "optimizedBytes": 576762,
+    "sha1": "48a71bd9333fee931c374d0276b1513c0f227a16",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img4.webp": {
+    "originalBytes": 439614,
+    "optimizedBytes": 439614,
+    "sha1": "ea3eaa357a610d483c0fff3e8529b76374bd13ba",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img5.webp": {
+    "originalBytes": 653578,
+    "optimizedBytes": 653578,
+    "sha1": "ab84cd00a2ebac46e634c6c5553cabafe375afbc",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img6.webp": {
+    "originalBytes": 211426,
+    "optimizedBytes": 208010,
+    "sha1": "4ea731da7652722bf9501064217e7cfb08f9bdd9",
+    "skipped": false
+  },
+  "projectsImg/rajapushpa/rp-img7.webp": {
+    "originalBytes": 107020,
+    "optimizedBytes": 107020,
+    "sha1": "598ad5a20926d84b6e2505771a8bc734127a16b6",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img8.webp": {
+    "originalBytes": 327436,
+    "optimizedBytes": 327436,
+    "sha1": "52189d73a91c9913cf423d8ee4954edbe9034aa9",
+    "skipped": true
+  },
+  "projectsImg/rajapushpa/rp-img9.webp": {
+    "originalBytes": 193816,
+    "optimizedBytes": 193816,
+    "sha1": "6f951dfc1343688238c8ab032920dc7b8265283b",
+    "skipped": true
+  },
+  "projectsImg/varaprasad/vp-img1.png": {
+    "originalBytes": 12558313,
+    "optimizedBytes": 3499610,
+    "sha1": "90357492aeae22a016b012844102e2ae7f5832ba",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img10.png": {
+    "originalBytes": 16583465,
+    "optimizedBytes": 4799751,
+    "sha1": "cc1f9c5edff64e6377e1692a0277582c9ccab404",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img11.png": {
+    "originalBytes": 9892311,
+    "optimizedBytes": 2812071,
+    "sha1": "1cca995c8a025f45332e3ac87fda0a5facd17001",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img12.png": {
+    "originalBytes": 9528700,
+    "optimizedBytes": 2741178,
+    "sha1": "40fa01fa85e957a105f9dd0a32b212a49b2a7738",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img13.png": {
+    "originalBytes": 11975617,
+    "optimizedBytes": 3301201,
+    "sha1": "626df5fb4dff7bcc1de59932af033bd04b71d7b0",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img14.png": {
+    "originalBytes": 5619773,
+    "optimizedBytes": 1657574,
+    "sha1": "be12ba1f3b2ea5236181a8bcb37c445183808650",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img15.png": {
+    "originalBytes": 40450512,
+    "optimizedBytes": 14726130,
+    "sha1": "91dfaa2a09baf686021466b1409b04194aadc092",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img16.png": {
+    "originalBytes": 20902677,
+    "optimizedBytes": 5225502,
+    "sha1": "41ba621ccb3fcdc498eec78430b133755bba3d60",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img2.png": {
+    "originalBytes": 9915270,
+    "optimizedBytes": 2489756,
+    "sha1": "22186fe2ae779ba87be6fa4f0f708c680c52d919",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img3.png": {
+    "originalBytes": 9528935,
+    "optimizedBytes": 2390753,
+    "sha1": "d3e8b04e7600b8658c86d556632cec7759d6d257",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img4.png": {
+    "originalBytes": 9975910,
+    "optimizedBytes": 2974954,
+    "sha1": "4e01193b7b34aeb5d2c32f41ab29f50b99737cf3",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img5.png": {
+    "originalBytes": 4146927,
+    "optimizedBytes": 1275941,
+    "sha1": "85c98900336bcdd72fa733e3656a16a37f01e5db",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img6.png": {
+    "originalBytes": 11096122,
+    "optimizedBytes": 2894198,
+    "sha1": "3f849df0c88a88d9e040b3bf3cd3a1a9b3ab550d",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img7.png": {
+    "originalBytes": 7926784,
+    "optimizedBytes": 2145539,
+    "sha1": "092a5ca8f63c87a16c34b42affe89c09c1d6796f",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img8.png": {
+    "originalBytes": 6262463,
+    "optimizedBytes": 2067994,
+    "sha1": "9ffe80859b7fd9779514250569232db2ab09e660",
+    "skipped": false
+  },
+  "projectsImg/varaprasad/vp-img9.png": {
+    "originalBytes": 12470989,
+    "optimizedBytes": 3926514,
+    "sha1": "edcdd1d7cc24c602c9536a0b72165cacf8e06765",
+    "skipped": false
+  },
+  "review1.png": {
+    "originalBytes": 17553,
+    "optimizedBytes": 7055,
+    "sha1": "fd11082747d74a6e494930b1d5ea7120b53cd0de",
+    "skipped": false
+  },
+  "review2.png": {
+    "originalBytes": 17504,
+    "optimizedBytes": 6500,
+    "sha1": "274a7678357e579ac2e7bba1a4a209f48f7e42cb",
+    "skipped": false
+  },
+  "small-house-interior-designs.png": {
+    "originalBytes": 2417608,
+    "optimizedBytes": 755350,
+    "sha1": "687b2c139f5a08e305a689590033cfa36dd36b5b",
+    "skipped": false
+  }
+}

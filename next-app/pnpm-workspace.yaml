@@ -1,0 +1,6 @@
+# Standalone workspace root: stops pnpm from walking up into the parent Vite repository.
+packages:
+  - "."
+allowBuilds:
+  sharp: true
+  unrs-resolver: true

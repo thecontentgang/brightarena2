@@ -1,0 +1,16 @@
+/*
+ * Ported from the Vite app's src/index.css.
+ * Font files are now loaded through next/font (see src/app/fonts.ts) instead of the Google Fonts
+ * @import and hand-written @font-face rules. The family mapping is unchanged:
+ *   font-primary      -> "TT Bakers"      = /font/OrangeAvenueDEMO-Regular.otf (400)
+ *   font-primary-bold -> "TT Bakers Bold" = /font/TT_Bakers_Trial_Bold.ttf (bold)
+ *   font-secondary    -> Inter (variable, 100-900)
+ * `inline` makes each utility reference the next/font variable directly, so it resolves on any element.
+ */
+@import "tailwindcss";
+
+@theme inline {
+  --font-primary-bold: var(--font-tt-bakers-bold), sans-serif;
+  --font-primary: var(--font-tt-bakers), sans-serif;
+  --font-secondary: var(--font-inter), sans-serif;
+}

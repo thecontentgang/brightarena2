@@ -1,0 +1,192 @@
+"use client";
+
+import { motion } from "framer-motion";
+import ContactForm from "@/components/ContactForm";
+
+// Explicitly typed easing tuple to satisfy TypeScript
+const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.8, ease: smoothEase } 
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+export default function ContactPage() {
+  return (
+    <>
+      <main className="bg-[#f7f4ee] text-[#4a1c13] min-h-screen antialiased selection:bg-[#ff7043] selection:text-white pb-24">
+      
+      {/* ── HERO SECTION ── */}
+      <header aria-labelledby="contact-heading" className="pt-32 pb-12 md:pt-48 md:pb-16 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto text-center flex flex-col items-center">
+        <motion.span 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: smoothEase }}
+          className="text-[#ff7043] text-xs md:text-sm tracking-[0.3em] uppercase font-bold block mb-6"
+        >
+          Get In Touch
+        </motion.span>
+        
+        <motion.h2 
+          id="contact-heading"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: smoothEase, delay: 0.1 }}
+          className="text-[clamp(40px,7vw,96px)] font-primary font-light leading-[1.05] tracking-tight mb-8"
+        >
+          Let&apos;s build something <br />
+          <span className="italic font-serif text-[#ff7043]">beautiful.</span>
+        </motion.h2>
+      </header>
+
+      {/* ── SPLIT CONTENT: INFO & FORM ── */}
+      <section aria-label="Contact Information and Inquiry Form" className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+          
+          {/* LEFT COLUMN: Contact Details & Image */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="flex flex-col gap-12"
+          >
+            {/* Atmospheric Image */}
+            <motion.div variants={fadeUp} className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-[#e8e5de]">
+              <img 
+                src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1200&auto=format&fit=crop" 
+                alt="Luxury interior design materials and architectural swatches at Bright Arena studio"
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Info Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Address */}
+              <motion.div variants={fadeUp}>
+                <h3 className="text-[#4a1c13]/40 text-xs font-bold tracking-widest uppercase mb-4">
+                  Headquarters
+                </h3>
+                <address className="not-italic text-[#4a1c13] text-base leading-relaxed font-medium">
+                  4th Floor, 23 Nordwest, <br />
+                  P Janardhan Reddy Nagar, <br />
+                  Gachibowli, Hyderabad, <br />
+                  Telangana 500032
+                </address>
+              </motion.div>
+
+              {/* Direct Contact */}
+              <motion.div variants={fadeUp} className="flex flex-col gap-8">
+                <div>
+                  <h3 className="text-[#4a1c13]/40 text-xs font-bold tracking-widest uppercase mb-4">
+                    Direct
+                  </h3>
+                  <div className="flex flex-col gap-2 font-medium">
+                    <a href="tel:+918978222980" aria-label="Call us at +91-8978222980" className="hover:text-[#ff7043] transition-colors duration-300">
+                      +91 8978 222 980
+                    </a>
+                    <a href="mailto:info@brightarenainteriors.com" aria-label="Email us at info@brightarenainteriors.com" className="hover:text-[#ff7043] transition-colors duration-300">
+                      info@brightarenainteriors.com
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-[#4a1c13]/40 text-xs font-bold tracking-widest uppercase mb-4">
+                    Follow Us
+                  </h3>
+                  <div className="flex items-center gap-4">
+                    {[
+                      { name: "Instagram", url: "https://www.instagram.com/brightarenainteriors" },
+                      { name: "YouTube", url: "https://www.youtube.com/@brightarenainteriors" }
+                    ].map((social) => (
+                      <a 
+                        key={social.name}
+                        href={social.url} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Follow Bright Arena on ${social.name}`}
+                        className="text-sm font-medium hover:text-[#ff7043] transition-colors duration-300"
+                      >
+                        {social.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT COLUMN: Contact Form */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: smoothEase, delay: 0.2 }}
+            className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 lg:p-16 shadow-sm border border-[#4a1c13]/5"
+          >
+            <h2 className="text-3xl font-primary mb-2">Project Inquiry</h2>
+            <p className="text-[#4a1c13]/60 text-sm mb-10 leading-relaxed">
+              Please provide a few details about your project, and our design team will get back to you within 24-48 hours.
+            </p>
+
+            <ContactForm />
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* ── MAP SECTION ── */}
+      <section aria-label="Studio Location Map" className="px-4 md:px-12 lg:px-24 max-w-[1600px] mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: smoothEase }}
+          className="flex flex-col gap-6"
+        >
+          <div className="flex flex-col items-center text-center mb-4">
+            <h2 className="text-2xl md:text-4xl font-primary leading-tight mb-3">
+              Visit Our Office
+            </h2>
+            <p className="text-[#4a1c13]/60 text-sm md:text-base max-w-md">
+              We&apos;d love to host you for a coffee and a conversation about your upcoming project.
+            </p>
+          </div>
+
+          {/* Interactive Map Container */}
+          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden relative shadow-sm border border-[#4a1c13]/5 group bg-[#e8e5de]">
+            <iframe 
+              title="Bright Arena Interiors Studio Location Map in Gachibowli, Hyderabad"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2691.5108603682183!2d78.36538624751807!3d17.441940515237768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb934fc43492d7%3A0xb4afd24eb829f868!2sBright%20Arena%20Interiors!5e0!3m2!1sen!2sin!4v1784722465708!5m2!1sen!2sin"
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              className="grayscale-[80%] contrast-[1.1] opacity-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 transition-all duration-700 ease-in-out"
+            />
+          </div>
+        </motion.div>
+      </section>
+
+    </main>
+    </>
+  );
+}
